@@ -9,10 +9,10 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <main className="min-h-screen bg-white text-gray-900">
+    <main className="min-h-screen bg-[#f7f5f0] text-stone-900">
 
       {/* ================= HEADER ================= */}
-      <header className="border-b bg-white">
+      <header className="border-b border-stone-200/70 bg-[#f7f5f0]/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 
           {/* Logo */}
@@ -122,117 +122,224 @@ export default function Home() {
           </div>
         )}
       </header>
+{/* ================= PREMIUM HERO ================= */}
+<section
+  id="home"
+  className="relative overflow-hidden bg-[#eee9df] px-5 py-8 sm:px-6 sm:py-12 md:py-20 lg:py-28"
+>
+  <div className="mx-auto max-w-7xl">
 
-      {/* ================= HERO ================= */}
-      <section
-        id="home"
-        className="relative overflow-hidden bg-[#f4f1eb] px-6 py-20 md:py-32"
-      >
-        <div className="mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-2 md:gap-16">
+    {/* Top Label */}
+    <div className="mb-8 flex items-center gap-3 md:mb-12">
+      <span className="h-px w-10 bg-stone-500" />
 
-          {/* Hero Text */}
+      <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-stone-600 sm:text-xs">
+        Maruti Tiles · Surat · Gujarat
+      </p>
+    </div>
+
+    <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+
+      {/* ================= HERO CONTENT ================= */}
+      <div>
+
+        <p className="text-xs font-medium uppercase tracking-[0.3em] text-stone-500">
+          Premium Surfaces
+        </p>
+
+        <h1 className="mt-5 max-w-4xl text-[3.5rem] font-semibold leading-[0.9] tracking-[-0.06em] text-stone-950 sm:text-6xl md:text-7xl lg:text-[6.2rem]">
+          Surfaces
+
+          <span className="block font-normal text-stone-500">
+            that define
+          </span>
+
+          <span className="block">
+            space.
+          </span>
+        </h1>
+
+        <p className="mt-7 max-w-lg text-base leading-7 text-stone-600 sm:text-lg">
+          Premium tiles created for refined residential, commercial and
+          architectural spaces.
+        </p>
+
+
+        {/* ================= BUTTONS ================= */}
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+
+          <a
+            href="#products"
+            className="inline-flex min-h-14 items-center justify-center rounded-full bg-stone-950 px-7 text-sm font-semibold text-white shadow-lg shadow-stone-900/10 transition duration-300 hover:-translate-y-0.5 hover:bg-stone-800"
+          >
+            Explore Collection
+            <span className="ml-3 text-lg">
+              ↗
+            </span>
+          </a>
+
+          <a
+            href="#contact"
+            className="inline-flex min-h-14 items-center justify-center rounded-full border border-stone-400 bg-[#eee9df] px-7 text-sm font-semibold text-stone-900 transition duration-300 hover:-translate-y-0.5 hover:bg-white"
+          >
+            Talk to Us
+          </a>
+
+        </div>
+
+
+        {/* ================= TRUST DETAILS ================= */}
+        <div className="mt-10 grid max-w-xl grid-cols-3 border-t border-stone-300 pt-6">
+
           <div>
-            <p className="mb-5 text-sm font-semibold uppercase tracking-[0.3em] text-stone-600">
-              Premium Surfaces
+            <p className="text-lg font-semibold text-stone-900 sm:text-xl">
+              Premium
             </p>
 
-            <h1 className="max-w-3xl text-5xl font-semibold leading-[1.05] tracking-tight text-stone-900 md:text-7xl">
-              Designed for
-              <span className="block text-stone-500">
-                beautiful spaces.
-              </span>
-            </h1>
-
-            <p className="mt-7 max-w-xl text-lg leading-8 text-stone-600">
-              Discover premium tiles that bring elegance, durability and
-              timeless style to residential and commercial spaces.
+            <p className="mt-1 text-[9px] uppercase tracking-[0.18em] text-stone-500 sm:text-xs">
+              Quality
             </p>
-
-            <div className="mt-10 flex flex-wrap gap-4">
-              <a
-                href="#products"
-                className="rounded-full bg-stone-900 px-7 py-4 font-semibold text-white transition hover:bg-stone-700"
-              >
-                Explore Collection
-              </a>
-
-              <a
-                href="#contact"
-                className="rounded-full border border-stone-400 px-7 py-4 font-semibold text-stone-800 transition hover:bg-white"
-              >
-                Talk to Us
-              </a>
-            </div>
-
-            <div className="mt-12 flex flex-wrap gap-8 border-t border-stone-300 pt-7 md:gap-10">
-              <div>
-                <p className="text-2xl font-bold text-stone-900">
-                  Premium
-                </p>
-                <p className="mt-1 text-sm text-stone-500">
-                  Quality
-                </p>
-              </div>
-
-              <div>
-                <p className="text-2xl font-bold text-stone-900">
-                  Morbi
-                </p>
-                <p className="mt-1 text-sm text-stone-500">
-                  Manufacturing
-                </p>
-              </div>
-
-              <div>
-                <p className="text-2xl font-bold text-stone-900">
-                  2026
-                </p>
-                <p className="mt-1 text-sm text-stone-500">
-                  Established
-                </p>
-              </div>
-            </div>
           </div>
 
-          {/* Hero Visual */}
-          <div className="relative">
-            <div className="aspect-[4/5] overflow-hidden rounded-[2rem] bg-stone-900">
-              <div className="flex h-full flex-col items-center justify-center p-8 text-center md:p-10">
+
+          <div className="border-l border-stone-300 pl-4 sm:pl-6">
+            <p className="text-lg font-semibold text-stone-900 sm:text-xl">
+              Morbi
+            </p>
+
+            <p className="mt-1 text-[9px] uppercase tracking-[0.18em] text-stone-500 sm:text-xs">
+              Manufacturing
+            </p>
+          </div>
+
+
+          <div className="border-l border-stone-300 pl-4 sm:pl-6">
+            <p className="text-lg font-semibold text-stone-900 sm:text-xl">
+              2026
+            </p>
+
+            <p className="mt-1 text-[9px] uppercase tracking-[0.18em] text-stone-500 sm:text-xs">
+              Established
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      {/* ================= PREMIUM VISUAL ================= */}
+      <div className="relative">
+
+        <div className="relative min-h-[430px] overflow-hidden rounded-[2rem] border border-stone-800 bg-[#11100e] shadow-[0_30px_80px_rgba(0,0,0,0.15)] sm:min-h-[520px] lg:min-h-[620px]">
+
+          {/* Soft luxury glow */}
+          <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#b49a72]/10 blur-3xl" />
+
+
+          {/* Decorative circles */}
+          <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full border border-[#b49a72]/20" />
+
+          <div className="absolute -bottom-32 -left-24 h-80 w-80 rounded-full border border-[#b49a72]/15" />
+
+
+          {/* Architectural lines */}
+          <div className="absolute left-8 top-8 h-px w-20 bg-[#b49a72]/60" />
+
+          <div className="absolute bottom-8 right-8 h-px w-20 bg-[#b49a72]/60" />
+
+
+          {/* Main content */}
+          <div className="relative flex min-h-[430px] flex-col items-center justify-center px-6 py-12 text-center sm:min-h-[520px] sm:px-10 lg:min-h-[620px]">
+
+
+            {/* Premium badge */}
+            <div className="mb-8 rounded-full border border-[#b49a72]/40 bg-[#b49a72]/5 px-5 py-2">
+              <p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#d1bd9c]">
+                Premium Surfaces
+              </p>
+            </div>
+
+
+            {/* Logo */}
+            <div className="rounded-full border border-[#b49a72]/30 bg-black/20 p-4 shadow-[0_0_50px_rgba(180,154,114,0.08)] sm:p-6">
+
+              <div className="rounded-full border border-stone-800 bg-[#090908] p-4 sm:p-5">
 
                 <Image
                   src="/images/brand/logo.png"
                   alt="Maruti Tiles"
-                  width={220}
-                  height={220}
-                  className="object-contain"
+                  width={170}
+                  height={170}
+                  className="h-24 w-24 object-contain sm:h-32 sm:w-32"
                 />
 
-                <p className="mt-8 text-sm font-semibold uppercase tracking-[0.35em] text-stone-200 md:tracking-[0.5em]">
-                  India & International Export
-                </p>
-
-                <p className="mt-4 max-w-sm text-sm leading-6 text-stone-400">
-                  Premium tiles, modern surfaces and reliable solutions for
-                  residential and commercial spaces.
-                </p>
-
               </div>
+
             </div>
 
-            <div className="absolute -bottom-6 -left-3 rounded-2xl bg-white p-5 shadow-xl md:-left-6 md:p-6">
-              <p className="text-xs uppercase tracking-widest text-stone-500">
-                Established
-              </p>
 
-              <p className="mt-1 text-2xl font-bold text-stone-900">
-                2026
-              </p>
+            {/* Export */}
+            <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#d1bd9c] sm:text-xs">
+              India · International
+            </p>
+
+
+            {/* Divider */}
+            <div className="mt-6 h-px w-16 bg-[#b49a72]/60" />
+
+
+            {/* Description */}
+            <p className="mt-6 max-w-sm text-sm leading-7 text-stone-400 sm:text-base">
+              Curated surfaces for residential, commercial and architectural
+              spaces.
+            </p>
+
+
+            {/* Brand values */}
+            <div className="mt-10 flex items-center gap-4 text-[8px] font-semibold uppercase tracking-[0.3em] text-stone-600 sm:text-[9px]">
+
+              <span>
+                Design
+              </span>
+
+              <span className="h-1 w-1 rounded-full bg-[#b49a72]/60" />
+
+              <span>
+                Quality
+              </span>
+
+              <span className="h-1 w-1 rounded-full bg-[#b49a72]/60" />
+
+              <span>
+                Reliability
+              </span>
+
             </div>
+
           </div>
 
         </div>
-      </section>
 
+
+        {/* ================= FLOATING BADGE ================= */}
+        <div className="absolute -bottom-4 left-4 rounded-2xl border border-stone-200 bg-white px-5 py-4 shadow-xl sm:-bottom-5 sm:left-6 sm:px-6 sm:py-5">
+
+          <p className="text-[9px] font-semibold uppercase tracking-[0.25em] text-stone-400">
+            Established
+          </p>
+
+          <p className="mt-1 text-xl font-semibold tracking-tight text-stone-900">
+            2026
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
       {/* ================= PRODUCTS ================= */}
       <section
         id="products"
@@ -287,105 +394,139 @@ export default function Home() {
 </div>
           </div>
 
-          {/* Product Cards */}
-          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+         {/* ================= PREMIUM PRODUCT CARDS ================= */}
+<div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
 
-            {products.map((product) => (
-              <article
-                key={product.id}
-                className="group overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
-              >
+  {products.map((product) => (
+    <article
+      key={product.id}
+      className="group overflow-hidden rounded-[2rem] border border-stone-200/80 bg-white shadow-[0_8px_40px_rgba(0,0,0,0.06)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]"
+    >
 
-                {/* Product Image */}
-                <div className="relative h-72 overflow-hidden bg-stone-100">
+      {/* ================= IMAGE ================= */}
+      <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
 
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                  />
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        />
 
-                  {/* Product Labels */}
-                  <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+        {/* Soft image overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-60" />
 
-                    {product.newArrival && (
-                      <span className="rounded-full bg-white px-3 py-1.5 text-xs font-bold text-stone-900 shadow-sm">
-                        New Arrival
-                      </span>
-                    )}
+        {/* Labels */}
+        <div className="absolute left-4 top-4 flex flex-wrap gap-2">
 
-                    {product.bestSeller && (
-                      <span className="rounded-full bg-stone-900 px-3 py-1.5 text-xs font-bold text-white shadow-sm">
-                        Best Seller
-                      </span>
-                    )}
+          {product.newArrival && (
+            <span className="rounded-full border border-white/40 bg-white/90 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-stone-900 shadow-lg backdrop-blur-md">
+              New Arrival
+            </span>
+          )}
 
-                  </div>
-                </div>
+          {product.bestSeller && (
+            <span className="rounded-full bg-stone-950/90 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-white shadow-lg backdrop-blur-md">
+              Best Seller
+            </span>
+          )}
 
-                {/* Product Details */}
-                <div className="p-7">
-
-                  <p className="text-xs font-semibold uppercase tracking-widest text-stone-500">
-                    {product.category}
-                  </p>
-
-                  <h3 className="mt-3 text-2xl font-semibold text-stone-900">
-                    {product.name}
-                  </h3>
-
-                  <div className="mt-6 grid grid-cols-2 gap-3">
-
-                    <div className="rounded-xl bg-stone-50 p-3">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-stone-400">
-                        Size
-                      </p>
-
-                      <p className="mt-1 text-sm font-semibold text-stone-800">
-                        {product.size}
-                      </p>
-                    </div>
-
-                    <div className="rounded-xl bg-stone-50 p-3">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-stone-400">
-                        Finish
-                      </p>
-
-                      <p className="mt-1 text-sm font-semibold text-stone-800">
-                        {product.finish}
-                      </p>
-                    </div>
-
-                  </div>
-
-                  <p className="mt-5 text-sm leading-6 text-stone-600">
-                    {product.description}
-                  </p>
-
-                  <div className="mt-6 border-t border-stone-200 pt-5">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-stone-400">
-                      Pricing
-                    </p>
-
-                    <p className="mt-1 text-sm font-semibold text-stone-900">
-                      {product.price}
-                    </p>
-                  </div>
-
-                  <a
-                    href={`/products/${product.id}`}
-                    className="mt-6 block rounded-full bg-stone-900 px-5 py-3 text-center font-semibold text-white transition hover:bg-stone-700"
-                  >
-                    View Product
-                  </a>
-
-                </div>
-              </article>
-            ))}
-
-          </div>
         </div>
+
+        {/* Premium badge */}
+        <div className="absolute bottom-4 right-4">
+          <span className="rounded-full border border-white/30 bg-white/85 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-stone-800 shadow-lg backdrop-blur-md">
+            Premium Collection
+          </span>
+        </div>
+
+      </div>
+
+
+      {/* ================= PRODUCT DETAILS ================= */}
+      <div className="p-5 sm:p-6 lg:p-7">
+
+        {/* Category */}
+        <p className="text-[9px] font-bold uppercase tracking-[0.28em] text-stone-400">
+          {product.category}
+        </p>
+
+        {/* Product Name */}
+        <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-950 sm:text-2xl">
+          {product.name}
+        </h3>
+
+
+        {/* Specifications */}
+        <div className="mt-5 grid grid-cols-2 gap-2.5">
+
+          <div className="rounded-2xl border border-stone-100 bg-[#f8f6f2] px-3.5 py-3.5">
+            <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-stone-400">
+              Size
+            </p>
+
+            <p className="mt-1.5 text-xs font-semibold text-stone-800">
+              {product.size}
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-stone-100 bg-[#f8f6f2] px-3.5 py-3.5">
+            <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-stone-400">
+              Finish
+            </p>
+
+            <p className="mt-1.5 text-xs font-semibold text-stone-800">
+              {product.finish}
+            </p>
+          </div>
+
+        </div>
+
+
+        {/* Description */}
+        <p className="mt-5 line-clamp-2 text-sm leading-6 text-stone-500">
+          {product.description}
+        </p>
+
+
+        {/* Divider */}
+        <div className="my-5 h-px bg-stone-200" />
+
+
+        {/* Price + Button */}
+        <div className="flex items-center justify-between gap-4">
+
+          <div>
+            <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-stone-400">
+              Pricing
+            </p>
+
+            <p className="mt-1 text-sm font-semibold text-stone-900">
+              {product.price}
+            </p>
+          </div>
+
+
+          <a
+            href={`/products/${product.id}`}
+            className="inline-flex min-h-11 items-center justify-center rounded-full bg-stone-950 px-5 text-xs font-semibold text-white shadow-sm transition-all duration-300 hover:bg-stone-700 hover:shadow-lg active:scale-95"
+          >
+            View Product
+            <span className="ml-2 text-sm transition-transform duration-300 group-hover:translate-x-0.5">
+              →
+            </span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </article>
+  ))}
+
+</div>
+</div>
       </section>
 
       {/* ================= ABOUT ================= */}

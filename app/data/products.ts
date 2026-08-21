@@ -1,3 +1,4 @@
+
 export const products = [
   {
     id: 1,
@@ -127,7 +128,7 @@ export const products = [
     bestSeller: false,
   },
 
-   {
+  {
     id: 9,
     name: "Sadstone-7026",
     size: "600 × 1200 mm",
@@ -143,8 +144,7 @@ export const products = [
     bestSeller: false,
   },
 
-
-    {
+  {
     id: 10,
     name: "Golden Infinity - 1018",
     size: "600 × 1200 mm",
@@ -208,7 +208,7 @@ export const products = [
     bestSeller: false,
   },
 
-    {
+  {
     id: 14,
     name: "Amber Bianco",
     size: "600 × 1200 mm",
@@ -332,22 +332,6 @@ export const products = [
       "Elegant platinum-grey marble-look tile with fine natural veining and a refined carved finish.",
     application:
       "Living rooms, bedrooms, hotels, offices, feature walls and contemporary interiors",
-    newArrival: true,
-    bestSeller: false,
-  },
-
-  {
-    id: 22,
-    name: "Plain White",
-    size: "600 × 1200 mm",
-    finish: "Glossy",
-    price: "Price on Request",
-    category: "Large Format Tiles",
-    image: "/images/products/plainwhite.jpg",
-    description:
-      "Clean plain white large-format tile with a bright, minimal appearance and glossy surface.",
-    application:
-      "Living rooms, bedrooms, bathrooms, hotels, offices and modern interiors",
     newArrival: true,
     bestSeller: false,
   },
