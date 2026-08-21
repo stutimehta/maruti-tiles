@@ -60,20 +60,28 @@ export default function Home() {
           </a>
 
           {/* Mobile Menu Button */}
-          <button
-            type="button"
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="rounded-lg p-2 text-2xl text-stone-900 md:hidden"
-            aria-label="Toggle menu"
-            aria-expanded={menuOpen}
-          >
-            {menuOpen ? "✕" : "☰"}
-          </button>
+<button
+  type="button"
+  onClick={() => setMenuOpen((open) => !open)}
+  className="relative z-[60] flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 bg-white text-stone-900 shadow-sm transition active:scale-95 md:hidden"
+  aria-label={menuOpen ? "Close menu" : "Open menu"}
+  aria-expanded={menuOpen}
+>
+  {menuOpen ? (
+    <span className="text-xl leading-none">✕</span>
+  ) : (
+    <span className="flex flex-col gap-1.5">
+      <span className="block h-[2px] w-5 bg-stone-900" />
+      <span className="block h-[2px] w-5 bg-stone-900" />
+      <span className="block h-[2px] w-5 bg-stone-900" />
+    </span>
+  )}
+</button>
         </div>
 
         {/* Mobile Navigation */}
-        {menuOpen && (
-          <div className="border-t border-stone-200 bg-white px-6 py-5 md:hidden">
+       {menuOpen && (
+  <div className="relative z-50 border-t border-stone-200 bg-[#f7f5f0] px-6 py-6 shadow-xl md:hidden">
             <nav className="flex flex-col gap-5">
 
               <a
@@ -340,193 +348,203 @@ export default function Home() {
     </div>
   </div>
 </section>
-      {/* ================= PRODUCTS ================= */}
+          {/* ================= PREMIUM COLLECTION ================= */}
       <section
         id="products"
-        className="bg-stone-50 px-6 py-20 md:py-24"
+        className="bg-[#f2efe9] px-5 py-20 sm:px-6 md:py-28"
       >
         <div className="mx-auto max-w-7xl">
 
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          {/* Collection Header */}
+          <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
 
             <div className="max-w-2xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-stone-500">
-                Our Collection
-              </p>
 
-              <h2 className="mt-4 text-4xl font-semibold tracking-tight text-stone-900 md:text-5xl">
-                Tiles for every space.
+              <div className="flex items-center gap-3">
+                <span className="h-px w-10 bg-stone-500" />
+
+                <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-stone-500">
+                  The Collection
+                </p>
+              </div>
+
+              <h2 className="mt-5 text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-stone-950 sm:text-5xl md:text-6xl">
+                Tiles for every
+                <span className="block font-normal text-stone-500">
+                  beautiful space.
+                </span>
               </h2>
 
-              <p className="mt-5 text-lg leading-8 text-stone-600">
-                Explore premium surfaces available in different sizes,
-                finishes and designs for residential and commercial projects.
+              <p className="mt-6 max-w-xl text-sm leading-7 text-stone-600 sm:text-base">
+                Explore a curated selection of premium surfaces created for
+                refined residential, commercial and architectural spaces.
               </p>
+
             </div>
 
-           <div className="flex flex-wrap gap-3">
-  <a
-    href="/catalogues/cataloge1.pdf"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="rounded-full border border-stone-300 px-5 py-3 text-sm font-semibold transition hover:bg-white"
-  >
-    Premium Catalogue
-  </a>
 
-  <a
-    href="/catalogues/cataloge2.pdf"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="rounded-full border border-stone-300 px-5 py-3 text-sm font-semibold transition hover:bg-white"
-  >
-    Parking Catalogue
-  </a>
+            {/* Catalogue Buttons */}
+            <div className="flex flex-wrap gap-2">
 
-  <a
-    href="/catalogues/cataloge3.pdf"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="rounded-full border border-stone-300 px-5 py-3 text-sm font-semibold transition hover:bg-white"
-  >
-    Large Format Catalogue
-  </a>
-</div>
-          </div>
+              <a
+                href="/catalogues/cataloge1.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-stone-300 bg-white px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-stone-700 transition hover:border-stone-900 hover:bg-stone-950 hover:text-white"
+              >
+                Premium Catalogue
+              </a>
 
-         {/* ================= PREMIUM PRODUCT CARDS ================= */}
-<div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+              <a
+                href="/catalogues/cataloge2.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-stone-300 bg-white px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-stone-700 transition hover:border-stone-900 hover:bg-stone-950 hover:text-white"
+              >
+                Parking
+              </a>
 
-  {products.map((product) => (
-    <article
-      key={product.id}
-      className="group overflow-hidden rounded-[2rem] border border-stone-200/80 bg-white shadow-[0_8px_40px_rgba(0,0,0,0.06)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]"
-    >
+              <a
+                href="/catalogues/cataloge3.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-stone-300 bg-white px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-stone-700 transition hover:border-stone-900 hover:bg-stone-950 hover:text-white"
+              >
+                Large Format
+              </a>
 
-      {/* ================= IMAGE ================= */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
+            </div>
 
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-        />
-
-        {/* Soft image overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-60" />
-
-        {/* Labels */}
-        <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-
-          {product.newArrival && (
-            <span className="rounded-full border border-white/40 bg-white/90 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-stone-900 shadow-lg backdrop-blur-md">
-              New Arrival
-            </span>
-          )}
-
-          {product.bestSeller && (
-            <span className="rounded-full bg-stone-950/90 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-white shadow-lg backdrop-blur-md">
-              Best Seller
-            </span>
-          )}
-
-        </div>
-
-        {/* Premium badge */}
-        <div className="absolute bottom-4 right-4">
-          <span className="rounded-full border border-white/30 bg-white/85 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-stone-800 shadow-lg backdrop-blur-md">
-            Premium Collection
-          </span>
-        </div>
-
-      </div>
-
-
-      {/* ================= PRODUCT DETAILS ================= */}
-      <div className="p-5 sm:p-6 lg:p-7">
-
-        {/* Category */}
-        <p className="text-[9px] font-bold uppercase tracking-[0.28em] text-stone-400">
-          {product.category}
-        </p>
-
-        {/* Product Name */}
-        <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-950 sm:text-2xl">
-          {product.name}
-        </h3>
-
-
-        {/* Specifications */}
-        <div className="mt-5 grid grid-cols-2 gap-2.5">
-
-          <div className="rounded-2xl border border-stone-100 bg-[#f8f6f2] px-3.5 py-3.5">
-            <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-stone-400">
-              Size
-            </p>
-
-            <p className="mt-1.5 text-xs font-semibold text-stone-800">
-              {product.size}
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-stone-100 bg-[#f8f6f2] px-3.5 py-3.5">
-            <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-stone-400">
-              Finish
-            </p>
-
-            <p className="mt-1.5 text-xs font-semibold text-stone-800">
-              {product.finish}
-            </p>
-          </div>
-
-        </div>
-
-
-        {/* Description */}
-        <p className="mt-5 line-clamp-2 text-sm leading-6 text-stone-500">
-          {product.description}
-        </p>
-
-
-        {/* Divider */}
-        <div className="my-5 h-px bg-stone-200" />
-
-
-        {/* Price + Button */}
-        <div className="flex items-center justify-between gap-4">
-
-          <div>
-            <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-stone-400">
-              Pricing
-            </p>
-
-            <p className="mt-1 text-sm font-semibold text-stone-900">
-              {product.price}
-            </p>
           </div>
 
 
-          <a
-            href={`/products/${product.id}`}
-            className="inline-flex min-h-11 items-center justify-center rounded-full bg-stone-950 px-5 text-xs font-semibold text-white shadow-sm transition-all duration-300 hover:bg-stone-700 hover:shadow-lg active:scale-95"
-          >
-            View Product
-            <span className="ml-2 text-sm transition-transform duration-300 group-hover:translate-x-0.5">
-              →
-            </span>
-          </a>
+          {/* ================= FEATURED PRODUCTS ================= */}
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+
+            {products
+              .filter((product) =>
+                [1, 2, 3, 4, 10, 11].includes(product.id)
+              )
+              .map((product) => (
+
+                <article
+                  key={product.id}
+                  className="group overflow-hidden rounded-[2rem] border border-stone-200/80 bg-white shadow-[0_8px_40px_rgba(0,0,0,0.06)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]"
+                >
+
+                  {/* Product Image */}
+                  <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
+
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition duration-700 ease-out group-hover:scale-105"
+                    />
+
+                    {/* Image overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+
+
+                    {/* Product Label */}
+                    <div className="absolute left-4 top-4">
+
+                      {product.bestSeller ? (
+                        <span className="rounded-full bg-stone-950/90 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-white shadow-lg backdrop-blur-md">
+                          Best Seller
+                        </span>
+                      ) : (
+                        <span className="rounded-full border border-white/40 bg-white/90 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-stone-900 shadow-lg backdrop-blur-md">
+                          New Arrival
+                        </span>
+                      )}
+
+                    </div>
+
+                  </div>
+
+
+                  {/* Product Details */}
+                  <div className="p-5 sm:p-6">
+
+                    <p className="text-[9px] font-bold uppercase tracking-[0.28em] text-stone-400">
+                      {product.category}
+                    </p>
+
+                    <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-950 sm:text-2xl">
+                      {product.name}
+                    </h3>
+
+
+                    {/* Specs */}
+                    <div className="mt-5 flex flex-wrap gap-2">
+
+                      <span className="rounded-full bg-[#f5f2ec] px-3 py-2 text-[10px] font-semibold text-stone-600">
+                        {product.size}
+                      </span>
+
+                      <span className="rounded-full bg-[#f5f2ec] px-3 py-2 text-[10px] font-semibold text-stone-600">
+                        {product.finish}
+                      </span>
+
+                    </div>
+
+
+                    {/* Bottom */}
+                    <div className="mt-5 flex items-center justify-between gap-4 border-t border-stone-200 pt-5">
+
+                      <div>
+
+                        <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-stone-400">
+                          Pricing
+                        </p>
+
+                        <p className="mt-1 text-sm font-semibold text-stone-900">
+                          {product.price}
+                        </p>
+
+                      </div>
+
+
+                      <a
+                        href={`/products/${product.id}`}
+                        className="inline-flex min-h-11 items-center justify-center rounded-full bg-stone-950 px-5 text-xs font-semibold text-white transition-all duration-300 hover:bg-stone-700 active:scale-95"
+                      >
+                        View Product
+                        <span className="ml-2">
+                          →
+                        </span>
+                      </a>
+
+                    </div>
+
+                  </div>
+
+                </article>
+
+              ))}
+
+          </div>
+
+
+          {/* ================= FULL COLLECTION CTA ================= */}
+          <div className="mt-12 flex justify-center">
+
+            <a
+              href="/products"
+              className="group inline-flex min-h-14 items-center justify-center rounded-full border border-stone-400 bg-white px-7 text-sm font-semibold text-stone-900 shadow-sm transition-all duration-300 hover:bg-stone-950 hover:text-white"
+            >
+              View Full Collection
+
+              <span className="ml-3 transition-transform duration-300 group-hover:translate-x-1">
+                ↗
+              </span>
+            </a>
+
+          </div>
 
         </div>
-
-      </div>
-
-    </article>
-  ))}
-
-</div>
-</div>
       </section>
 
       {/* ================= ABOUT ================= */}
