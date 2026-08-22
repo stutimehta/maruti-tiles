@@ -38,30 +38,64 @@ export default function CartPage() {
     localStorage.setItem("maruti-cart", JSON.stringify(updatedCart));
   }
 
+  const quantityOptions = [20, 50, 100, 500];
+
+  function getPackSize(quantity: number) {
+    if (quantity >= 500 && quantity % 500 === 0) {
+      return 500;
+    }
+
+    if (quantity >= 100 && quantity % 100 === 0) {
+      return 100;
+    }
+
+    if (quantity >= 50 && quantity % 50 === 0) {
+      return 50;
+    }
+
+    return 20;
+  }
+
+  function getRepeatCount(quantity: number) {
+    const packSize = getPackSize(quantity);
+    return Math.max(1, Math.round(quantity / packSize));
+  }
+
   function increase(id: number) {
-    const updated = cart.map((item) =>
-      item.id === id
-        ? {
-            ...item,
-            quantity: item.quantity + 1,
-          }
-        : item
-    );
+    const updated = cart.map((item) => {
+      if (item.id !== id) {
+        return item;
+      }
+
+      const packSize = getPackSize(item.quantity);
+      const repeatCount = getRepeatCount(item.quantity);
+
+      return {
+        ...item,
+        quantity: packSize * (repeatCount + 1),
+      };
+    });
 
     saveCart(updated);
   }
 
   function decrease(id: number) {
-    const updated = cart
-      .map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              quantity: item.quantity - 1,
-            }
-          : item
-      )
-      .filter((item) => item.quantity > 0);
+    const updated = cart.map((item) => {
+      if (item.id !== id) {
+        return item;
+      }
+
+      const packSize = getPackSize(item.quantity);
+      const repeatCount = getRepeatCount(item.quantity);
+
+      return {
+        ...item,
+        quantity: Math.max(
+          packSize,
+          packSize * (repeatCount - 1)
+        ),
+      };
+    });
 
     saveCart(updated);
   }
@@ -238,19 +272,22 @@ export default function CartPage() {
                             <button
                               type="button"
                               onClick={() => decrease(item.id)}
-                              className="flex h-10 w-10 items-center justify-center text-lg font-medium transition hover:bg-white"
+                              disabled={item.quantity <= 20}
+                              aria-label={`Decrease ${item.name} quantity`}
+                              className="touch-manipulation flex h-10 w-10 items-center justify-center rounded-full text-lg font-medium transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-30"
                             >
                               −
                             </button>
 
-                            <span className="min-w-12 text-center text-sm font-semibold">
+                            <span className="min-w-[100px] text-center text-sm font-semibold">
                               {item.quantity} sq.ft.
                             </span>
 
                             <button
                               type="button"
                               onClick={() => increase(item.id)}
-                              className="flex h-10 w-10 items-center justify-center text-lg font-medium transition hover:bg-white"
+                              aria-label={`Increase ${item.name} quantity`}
+                              className="touch-manipulation flex h-10 w-10 items-center justify-center rounded-full text-lg font-medium transition hover:bg-white"
                             >
                               +
                             </button>
