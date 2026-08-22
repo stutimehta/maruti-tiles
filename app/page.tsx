@@ -1,10 +1,10 @@
+
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { products } from "./data/products";
-import ProductActions from "./components/ProductActions";
 
 const whatsappNumber = "918141352183";
 
@@ -21,53 +21,19 @@ export default function Home() {
     products.find((product) => product.id === 19),
   ].filter(Boolean);
 
-  /*
-   * MOBILE MENU ONLY
-   *
-   * This does not change desktop behavior.
-   */
-  useEffect(() => {
-    if (!menuOpen) {
-      document.body.style.overflow = "";
-      return;
-    }
-
-    document.body.style.overflow = "hidden";
-
-    function handleEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setMenuOpen(false);
-      }
-    }
-
-    document.addEventListener("keydown", handleEscape);
-
-    return () => {
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, [menuOpen]);
-
-  function closeMobileMenu() {
-    setMenuOpen(false);
-  }
-
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f5f1e9] text-stone-950">
 
-      {/* =====================================================
+      {/* =========================================================
           HEADER
-      ====================================================== */}
-
+      ========================================================= */}
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0b0b0a]/95 text-white backdrop-blur-xl">
 
         <div className="mx-auto flex h-[72px] max-w-[1400px] items-center justify-between px-5 sm:px-7 lg:px-10">
 
-          {/* LOGO */}
-
+          {/* LOGO — SAME EXISTING LOGO */}
           <Link
             href="/"
-            onClick={closeMobileMenu}
             className="flex shrink-0 items-center"
           >
             <Image
@@ -80,6 +46,7 @@ export default function Home() {
             />
 
             <div className="ml-3">
+
               <p className="font-serif text-[19px] font-semibold tracking-[0.08em] sm:text-[22px]">
                 MARUTI TILES
               </p>
@@ -87,15 +54,12 @@ export default function Home() {
               <p className="mt-0.5 text-[7px] font-semibold uppercase tracking-[0.42em] text-[#c7a665]">
                 Premium Surfaces
               </p>
+
             </div>
           </Link>
 
 
-          {/* =================================================
-              DESKTOP NAV
-              NO CHANGE
-          ================================================== */}
-
+          {/* DESKTOP NAV */}
           <nav className="hidden items-center gap-8 lg:flex">
 
             <a
@@ -136,26 +100,14 @@ export default function Home() {
           </nav>
 
 
-          {/* =================================================
-              DESKTOP ACTIONS
-              NO CHANGE
-          ================================================== */}
-
+          {/* DESKTOP ACTIONS */}
           <div className="hidden items-center gap-3 lg:flex">
 
             <Link
-              href="/wishlist"
+              href="/enquiry"
               className="rounded-full px-4 py-2 text-sm text-stone-300 transition hover:text-white"
             >
-              ♡ Wishlist
-            </Link>
-
-            <Link
-              href="/enquiry"
-              aria-label="Cart"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-stone-700 text-lg text-stone-200 transition hover:border-[#d2b06c] hover:text-[#d2b06c]"
-            >
-              🛒
+              ♡ Enquiry
             </Link>
 
             <a
@@ -170,67 +122,30 @@ export default function Home() {
           </div>
 
 
-          {/* =================================================
-              MOBILE HEADER
-          ================================================== */}
-
+          {/* MOBILE */}
           <div className="flex items-center gap-2 lg:hidden">
 
-            {/* MOBILE WISHLIST */}
-
             <Link
-              href="/wishlist"
-              aria-label="Wishlist"
-              onClick={closeMobileMenu}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-stone-700 text-lg text-white transition active:scale-95 hover:border-[#d2b06c] hover:text-[#d2b06c]"
+              href="/enquiry"
+              aria-label="Enquiry"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-stone-700 text-lg"
             >
               ♡
             </Link>
 
-
-            {/* MOBILE CART */}
-
-            <Link
-              href="/enquiry"
-              aria-label="Cart"
-              onClick={closeMobileMenu}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-stone-700 text-base text-white transition active:scale-95 hover:border-[#d2b06c] hover:text-[#d2b06c]"
-            >
-              🛒
-            </Link>
-
-
-            {/* =================================================
-                MOBILE 3 DOT / MENU BUTTON
-
-                IMPORTANT:
-                - relative
-                - z-[100]
-                - type button
-                - pointer events enabled
-            ================================================== */}
-
             <button
               type="button"
+              onClick={() => setMenuOpen((value) => !value)}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-stone-700"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-navigation"
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                setMenuOpen((value) => !value);
-              }}
-              className="relative z-[100] flex h-10 w-10 shrink-0 touch-manipulation items-center justify-center rounded-full border border-stone-700 text-white transition active:scale-95 hover:border-[#d2b06c]"
             >
               {menuOpen ? (
-                <span className="text-2xl leading-none">
-                  ×
-                </span>
+                <span className="text-xl">×</span>
               ) : (
                 <span className="flex flex-col gap-1.5">
-                  <span className="h-[2px] w-5 rounded-full bg-white" />
-                  <span className="h-[2px] w-5 rounded-full bg-white" />
-                  <span className="h-[2px] w-5 rounded-full bg-white" />
+                  <span className="h-[2px] w-5 bg-white" />
+                  <span className="h-[2px] w-5 bg-white" />
+                  <span className="h-[2px] w-5 bg-white" />
                 </span>
               )}
             </button>
@@ -240,138 +155,81 @@ export default function Home() {
         </div>
 
 
-        {/* =====================================================
-            MOBILE MENU
-
-            FIX:
-            - fixed position
-            - high z-index
-            - proper top position
-            - touch friendly
-            - full width
-            - desktop completely unaffected
-        ====================================================== */}
-
+        {/* MOBILE MENU */}
         {menuOpen && (
-          <>
-            {/* MOBILE BACKDROP */}
+          <div className="border-t border-stone-800 bg-[#0b0b0a] px-5 py-6 lg:hidden">
 
-            <button
-              type="button"
-              aria-label="Close menu"
-              onClick={closeMobileMenu}
-              className="fixed inset-0 top-[72px] z-[70] bg-black/50 lg:hidden"
-            />
+            <nav className="flex flex-col gap-5">
 
+              <a
+                href="#home"
+                onClick={() => setMenuOpen(false)}
+                className="text-base"
+              >
+                Home
+              </a>
 
-            {/* MOBILE MENU PANEL */}
+              <a
+                href="#products"
+                onClick={() => setMenuOpen(false)}
+                className="text-base"
+              >
+                Collection
+              </a>
 
-            <div
-              id="mobile-navigation"
-              className="fixed left-0 right-0 top-[72px] z-[90] max-h-[calc(100vh-72px)] overflow-y-auto border-t border-stone-800 bg-[#0b0b0a] px-5 py-6 shadow-2xl lg:hidden"
-            >
+              <a
+                href="#catalogues"
+                onClick={() => setMenuOpen(false)}
+                className="text-base"
+              >
+                Catalogues
+              </a>
 
-              <nav className="flex flex-col gap-3">
+              <a
+                href="#about"
+                onClick={() => setMenuOpen(false)}
+                className="text-base"
+              >
+                About
+              </a>
 
-                <a
-                  href="#home"
-                  onClick={closeMobileMenu}
-                  className="rounded-xl px-4 py-4 text-base font-medium text-white transition active:bg-stone-800"
-                >
-                  Home
-                </a>
+              <a
+                href="#contact"
+                onClick={() => setMenuOpen(false)}
+                className="text-base"
+              >
+                Contact
+              </a>
 
-                <a
-                  href="#products"
-                  onClick={closeMobileMenu}
-                  className="rounded-xl px-4 py-4 text-base font-medium text-white transition active:bg-stone-800"
-                >
-                  Collection
-                </a>
+              <Link
+                href="/enquiry"
+                onClick={() => setMenuOpen(false)}
+                className="rounded-full border border-stone-700 px-6 py-3 text-center font-semibold"
+              >
+                View Enquiry
+              </Link>
 
-                <a
-                  href="#catalogues"
-                  onClick={closeMobileMenu}
-                  className="rounded-xl px-4 py-4 text-base font-medium text-white transition active:bg-stone-800"
-                >
-                  Catalogues
-                </a>
+              <a
+                href={`https://wa.me/${whatsappNumber}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+                className="rounded-full bg-[#d2b06c] px-6 py-3 text-center font-semibold text-black"
+              >
+                WhatsApp Enquiry
+              </a>
 
-                <a
-                  href="#about"
-                  onClick={closeMobileMenu}
-                  className="rounded-xl px-4 py-4 text-base font-medium text-white transition active:bg-stone-800"
-                >
-                  About
-                </a>
+            </nav>
 
-                <a
-                  href="#contact"
-                  onClick={closeMobileMenu}
-                  className="rounded-xl px-4 py-4 text-base font-medium text-white transition active:bg-stone-800"
-                >
-                  Contact
-                </a>
-
-
-                {/* DIVIDER */}
-
-                <div className="my-2 h-px bg-stone-800" />
-
-
-                {/* WISHLIST */}
-
-                <Link
-                  href="/wishlist"
-                  onClick={closeMobileMenu}
-                  className="flex min-h-14 items-center justify-center rounded-full border border-stone-700 px-6 py-3 text-center font-semibold text-white transition active:scale-[0.98] active:bg-stone-800"
-                >
-                  ♡
-                  <span className="ml-2">
-                    View Wishlist
-                  </span>
-                </Link>
-
-
-                {/* CART */}
-
-                <Link
-                  href="/enquiry"
-                  onClick={closeMobileMenu}
-                  className="flex min-h-14 items-center justify-center rounded-full border border-stone-700 px-6 py-3 text-center font-semibold text-white transition active:scale-[0.98] active:bg-stone-800"
-                >
-                  🛒
-                  <span className="ml-2">
-                    View Cart
-                  </span>
-                </Link>
-
-
-                {/* WHATSAPP */}
-
-                <a
-                  href={`https://wa.me/${whatsappNumber}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={closeMobileMenu}
-                  className="flex min-h-14 items-center justify-center rounded-full bg-[#d2b06c] px-6 py-3 text-center font-semibold text-black transition active:scale-[0.98]"
-                >
-                  WhatsApp Enquiry
-                </a>
-
-              </nav>
-
-            </div>
-          </>
+          </div>
         )}
 
       </header>
 
 
-      {/* =====================================================
+      {/* =========================================================
           HERO
-      ====================================================== */}
-
+      ========================================================= */}
       <section
         id="home"
         className="relative overflow-hidden bg-[#eee8dc]"
@@ -381,6 +239,7 @@ export default function Home() {
 
           <div className="grid min-h-[680px] items-stretch lg:grid-cols-[0.9fr_1.1fr]">
 
+            {/* HERO TEXT */}
             <div className="flex flex-col justify-center px-6 py-16 sm:px-10 lg:px-14 xl:px-20">
 
               <div className="flex items-center gap-3">
@@ -393,9 +252,11 @@ export default function Home() {
 
               </div>
 
+
               <p className="mt-10 text-[10px] font-bold uppercase tracking-[0.35em] text-[#ad8b4d]">
                 Premium Surfaces
               </p>
+
 
               <h1 className="mt-5 max-w-[650px] font-serif text-[4.2rem] font-medium leading-[0.86] tracking-[-0.055em] text-stone-950 sm:text-6xl md:text-7xl xl:text-[6.3rem]">
 
@@ -411,11 +272,14 @@ export default function Home() {
 
               </h1>
 
+
               <p className="mt-8 max-w-lg text-base leading-7 text-stone-600 sm:text-lg">
                 Premium tiles curated for refined residential,
                 commercial and architectural spaces.
               </p>
 
+
+              {/* BUTTONS */}
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
 
                 <a
@@ -423,7 +287,9 @@ export default function Home() {
                   className="inline-flex min-h-14 items-center justify-center rounded-lg bg-stone-950 px-7 text-sm font-semibold text-white shadow-xl transition hover:-translate-y-1 hover:bg-stone-800"
                 >
                   Explore Collection
-                  <span className="ml-4 text-lg">↗</span>
+                  <span className="ml-4 text-lg">
+                    ↗
+                  </span>
                 </a>
 
                 <a
@@ -435,36 +301,56 @@ export default function Home() {
 
               </div>
 
+
+              {/* TRUST */}
               <div className="mt-12 grid max-w-lg grid-cols-3 border-t border-stone-300 pt-6">
 
                 <div>
-                  <p className="text-lg font-semibold">◆</p>
+                  <p className="text-lg font-semibold">
+                    ◆
+                  </p>
+
                   <p className="mt-3 text-[12px] font-semibold tracking-wide">
                     Premium
                   </p>
+
                   <p className="mt-1 text-[10px] text-stone-500">
                     Quality
                   </p>
                 </div>
 
+
                 <div className="border-l border-stone-300 pl-4 sm:pl-7">
-                  <p className="text-lg font-semibold">▥</p>
+
+                  <p className="text-lg font-semibold">
+                    ▥
+                  </p>
+
                   <p className="mt-3 text-[12px] font-semibold tracking-wide">
                     Morbi
                   </p>
+
                   <p className="mt-1 text-[10px] text-stone-500">
                     Manufacturing
                   </p>
+
                 </div>
 
+
                 <div className="border-l border-stone-300 pl-4 sm:pl-7">
-                  <p className="text-lg font-semibold">◎</p>
+
+                  <p className="text-lg font-semibold">
+                    ◎
+                  </p>
+
                   <p className="mt-3 text-[12px] font-semibold tracking-wide">
-                    India &
+                    India & International 
                   </p>
+
                   <p className="mt-1 text-[10px] text-stone-500">
-                    International
+                    Export
                   </p>
+
                 </div>
 
               </div>
@@ -474,73 +360,35 @@ export default function Home() {
 
             {/* HERO VISUAL */}
 
-            <div className="relative min-h-[540px] overflow-hidden bg-[#171512] lg:min-h-full">
+            <div className="relative min-h-[540px] overflow-hidden bg-[#15130f] lg:min-h-full">
 
-              <div className="absolute inset-0 opacity-20">
-                <div className="absolute left-[18%] top-[-10%] h-[130%] w-px rotate-[18deg] bg-[#d3b474]" />
+              {/* Premium background */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(190,153,82,0.18),transparent_42%),linear-gradient(135deg,#0d0c0a_0%,#211b12_50%,#0d0c0a_100%)]" />
+
+              <div className="absolute inset-0 opacity-30">
+                <div className="absolute left-[15%] top-[-10%] h-[130%] w-px rotate-[18deg] bg-[#d3b474]" />
                 <div className="absolute left-[45%] top-[-10%] h-[130%] w-px rotate-[18deg] bg-[#8d774e]" />
-                <div className="absolute right-[20%] top-[-10%] h-[130%] w-px rotate-[18deg] bg-[#d3b474]" />
+                <div className="absolute right-[18%] top-[-10%] h-[130%] w-px rotate-[18deg] bg-[#d3b474]" />
               </div>
 
-              <div className="absolute right-[-10%] top-[15%] h-[400px] w-[400px] rounded-full bg-[#a9874d]/15 blur-[100px]" />
+              {/* Premium glow */}
+              <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#b08c4c]/15 blur-[110px]" />
 
-              <div className="absolute bottom-[10%] left-[8%] right-[8%] h-16 rounded-[50%] border border-[#b99b63]/50 bg-gradient-to-b from-[#413a2e] to-[#141311] shadow-[0_35px_70px_rgba(0,0,0,0.65)] sm:h-20" />
-
-              {heroProducts[0] && (
-                <div className="absolute bottom-[16%] left-[21%] h-[330px] w-[190px] rotate-[-10deg] overflow-hidden rounded-[18px] border border-white/20 shadow-[25px_35px_60px_rgba(0,0,0,0.6)] sm:h-[430px] sm:w-[245px]">
+              {/* Logo */}
+              <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
+                <div className="rounded-[2rem] border border-[#d2b06c]/30 bg-black/20 p-8 shadow-[0_35px_90px_rgba(0,0,0,0.7)] backdrop-blur-sm sm:p-10">
                   <Image
-                    src={heroProducts[0].image}
-                    alt={heroProducts[0].name}
-                    fill
+                    src="/images/brand/logo.png"
+                    alt="Maruti Tiles"
+                    width={300}
+                    height={300}
                     priority
-                    sizes="300px"
-                    className="object-cover"
+                    className="h-[190px] w-[190px] object-contain sm:h-[250px] sm:w-[250px]"
                   />
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                 </div>
-              )}
+              </div>
 
-              {heroProducts[1] && (
-                <div className="absolute bottom-[16%] left-[39%] z-10 h-[350px] w-[205px] rotate-[2deg] overflow-hidden rounded-[18px] border border-[#d2b06c]/40 shadow-[30px_35px_70px_rgba(0,0,0,0.65)] sm:h-[450px] sm:w-[255px]">
-
-                  <Image
-                    src={heroProducts[1].image}
-                    alt={heroProducts[1].name}
-                    fill
-                    priority
-                    sizes="300px"
-                    className="object-cover"
-                  />
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
-
-                  <div className="absolute bottom-7 left-7">
-                    <p className="text-[8px] font-bold uppercase tracking-[0.35em] text-white/70">
-                      MARUTI TILES
-                    </p>
-                  </div>
-
-                </div>
-              )}
-
-              {heroProducts[2] && (
-                <div className="absolute bottom-[16%] left-[57%] h-[330px] w-[190px] rotate-[12deg] overflow-hidden rounded-[18px] border border-white/20 shadow-[25px_35px_60px_rgba(0,0,0,0.65)] sm:h-[430px] sm:w-[245px]">
-
-                  <Image
-                    src={heroProducts[2].image}
-                    alt={heroProducts[2].name}
-                    fill
-                    priority
-                    sizes="300px"
-                    className="object-cover"
-                  />
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-
-                </div>
-              )}
-
+              {/* Premium frame */}
               <div className="absolute left-8 top-8 h-px w-24 bg-[#d2b06c]" />
               <div className="absolute right-8 top-8 h-20 w-px bg-[#d2b06c]" />
               <div className="absolute bottom-8 left-8 h-20 w-px bg-[#d2b06c]" />
@@ -548,7 +396,7 @@ export default function Home() {
 
               <div className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 text-center">
                 <p className="whitespace-nowrap text-[8px] font-semibold uppercase tracking-[0.4em] text-[#d2b06c]">
-                  Design · Quality · Reliability
+                  Premium Surfaces · Maruti Tiles
                 </p>
               </div>
 
@@ -561,10 +409,9 @@ export default function Home() {
       </section>
 
 
-      {/* =====================================================
+      {/* =========================================================
           CATEGORY STRIP
-      ====================================================== */}
-
+      ========================================================= */}
       <section className="bg-[#f8f5ef] px-5 py-12 sm:px-7">
 
         <div className="mx-auto max-w-[1400px]">
@@ -581,6 +428,7 @@ export default function Home() {
 
           </div>
 
+
           <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
 
             <CategoryCard
@@ -594,28 +442,28 @@ export default function Home() {
               title="Parking Tiles"
               subtitle="500×500 mm"
               image="/images/products/crystal-7003.jpg"
-              href="/products?category=parking"
+              href="/products"
             />
 
             <CategoryCard
               title="Carving"
               subtitle="Premium Finish"
               image="/images/products/metrogrey.jpg"
-              href="/products?category=carving"
+              href="/products"
             />
 
             <CategoryCard
               title="Glossy"
               subtitle="Luxury Surfaces"
               image="/images/products/goldeninfinity.jpg"
-              href="/products?category=glossy"
+              href="/products"
             />
 
             <CategoryCard
               title="Premium Projects"
               subtitle="Residential & Commercial"
               image="/images/products/frenzy.jpg"
-              href="/products?category=projects"
+              href="/products"
             />
 
           </div>
@@ -625,10 +473,9 @@ export default function Home() {
       </section>
 
 
-      {/* =====================================================
-          COLLECTION
-      ====================================================== */}
-
+      {/* =========================================================
+          COLLECTION — DARK
+      ========================================================= */}
       <section
         id="products"
         className="bg-[#0d0d0c] px-5 py-20 text-white sm:px-7 md:py-24"
@@ -636,7 +483,7 @@ export default function Home() {
 
         <div className="mx-auto max-w-[1400px]">
 
-          <div className="grid gap-10 lg:grid-cols-[260px_1fr] lg:items-start">
+          <div className="grid gap-10 lg:grid-cols-[260px_1fr] lg:items-end">
 
             <div>
 
@@ -646,7 +493,6 @@ export default function Home() {
 
               <h2 className="mt-5 font-serif text-4xl leading-[0.95] sm:text-5xl">
                 Tiles for every
-
                 <span className="block text-stone-500">
                   beautiful space.
                 </span>
@@ -662,102 +508,69 @@ export default function Home() {
                 className="mt-7 inline-flex items-center text-xs font-semibold text-[#d4b574]"
               >
                 View All Products
-                <span className="ml-3 text-lg">→</span>
+                <span className="ml-3 text-lg">
+                  →
+                </span>
               </Link>
 
             </div>
 
 
-            {/* PRODUCT GRID */}
-
-            <div className="grid grid-cols-2 gap-4 xl:grid-cols-5">
+            {/* PRODUCT CARDS */}
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
 
               {featuredProducts.map((product) => (
 
-                <article
+                <Link
+                  href={`/products/${product.id}`}
                   key={product.id}
-                  className="group relative overflow-hidden rounded-xl bg-white text-stone-950 transition duration-500 hover:-translate-y-2"
+                  className="group overflow-hidden rounded-xl bg-white text-stone-950 transition duration-500 hover:-translate-y-2"
                 >
 
-                  {/* IMAGE */}
+                  <div className="relative aspect-[0.82] overflow-hidden">
 
-                  <Link
-                    href={`/products/${product.id}`}
-                    className="block"
-                  >
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      sizes="300px"
+                      className="object-cover transition duration-700 group-hover:scale-105"
+                    />
 
-                    <div className="relative aspect-[4/5] overflow-hidden bg-stone-100">
 
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        sizes="(max-width: 640px) 50vw, (max-width: 1280px) 25vw, 220px"
-                        className="object-cover transition duration-700 group-hover:scale-105"
-                      />
+                    <div className="absolute left-3 top-3">
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
-
-                      <div className="absolute left-3 top-3">
-                        <span className="rounded-sm bg-[#c6a563] px-2 py-1 text-[7px] font-bold uppercase tracking-[0.12em] text-black">
-                          {product.bestSeller ? "Best Seller" : "New"}
-                        </span>
-                      </div>
+                      <span className="rounded-sm bg-[#c6a563] px-2 py-1 text-[7px] font-bold uppercase tracking-[0.12em] text-black">
+                        {product.bestSeller ? "Best Seller" : "New"}
+                      </span>
 
                     </div>
 
-                  </Link>
 
-
-                  {/* ACTIONS */}
-
-                  <div className="absolute right-3 top-3 z-20">
-
-                    <ProductActions
-                      id={product.id}
-                      name={product.name}
-                      category={product.category}
-                      size={product.size}
-                      finish={product.finish}
-                      image={product.image}
-                      pricePerSqFt={product.pricePerSqFt}
-                    />
+                    <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-sm">
+                      ♡
+                    </div>
 
                   </div>
 
 
-                  {/* DETAILS */}
+                  <div className="p-4">
 
-                  <Link
-                    href={`/products/${product.id}`}
-                    className="block"
-                  >
+                    <h3 className="text-sm font-semibold">
+                      {product.name}
+                    </h3>
 
-                    <div className="p-4">
+                    <p className="mt-1 text-[9px] text-stone-500">
+                      {product.size} | {product.finish}
+                    </p>
 
-                      <h3 className="text-sm font-semibold leading-5">
-                        {product.name}
-                      </h3>
+                    <p className="mt-4 text-[10px] font-semibold text-stone-800">
+                      Price on Request
+                    </p>
 
-                      <p className="mt-1 line-clamp-1 text-[9px] text-stone-500">
-                        {product.size} | {product.finish}
-                      </p>
+                  </div>
 
-                      <p className="mt-2 text-sm font-semibold text-stone-900">
-
-                        ₹{product.pricePerSqFt.toLocaleString("en-IN")}
-
-                        <span className="ml-1 text-[10px] font-normal text-stone-500">
-                          / sq. ft.
-                        </span>
-
-                      </p>
-
-                    </div>
-
-                  </Link>
-
-                </article>
+                </Link>
 
               ))}
 
@@ -770,10 +583,9 @@ export default function Home() {
       </section>
 
 
-      {/* =====================================================
+      {/* =========================================================
           CATALOGUES
-      ====================================================== */}
-
+      ========================================================= */}
       <section
         id="catalogues"
         className="bg-[#f5f1e9] px-5 py-20 sm:px-7 md:py-24"
@@ -797,6 +609,7 @@ export default function Home() {
               </h2>
 
             </div>
+
 
             <div className="grid gap-4 md:grid-cols-3">
 
@@ -824,10 +637,9 @@ export default function Home() {
       </section>
 
 
-      {/* =====================================================
+      {/* =========================================================
           ABOUT
-      ====================================================== */}
-
+      ========================================================= */}
       <section
         id="about"
         className="bg-[#12110f] px-5 py-20 text-white sm:px-7 md:py-24"
@@ -835,6 +647,7 @@ export default function Home() {
 
         <div className="mx-auto grid max-w-[1200px] gap-10 lg:grid-cols-2 lg:items-center">
 
+          {/* IMAGE */}
           <div className="relative overflow-hidden rounded-2xl border border-stone-700">
 
             <div className="aspect-[4/3]">
@@ -866,6 +679,7 @@ export default function Home() {
           </div>
 
 
+          {/* TEXT */}
           <div>
 
             <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#c8a867]">
@@ -874,7 +688,6 @@ export default function Home() {
 
             <h2 className="mt-5 font-serif text-4xl leading-[0.95] sm:text-5xl">
               Built around surfaces.
-
               <span className="block text-stone-500">
                 Designed around spaces.
               </span>
@@ -891,27 +704,43 @@ export default function Home() {
               requirements with a focus on quality, design and reliability.
             </p>
 
+
             <div className="mt-9 grid grid-cols-3 border-t border-stone-800 pt-6">
 
               <div>
-                <p className="text-lg font-semibold">2026</p>
+                <p className="text-lg font-semibold">
+                  2026
+                </p>
+
                 <p className="mt-1 text-[8px] uppercase tracking-[0.2em] text-stone-500">
                   Established
                 </p>
               </div>
 
+
               <div className="border-l border-stone-800 pl-5">
-                <p className="text-lg font-semibold">Morbi</p>
+
+                <p className="text-lg font-semibold">
+                  Morbi
+                </p>
+
                 <p className="mt-1 text-[8px] uppercase tracking-[0.2em] text-stone-500">
                   Manufacturing
                 </p>
+
               </div>
 
+
               <div className="border-l border-stone-800 pl-5">
-                <p className="text-lg font-semibold">Global</p>
+
+                <p className="text-lg font-semibold">
+                  Global
+                </p>
+
                 <p className="mt-1 text-[8px] uppercase tracking-[0.2em] text-stone-500">
                   Reach
                 </p>
+
               </div>
 
             </div>
@@ -923,10 +752,9 @@ export default function Home() {
       </section>
 
 
-      {/* =====================================================
-          CONTACT
-      ====================================================== */}
-
+      {/* =========================================================
+          CONTACT CTA
+      ========================================================= */}
       <section
         id="contact"
         className="bg-[#f5f1e9] px-5 py-10 sm:px-7 md:py-14"
@@ -948,19 +776,18 @@ export default function Home() {
 
             </div>
 
+
             <a
               href={`https://wa.me/${whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex min-h-16 items-center justify-center rounded-xl border border-stone-200 px-5 transition hover:border-[#c8a867] hover:bg-[#faf8f3]"
             >
-
               <span className="mr-4 text-2xl text-green-600">
                 ◉
               </span>
 
               <div>
-
                 <p className="text-sm font-semibold">
                   WhatsApp Enquiry
                 </p>
@@ -968,10 +795,10 @@ export default function Home() {
                 <p className="mt-1 text-xs text-stone-500">
                   Get pricing & availability
                 </p>
-
               </div>
 
             </a>
+
 
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
 
@@ -979,13 +806,11 @@ export default function Home() {
                 href="tel:+918141352183"
                 className="flex min-h-14 items-center rounded-xl border border-stone-200 px-5 transition hover:border-[#c8a867]"
               >
-
                 <span className="mr-4 text-xl text-[#ad8a4d]">
                   ☎
                 </span>
 
                 <div>
-
                   <p className="text-xs font-semibold">
                     Call Now
                   </p>
@@ -993,22 +818,20 @@ export default function Home() {
                   <p className="text-xs text-stone-500">
                     +91 81413 52183
                   </p>
-
                 </div>
 
               </a>
+
 
               <a
                 href="mailto:amitgohil006@gmail.com"
                 className="flex min-h-14 items-center rounded-xl border border-stone-200 px-5 transition hover:border-[#c8a867]"
               >
-
                 <span className="mr-4 text-xl text-[#ad8a4d]">
                   ✉
                 </span>
 
                 <div>
-
                   <p className="text-xs font-semibold">
                     Email Us
                   </p>
@@ -1016,7 +839,6 @@ export default function Home() {
                   <p className="break-all text-xs text-stone-500">
                     amitgohil006@gmail.com
                   </p>
-
                 </div>
 
               </a>
@@ -1030,16 +852,16 @@ export default function Home() {
       </section>
 
 
-      {/* =====================================================
+      {/* =========================================================
           FOOTER
-      ====================================================== */}
-
+      ========================================================= */}
       <footer className="bg-[#090908] px-5 py-12 text-white sm:px-7">
 
         <div className="mx-auto max-w-[1400px]">
 
           <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
 
+            {/* BRAND */}
             <div>
 
               <Link
@@ -1069,6 +891,7 @@ export default function Home() {
 
               </Link>
 
+
               <p className="mt-5 max-w-xs text-sm leading-6 text-stone-500">
                 Surat, Gujarat, India & International.
                 Premium surfaces for residential,
@@ -1078,6 +901,7 @@ export default function Home() {
             </div>
 
 
+            {/* QUICK LINKS */}
             <div>
 
               <p className="text-[8px] font-bold uppercase tracking-[0.3em] text-stone-500">
@@ -1106,19 +930,12 @@ export default function Home() {
                   Contact
                 </a>
 
-                <Link href="/wishlist" className="hover:text-white">
-                  Wishlist
-                </Link>
-
-                <Link href="/enquiry" className="hover:text-white">
-                  Cart
-                </Link>
-
               </div>
 
             </div>
 
 
+            {/* CATEGORIES */}
             <div>
 
               <p className="text-[8px] font-bold uppercase tracking-[0.3em] text-stone-500">
@@ -1127,23 +944,23 @@ export default function Home() {
 
               <div className="mt-5 flex flex-col gap-3 text-sm text-stone-400">
 
-                <Link href="/products?category=large-format">
+                <Link href="/products">
                   Large Format Tiles
                 </Link>
 
-                <Link href="/products?category=parking">
+                <Link href="/products">
                   Parking Tiles
                 </Link>
 
-                <Link href="/products?category=carving">
+                <Link href="/products">
                   Carving Tiles
                 </Link>
 
-                <Link href="/products?category=glossy">
+                <Link href="/products">
                   Glossy Tiles
                 </Link>
 
-                <Link href="/products?category=projects">
+                <Link href="/products">
                   Premium Projects
                 </Link>
 
@@ -1152,6 +969,7 @@ export default function Home() {
             </div>
 
 
+            {/* CONTACT */}
             <div>
 
               <p className="text-[8px] font-bold uppercase tracking-[0.3em] text-stone-500">
@@ -1191,6 +1009,7 @@ export default function Home() {
           </div>
 
 
+          {/* COPYRIGHT */}
           <div className="mt-10 flex flex-col justify-between gap-4 border-t border-stone-800 pt-6 text-[11px] text-stone-600 sm:flex-row">
 
             <p>
@@ -1198,8 +1017,15 @@ export default function Home() {
             </p>
 
             <div className="flex gap-5">
-              <span>Privacy Policy</span>
-              <span>Terms & Conditions</span>
+
+              <span>
+                Privacy Policy
+              </span>
+
+              <span>
+                Terms & Conditions
+              </span>
+
             </div>
 
           </div>
@@ -1213,9 +1039,9 @@ export default function Home() {
 }
 
 
-/* ============================================================
+/* ===============================================================
    CATEGORY CARD
-============================================================ */
+   =============================================================== */
 
 function CategoryCard({
   title,
@@ -1265,9 +1091,9 @@ function CategoryCard({
 }
 
 
-/* ============================================================
+/* ===============================================================
    CATALOGUE CARD
-============================================================ */
+   =============================================================== */
 
 function CatalogueCard({
   title,
@@ -1303,6 +1129,7 @@ function CatalogueCard({
         </div>
 
       </div>
+
 
       <span className="text-xl text-[#b08c4c] transition group-hover:translate-y-1">
         ↓

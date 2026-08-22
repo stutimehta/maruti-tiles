@@ -25,10 +25,14 @@ export default function AddToCartButton({
   image,
   pricePerSqFt,
 }: Props) {
-  const [quantity, setQuantity] = useState(1);
+  const [packSize, setPackSize] = useState(100);
+  const [repeatCount, setRepeatCount] = useState(1);
   const [added, setAdded] = useState(false);
 
+  const quantity = packSize * repeatCount;
   const subtotal = pricePerSqFt * quantity;
+
+  const quantityOptions = [20, 50, 100, 500];
 
   useEffect(() => {
     try {
@@ -41,15 +45,37 @@ export default function AddToCartButton({
       );
 
       if (current) {
-        setQuantity(Math.max(1, current.quantity));
+        const closestOption = quantityOptions.reduce(
+          (closest, option) =>
+            Math.abs(option - current.quantity) <
+            Math.abs(closest - current.quantity)
+              ? option
+              : closest
+        );
+
+        setPackSize(closestOption);
+
+        setRepeatCount(
+          Math.max(
+            1,
+            Math.round(current.quantity / closestOption)
+          )
+        );
       }
     } catch {
-      setQuantity(1);
+      setPackSize(100);
+      setRepeatCount(1);
     }
   }, [id]);
 
+  function selectPackSize(size: number) {
+    setPackSize(size);
+    setRepeatCount(1);
+    setAdded(false);
+  }
+
   function decreaseQuantity() {
-    setQuantity((current) =>
+    setRepeatCount((current) =>
       Math.max(1, current - 1)
     );
 
@@ -57,7 +83,10 @@ export default function AddToCartButton({
   }
 
   function increaseQuantity() {
-    setQuantity((current) => current + 1);
+    setRepeatCount((current) =>
+      current + 1
+    );
+
     setAdded(false);
   }
 
@@ -138,49 +167,84 @@ export default function AddToCartButton({
 
       <div className="mt-6 rounded-3xl border border-stone-200 bg-white p-4 shadow-sm sm:p-5">
 
-        <div className="flex items-center justify-between gap-4">
+        <div>
 
-          <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-400 sm:text-xs">
+            Quantity
+          </p>
 
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-400 sm:text-xs">
-              Quantity
-            </p>
+          <p className="mt-1 text-xs text-stone-500">
+            Select square feet
+          </p>
 
-            <p className="mt-1 text-xs text-stone-500">
-              Square feet required
-            </p>
-
-          </div>
+        </div>
 
 
-          {/* − QUANTITY + */}
+        {/* PRESET OPTIONS */}
 
-          <div className="flex shrink-0 items-center rounded-full border border-stone-200 bg-stone-50 p-1">
+        <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
 
-            <button
-              type="button"
-              onClick={decreaseQuantity}
-              disabled={quantity <= 1}
-              aria-label="Decrease quantity"
-              className="touch-manipulation flex h-10 w-10 items-center justify-center rounded-full text-xl font-medium transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-30"
-            >
-              −
-            </button>
-
-            <span className="min-w-[78px] text-center text-sm font-semibold">
-              {quantity} sq.ft.
-            </span>
+          {quantityOptions.map((option) => (
 
             <button
+              key={option}
               type="button"
-              onClick={increaseQuantity}
-              aria-label="Increase quantity"
-              className="touch-manipulation flex h-10 w-10 items-center justify-center rounded-full text-xl font-medium transition hover:bg-white"
+              onClick={() => selectPackSize(option)}
+              className={`min-h-11 rounded-full border px-3 text-xs font-semibold transition active:scale-95 ${
+                packSize === option
+                  ? "border-stone-950 bg-stone-950 text-white"
+                  : "border-stone-200 bg-stone-50 text-stone-900 hover:border-stone-950 hover:bg-white"
+              }`}
             >
-              +
+              {option} sq.ft.
             </button>
 
-          </div>
+          ))}
+
+        </div>
+
+
+        {/* REPEAT QUANTITY */}
+
+        <div className="mt-4 flex items-center justify-between rounded-full border border-stone-200 bg-stone-50 p-1">
+
+          <button
+            type="button"
+            onClick={decreaseQuantity}
+            disabled={repeatCount <= 1}
+            aria-label="Decrease quantity"
+            className="touch-manipulation flex h-10 w-10 items-center justify-center rounded-full text-xl font-medium transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-30"
+          >
+            −
+          </button>
+
+          <span className="text-sm font-semibold">
+            {repeatCount} × {packSize} sq.ft.
+          </span>
+
+          <button
+            type="button"
+            onClick={increaseQuantity}
+            aria-label="Increase quantity"
+            className="touch-manipulation flex h-10 w-10 items-center justify-center rounded-full text-xl font-medium transition hover:bg-white"
+          >
+            +
+          </button>
+
+        </div>
+
+
+        {/* TOTAL QUANTITY */}
+
+        <div className="mt-3 text-center">
+
+          <p className="text-xs text-stone-500">
+            Total Quantity
+          </p>
+
+          <p className="mt-1 text-lg font-semibold">
+            {quantity} sq.ft.
+          </p>
 
         </div>
 
@@ -225,6 +289,7 @@ export default function AddToCartButton({
             className="flex min-h-14 items-center justify-center rounded-full bg-stone-900 px-7 text-center font-semibold text-white transition hover:bg-stone-700"
           >
             View Cart
+
             <span className="ml-2">
               →
             </span>
@@ -248,6 +313,7 @@ export default function AddToCartButton({
           className="mt-4 flex min-h-14 w-full items-center justify-center rounded-full bg-stone-900 px-7 text-center font-semibold text-white transition hover:-translate-y-0.5 hover:bg-stone-700 active:scale-[0.98]"
         >
           Add to Cart
+
           <span className="ml-3 text-lg">
             →
           </span>
