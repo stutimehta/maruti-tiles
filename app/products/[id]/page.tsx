@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { products } from "../../data/products";
@@ -7,7 +8,69 @@ type PageProps = {
     id: string;
   }>;
 };
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { id } = await params;
 
+  const product = products.find(
+    (item) => String(item.id) === id
+  );
+
+  if (!product) {
+    return {
+      title: "Product Not Found",
+      description: "The requested Maruti Tiles product could not be found.",
+    };
+  }
+
+  const title = `${product.name} | ${product.size} ${product.finish} Tiles`;
+  
+  const description = `${product.description} Available for ${product.application}. Explore ${product.name} from Maruti Tiles, Surat, Gujarat.`;
+
+  return {
+    title,
+    description,
+
+    keywords: [
+      product.name,
+      `${product.name} tiles`,
+      `${product.size} tiles`,
+      `${product.finish} tiles`,
+      product.category,
+      "Maruti Tiles",
+      "tiles in Surat",
+      "premium tiles Gujarat",
+    ],
+
+    alternates: {
+      canonical: `/products/${product.id}`,
+    },
+
+    openGraph: {
+      type: "website",
+      title,
+      description,
+      url: `https://marutitiles.com/products/${product.id}`,
+      siteName: "Maruti Tiles",
+      images: [
+        {
+          url: product.image,
+          width: 1200,
+          height: 900,
+          alt: product.name,
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [product.image],
+    },
+  };
+}
 export default async function ProductPage({ params }: PageProps) {
   const { id } = await params;
 
