@@ -1,11 +1,11 @@
-
 export const products = [
   {
     id: 1,
     name: "Omega White - 1005",
     size: "600 × 1200 mm",
     finish: "Glossy",
-    price: "Price on Request",
+    price: "₹85 / sq.ft.",
+    pricePerSqFt: 85,
     category: "Large Format Tiles",
     image: "/images/products/omega-white-1005.jpg",
     description:
@@ -21,7 +21,8 @@ export const products = [
     name: "Alfre Aqua - 1049",
     size: "600 × 1200 mm",
     finish: "Glossy",
-    price: "Price on Request",
+    price: "₹90 / sq.ft.",
+    pricePerSqFt: 90,
     category: "Large Format Tiles",
     image: "/images/products/alfre-aqua-1049.jpg",
     description:
@@ -37,7 +38,8 @@ export const products = [
     name: "Crystal 7003",
     size: "500 × 500 mm",
     finish: "Vitrified",
-    price: "Price on Request",
+    price: "₹55 / sq.ft.",
+    pricePerSqFt: 55,
     category: "Parking Tiles",
     image: "/images/products/crystal-7003.jpg",
     description:
@@ -53,7 +55,8 @@ export const products = [
     name: "Dazzling 7002",
     size: "500 × 500 mm",
     finish: "Vitrified",
-    price: "Price on Request",
+    price: "₹55 / sq.ft.",
+    pricePerSqFt: 55,
     category: "Parking Tiles",
     image: "/images/products/dazzling-7002.jpg",
     description:
@@ -69,7 +72,8 @@ export const products = [
     name: "Liverpool 7003",
     size: "500 × 500 mm",
     finish: "Vitrified",
-    price: "Price on Request",
+    price: "₹55 / sq.ft.",
+    pricePerSqFt: 55,
     category: "Parking Tiles",
     image: "/images/products/liverpool-7003.jpg",
     description:
@@ -85,7 +89,8 @@ export const products = [
     name: "Liverpool 7006",
     size: "500 × 500 mm",
     finish: "Vitrified",
-    price: "Price on Request",
+    price: "₹55 / sq.ft.",
+    pricePerSqFt: 55,
     category: "Parking Tiles",
     image: "/images/products/liverpool-7006.jpg",
     description:
@@ -101,7 +106,8 @@ export const products = [
     name: "Rockline 7001",
     size: "500 × 500 mm",
     finish: "Vitrified",
-    price: "Price on Request",
+    price: "₹55 / sq.ft.",
+    pricePerSqFt: 55,
     category: "Parking Tiles",
     image: "/images/products/rockline-7001.jpg",
     description:
@@ -117,7 +123,8 @@ export const products = [
     name: "Rustic 7010",
     size: "500 × 500 mm",
     finish: "Vitrified",
-    price: "Price on Request",
+    price: "₹55 / sq.ft.",
+    pricePerSqFt: 55,
     category: "Parking Tiles",
     image: "/images/products/rustic-7009-10.jpg",
     description:
@@ -133,7 +140,8 @@ export const products = [
     name: "Sadstone-7026",
     size: "600 × 1200 mm",
     finish: "Glossy",
-    price: "Price on Request",
+    price: "₹90 / sq.ft.",
+    pricePerSqFt: 90,
     category: "Large Format Tiles",
     image: "/images/products/sandstone-7026.jpg",
     description:
@@ -149,7 +157,8 @@ export const products = [
     name: "Golden Infinity - 1018",
     size: "600 × 1200 mm",
     finish: "Glossy",
-    price: "Price on Request",
+    price: "₹110 / sq.ft.",
+    pricePerSqFt: 110,
     category: "Large Format Tiles",
     image: "/images/products/goldeninfinity.jpg",
     description:
@@ -165,7 +174,8 @@ export const products = [
     name: "Frenzy Statuario - 1011",
     size: "600 × 1200 mm",
     finish: "Glossy",
-    price: "Price on Request",
+    price: "₹105 / sq.ft.",
+    pricePerSqFt: 105,
     category: "Large Format Tiles",
     image: "/images/products/frenzy.jpg",
     description:
@@ -181,7 +191,8 @@ export const products = [
     name: "Penro Grey - 1047",
     size: "600 × 1200 mm",
     finish: "Glossy",
-    price: "Price on Request",
+    price: "₹95 / sq.ft.",
+    pricePerSqFt: 95,
     category: "Large Format Tiles",
     image: "/images/products/penrogrey.jpg",
     description:
@@ -197,7 +208,8 @@ export const products = [
     name: "Plain White",
     size: "600 × 1200 mm",
     finish: "Glossy",
-    price: "Price on Request",
+    price: "₹80 / sq.ft.",
+    pricePerSqFt: 80,
     category: "Large Format Tiles",
     image: "/images/products/plainwhite.jpg",
     description:
@@ -213,7 +225,8 @@ export const products = [
     name: "Amber Bianco",
     size: "600 × 1200 mm",
     finish: "Glossy",
-    price: "Price on Request",
+    price: "₹90 / sq.ft.",
+    pricePerSqFt: 90,
     category: "Large Format Tiles",
     image: "/images/products/amberbianco.jpg",
     description:
@@ -229,7 +242,8 @@ export const products = [
     name: "Hitera Staturio",
     size: "600 × 1200 mm",
     finish: "Glossy",
-    price: "Price on Request",
+    price: "₹95 / sq.ft.",
+    pricePerSqFt: 95,
     category: "Large Format Tiles",
     image: "/images/products/hiteriastaturio.jpg",
     description:
@@ -245,7 +259,8 @@ export const products = [
     name: "Juvenian White",
     size: "600 × 1200 mm",
     finish: "Glossy",
-    price: "Price on Request",
+    price: "₹95 / sq.ft.",
+    pricePerSqFt: 95,
     category: "Large Format Tiles",
     image: "/images/products/juvenianwhite.jpg",
     description:
@@ -261,7 +276,8 @@ export const products = [
     name: "Lunar Bianco",
     size: "600 × 1200 mm",
     finish: "Carving",
-    price: "Price on Request",
+    price: "₹110 / sq.ft.",
+    pricePerSqFt: 110,
     category: "Large Format Tiles",
     image: "/images/products/lunarbianco.jpg",
     description:
@@ -277,7 +293,8 @@ export const products = [
     name: "Metro Bianco",
     size: "600 × 1200 mm",
     finish: "Carving",
-    price: "Price on Request",
+    price: "₹105 / sq.ft.",
+    pricePerSqFt: 105,
     category: "Large Format Tiles",
     image: "/images/products/metrobianco.jpg",
     description:
@@ -293,7 +310,8 @@ export const products = [
     name: "Metro Grey",
     size: "600 × 1200 mm",
     finish: "Carving",
-    price: "Price on Request",
+    price: "₹105 / sq.ft.",
+    pricePerSqFt: 105,
     category: "Large Format Tiles",
     image: "/images/products/metrogrey.jpg",
     description:
@@ -309,7 +327,8 @@ export const products = [
     name: "Moon White",
     size: "600 × 1200 mm",
     finish: "Glossy",
-    price: "Price on Request",
+    price: "₹100 / sq.ft.",
+    pricePerSqFt: 100,
     category: "Large Format Tiles",
     image: "/images/products/moonwhite.jpg",
     description:
@@ -325,7 +344,8 @@ export const products = [
     name: "Nova Platinum",
     size: "600 × 1200 mm",
     finish: "Carving",
-    price: "Price on Request",
+    price: "₹115 / sq.ft.",
+    pricePerSqFt: 115,
     category: "Large Format Tiles",
     image: "/images/products/novaplatinium.jpg",
     description:
@@ -341,7 +361,8 @@ export const products = [
     name: "Purl White",
     size: "600 × 1200 mm",
     finish: "Glossy",
-    price: "Price on Request",
+    price: "₹85 / sq.ft.",
+    pricePerSqFt: 85,
     category: "Large Format Tiles",
     image: "/images/products/purlwhite.jpg",
     description:
@@ -357,7 +378,8 @@ export const products = [
     name: "Tinus Brown",
     size: "600 × 1200 mm",
     finish: "Glossy",
-    price: "Price on Request",
+    price: "₹95 / sq.ft.",
+    pricePerSqFt: 95,
     category: "Large Format Tiles",
     image: "/images/products/tinusbrown.jpg",
     description:

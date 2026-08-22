@@ -2,12 +2,19 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { products } from "../../data/products";
+import AddToCartButton from "../../components/AddToCartButton";
 
 type PageProps = {
   params: Promise<{
     id: string;
   }>;
 };
+
+
+/* =========================================================
+   SEO
+========================================================= */
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -20,12 +27,13 @@ export async function generateMetadata({
   if (!product) {
     return {
       title: "Product Not Found",
-      description: "The requested Maruti Tiles product could not be found.",
+      description:
+        "The requested Maruti Tiles product could not be found.",
     };
   }
 
   const title = `${product.name} | ${product.size} ${product.finish} Tiles`;
-  
+
   const description = `${product.description} Available for ${product.application}. Explore ${product.name} from Maruti Tiles, Surat, Gujarat.`;
 
   return {
@@ -71,17 +79,32 @@ export async function generateMetadata({
     },
   };
 }
-export default async function ProductPage({ params }: PageProps) {
+
+
+/* =========================================================
+   PRODUCT PAGE
+========================================================= */
+
+export default async function ProductPage({
+  params,
+}: PageProps) {
   const { id } = await params;
 
   const product = products.find(
     (item) => String(item.id) === id
   );
 
+
+  /* =======================================================
+     PRODUCT NOT FOUND
+  ======================================================= */
+
   if (!product) {
     return (
       <main className="min-h-screen bg-stone-50 px-6 py-24">
+
         <div className="mx-auto max-w-4xl text-center">
+
           <h1 className="text-4xl font-semibold text-stone-900">
             Product Not Found
           </h1>
@@ -91,293 +114,466 @@ export default async function ProductPage({ params }: PageProps) {
           </p>
 
           <Link
-            href="/#products"
-            className="mt-8 inline-block rounded-full bg-stone-900 px-7 py-4 font-semibold text-white"
+            href="/products"
+            className="mt-8 inline-block rounded-full bg-stone-900 px-7 py-4 font-semibold text-white transition hover:bg-stone-700"
           >
             Back to Products
           </Link>
+
         </div>
+
       </main>
     );
   }
+
+
+  /* =======================================================
+     RELATED PRODUCTS
+  ======================================================= */
 
   const relatedProducts = products
     .filter((item) => item.id !== product.id)
     .slice(0, 3);
 
+
+  /* =======================================================
+     WHATSAPP
+  ======================================================= */
+
   const whatsappMessage = `Hello Maruti Tiles,
 
-I am interested in:
+I have a query about this product:
+
 ${product.name}
 
 Category: ${product.category}
 Size: ${product.size}
 Finish: ${product.finish}
+Price: ₹${product.pricePerSqFt}/sq. ft.
 
-Please share the price and availability.`;
+Please share availability, delivery details and any other information.
 
-  const whatsappUrl = `https://wa.me/918141352183?text=${encodeURIComponent(
-    whatsappMessage
-  )}`;
+Thank you.`;
+
+  const whatsappUrl =
+    `https://wa.me/918141352183?text=` +
+    encodeURIComponent(whatsappMessage);
+
 
   return (
-    <main className="min-h-screen bg-stone-50 text-stone-900">
+    <main className="min-h-screen bg-[#f5f1e9] text-stone-900">
 
-      {/* Header */}
+
+      {/* =====================================================
+          HEADER
+      ===================================================== */}
+
       <header className="sticky top-0 z-50 border-b border-stone-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 
-          <Link href="/" className="flex items-center">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6">
+
+
+          {/* LOGO */}
+
+          <Link
+            href="/"
+            className="flex items-center"
+          >
+
             <Image
               src="/images/brand/logo.png"
               alt="Maruti Tiles"
               width={55}
               height={55}
-              className="object-contain"
+              priority
+              className="h-11 w-11 object-contain sm:h-12 sm:w-12"
             />
 
-            <span className="ml-3 text-xl font-bold md:text-2xl">
-              MARUTI TILES
-            </span>
+            <div className="ml-3">
+
+              <p className="text-lg font-bold tracking-tight sm:text-xl">
+                MARUTI TILES
+              </p>
+
+              <p className="text-[7px] font-semibold uppercase tracking-[0.35em] text-[#b08d4e]">
+                Premium Surfaces
+              </p>
+
+            </div>
+
           </Link>
 
-          <Link
-            href="/#products"
-            className="text-sm font-semibold transition hover:text-stone-500"
-          >
-            ← Back to Products
-          </Link>
+
+          {/* HEADER ACTIONS */}
+
+          <div className="flex items-center gap-2">
+
+            <Link
+              href="/wishlist"
+              className="hidden rounded-full border border-stone-300 px-4 py-2.5 text-xs font-semibold transition hover:bg-stone-950 hover:text-white sm:inline-flex"
+            >
+              ♡ Wishlist
+            </Link>
+
+
+            <Link
+              href="/cart"
+              className="rounded-full border border-stone-300 px-4 py-2.5 text-xs font-semibold transition hover:bg-stone-950 hover:text-white"
+            >
+              🛒 Cart
+            </Link>
+
+
+            <Link
+              href="/products"
+              className="hidden rounded-full border border-stone-300 px-5 py-2.5 text-xs font-semibold transition hover:bg-stone-950 hover:text-white md:inline-flex"
+            >
+              ← Products
+            </Link>
+
+          </div>
 
         </div>
+
       </header>
 
 
-      {/* Product Details */}
-      <section className="px-6 py-16 md:py-24">
-        <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2">
+      {/* =====================================================
+          PRODUCT DETAILS
+      ===================================================== */}
 
-          {/* Product Image */}
-          <div className="relative overflow-hidden rounded-3xl bg-white shadow-sm">
+      <section className="px-5 py-10 sm:px-6 sm:py-14 md:py-20">
 
-            {/* Badge */}
-            <div className="absolute left-5 top-5 z-10 flex gap-2">
+        <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
+
+
+          {/* =================================================
+              PRODUCT IMAGE
+          ================================================= */}
+
+          <div className="relative h-fit overflow-hidden rounded-[2rem] bg-white shadow-[0_15px_50px_rgba(0,0,0,0.07)]">
+
+
+            {/* BADGES */}
+
+            <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-2 sm:left-5 sm:top-5">
 
               {product.newArrival && (
-                <span className="rounded-full bg-white px-4 py-2 text-xs font-bold text-stone-900 shadow-md">
+                <span className="rounded-full bg-white px-4 py-2 text-[10px] font-bold text-stone-900 shadow-md sm:text-xs">
                   New Arrival
                 </span>
               )}
 
+
               {product.bestSeller && (
-                <span className="rounded-full bg-stone-900 px-4 py-2 text-xs font-bold text-white shadow-md">
+                <span className="rounded-full bg-stone-900 px-4 py-2 text-[10px] font-bold text-white shadow-md sm:text-xs">
                   Best Seller
                 </span>
               )}
 
             </div>
 
-            <div className="relative aspect-square">
+
+            {/* IMAGE */}
+
+            <div className="relative aspect-[4/3] w-full sm:aspect-square">
+
               <Image
                 src={product.image}
                 alt={product.name}
                 fill
                 priority
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
               />
+
             </div>
 
           </div>
 
 
-          {/* Product Information */}
+          {/* =================================================
+              PRODUCT INFORMATION
+          ================================================= */}
+
           <div className="flex flex-col justify-center">
 
-            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-stone-500">
+
+            {/* CATEGORY */}
+
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500 sm:text-sm">
               {product.category}
             </p>
 
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">
+
+            {/* PRODUCT NAME */}
+
+            <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
               {product.name}
             </h1>
 
-            <p className="mt-6 text-lg leading-8 text-stone-600">
+
+            {/* DESCRIPTION */}
+
+            <p className="mt-5 text-base leading-7 text-stone-600 sm:mt-6 sm:text-lg sm:leading-8">
               {product.description}
             </p>
 
 
-            {/* Specifications */}
-            <div className="mt-8 grid grid-cols-2 gap-4">
+            {/* =================================================
+                SPECIFICATIONS
+            ================================================= */}
 
-              <div className="rounded-2xl bg-white p-5 shadow-sm">
-                <p className="text-xs uppercase tracking-widest text-stone-400">
+            <div className="mt-7 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-4">
+
+
+              {/* SIZE */}
+
+              <div className="rounded-2xl bg-white p-4 shadow-sm sm:p-5">
+
+                <p className="text-[10px] uppercase tracking-widest text-stone-400 sm:text-xs">
                   Size
                 </p>
 
-                <p className="mt-2 font-semibold">
+                <p className="mt-2 text-sm font-semibold sm:text-base">
                   {product.size}
                 </p>
+
               </div>
 
-              <div className="rounded-2xl bg-white p-5 shadow-sm">
-                <p className="text-xs uppercase tracking-widest text-stone-400">
+
+              {/* FINISH */}
+
+              <div className="rounded-2xl bg-white p-4 shadow-sm sm:p-5">
+
+                <p className="text-[10px] uppercase tracking-widest text-stone-400 sm:text-xs">
                   Finish
                 </p>
 
-                <p className="mt-2 font-semibold">
+                <p className="mt-2 text-sm font-semibold sm:text-base">
                   {product.finish}
                 </p>
+
               </div>
 
             </div>
 
 
-            {/* Application */}
-            <div className="mt-6 rounded-2xl bg-white p-5 shadow-sm">
+            {/* =================================================
+                APPLICATION
+            ================================================= */}
 
-              <p className="text-xs uppercase tracking-widest text-stone-400">
+            <div className="mt-4 rounded-2xl bg-white p-4 shadow-sm sm:mt-6 sm:p-5">
+
+              <p className="text-[10px] uppercase tracking-widest text-stone-400 sm:text-xs">
                 Application
               </p>
 
-              <p className="mt-2 leading-7 text-stone-700">
+              <p className="mt-2 text-sm leading-6 text-stone-700 sm:leading-7">
                 {product.application}
               </p>
 
             </div>
 
 
-            {/* Price */}
-            <div className="mt-8 border-t border-stone-200 pt-6">
+            {/* =================================================
+                PRICE + QUANTITY + ADD TO CART
+            ================================================= */}
 
-              <p className="text-xs uppercase tracking-widest text-stone-400">
-                Pricing
-              </p>
+            <AddToCartButton
+              id={product.id}
+              name={product.name}
+              category={product.category}
+              size={product.size}
+              finish={product.finish}
+              image={product.image}
+              pricePerSqFt={product.pricePerSqFt}
+            />
 
-              <p className="mt-2 text-2xl font-semibold">
-                {product.price}
-              </p>
 
-            </div>
+            {/* =================================================
+                WHATSAPP QUERY
+            ================================================= */}
 
-
-            {/* WhatsApp */}
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 rounded-full bg-stone-900 px-7 py-4 text-center font-semibold text-white transition hover:bg-stone-700"
+              className="mt-5 flex min-h-14 w-full items-center justify-center rounded-full border border-stone-300 bg-white px-7 text-center text-sm font-semibold text-stone-900 transition hover:border-stone-900 hover:bg-stone-100 active:scale-[0.98]"
             >
-              Get Price on WhatsApp
+              Any Query? Ask on WhatsApp
             </a>
 
-            <p className="mt-4 text-center text-sm text-stone-500">
-              Ask us about availability, pricing and bulk orders.
+
+            <p className="mt-3 text-center text-xs leading-6 text-stone-500 sm:text-sm">
+              Have a question about this tile, availability or delivery?
+              Message us on WhatsApp.
             </p>
 
           </div>
 
         </div>
+
       </section>
 
 
-      {/* Related Products */}
-      <section className="border-t border-stone-200 bg-white px-6 py-20">
+      {/* =====================================================
+          RELATED PRODUCTS
+      ===================================================== */}
+
+      <section className="border-t border-stone-200 bg-white px-5 py-16 sm:px-6 sm:py-20">
 
         <div className="mx-auto max-w-7xl">
 
+
+          {/* TITLE */}
+
           <div className="max-w-2xl">
 
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-stone-500">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-stone-500 sm:text-sm">
               You May Also Like
             </p>
 
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
               Explore more tiles.
             </h2>
 
           </div>
 
 
-          <div className="mt-10 grid gap-8 md:grid-cols-3">
+          {/* RELATED PRODUCTS */}
+
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 md:mt-10 md:grid-cols-3 md:gap-8">
 
             {relatedProducts.map((related) => (
 
               <article
                 key={related.id}
-                className="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
               >
 
-                {/* Image */}
-                <div className="relative h-64 overflow-hidden bg-stone-100">
 
-                  <Image
-                    src={related.image}
-                    alt={related.name}
-                    fill
-                    className="object-cover transition duration-500 hover:scale-105"
-                  />
+                {/* IMAGE */}
 
-                  {/* Badge */}
-                  <div className="absolute left-4 top-4 flex gap-2">
+                <Link
+                  href={`/products/${related.id}`}
+                  className="block"
+                >
 
-                    {related.newArrival && (
-                      <span className="rounded-full bg-white px-3 py-1.5 text-xs font-bold shadow-sm">
-                        New Arrival
-                      </span>
-                    )}
+                  <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
 
-                    {related.bestSeller && (
-                      <span className="rounded-full bg-stone-900 px-3 py-1.5 text-xs font-bold text-white shadow-sm">
-                        Best Seller
-                      </span>
-                    )}
+                    <Image
+                      src={related.image}
+                      alt={related.name}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition duration-500 hover:scale-[1.03]"
+                    />
+
+
+                    {/* BADGES */}
+
+                    <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+
+                      {related.newArrival && (
+                        <span className="rounded-full bg-white px-3 py-1.5 text-[10px] font-bold shadow-sm">
+                          New Arrival
+                        </span>
+                      )}
+
+                      {related.bestSeller && (
+                        <span className="rounded-full bg-stone-900 px-3 py-1.5 text-[10px] font-bold text-white shadow-sm">
+                          Best Seller
+                        </span>
+                      )}
+
+                    </div>
 
                   </div>
 
-                </div>
+                </Link>
 
 
-                {/* Details */}
-                <div className="p-6">
+                {/* DETAILS */}
 
-                  <p className="text-xs font-semibold uppercase tracking-widest text-stone-500">
+                <div className="p-5 sm:p-6">
+
+
+                  {/* CATEGORY */}
+
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">
                     {related.category}
                   </p>
 
-                  <h3 className="mt-2 text-2xl font-semibold">
-                    {related.name}
-                  </h3>
+
+                  {/* NAME */}
+
+                  <Link href={`/products/${related.id}`}>
+
+                    <h3 className="mt-2 text-xl font-semibold transition hover:text-stone-500 sm:text-2xl">
+                      {related.name}
+                    </h3>
+
+                  </Link>
+
+
+                  {/* SPECS */}
 
                   <div className="mt-5 grid grid-cols-2 gap-3">
 
+
                     <div className="rounded-xl bg-stone-50 p-3">
-                      <p className="text-[10px] uppercase tracking-widest text-stone-400">
+
+                      <p className="text-[9px] uppercase tracking-widest text-stone-400">
                         Size
                       </p>
 
-                      <p className="mt-1 text-sm font-semibold">
+                      <p className="mt-1 text-xs font-semibold sm:text-sm">
                         {related.size}
                       </p>
+
                     </div>
 
+
                     <div className="rounded-xl bg-stone-50 p-3">
-                      <p className="text-[10px] uppercase tracking-widest text-stone-400">
+
+                      <p className="text-[9px] uppercase tracking-widest text-stone-400">
                         Finish
                       </p>
 
-                      <p className="mt-1 text-sm font-semibold">
+                      <p className="mt-1 text-xs font-semibold sm:text-sm">
                         {related.finish}
                       </p>
+
                     </div>
 
                   </div>
 
 
-                  <Link
-                    href={`/products/${related.id}`}
-                    className="mt-6 block rounded-full bg-stone-900 px-5 py-3 text-center font-semibold text-white transition hover:bg-stone-700"
-                  >
-                    View Product
-                  </Link>
+                  {/* PRICE + VIEW */}
+
+                  <div className="mt-6 flex items-center justify-between gap-3">
+
+                    <p className="text-sm font-semibold">
+
+                      ₹
+                      {related.pricePerSqFt.toLocaleString("en-IN")}
+
+                      <span className="ml-1 text-xs font-normal text-stone-500">
+                        / sq. ft.
+                      </span>
+
+                    </p>
+
+
+                    <Link
+                      href={`/products/${related.id}`}
+                      className="min-h-11 rounded-full bg-stone-900 px-4 py-3 text-center text-xs font-semibold text-white transition hover:bg-stone-700"
+                    >
+                      View →
+                    </Link>
+
+                  </div>
 
                 </div>
 
@@ -392,10 +588,13 @@ Please share the price and availability.`;
       </section>
 
 
-      {/* Footer */}
-      <footer className="border-t bg-stone-900 px-6 py-8 text-center text-white">
+      {/* =====================================================
+          FOOTER
+      ===================================================== */}
 
-        <p>
+      <footer className="border-t bg-stone-900 px-5 py-8 text-center text-white sm:px-6">
+
+        <p className="text-sm">
           © 2026 Maruti Tiles. All rights reserved.
         </p>
 
