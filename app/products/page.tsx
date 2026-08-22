@@ -21,6 +21,16 @@ export default function ProductsPage() {
     Record<number, number>
   >({});
 
+  const [packSizes, setPackSizes] = useState<
+    Record<number, number>
+  >({});
+
+  const [repeatCounts, setRepeatCounts] = useState<
+    Record<number, number>
+  >({});
+
+  const quantityOptions = [20, 50, 100, 500];
+
   function refreshCartCount() {
     setCartCount(getCartCount());
   }
@@ -57,19 +67,39 @@ export default function ProductsPage() {
      QUANTITY
   ========================================================= */
 
+  function getPackSize(id: number) {
+    return packSizes[id] || 20;
+  }
+
+  function getRepeatCount(id: number) {
+    return repeatCounts[id] || 1;
+  }
+
   function getQuantity(id: number) {
-    return quantities[id] || 1;
+    return getPackSize(id) * getRepeatCount(id);
+  }
+
+  function selectPackSize(id: number, size: number) {
+    setPackSizes((current) => ({
+      ...current,
+      [id]: size,
+    }));
+
+    setRepeatCounts((current) => ({
+      ...current,
+      [id]: 1,
+    }));
   }
 
   function decreaseQuantity(id: number) {
-    setQuantities((current) => ({
+    setRepeatCounts((current) => ({
       ...current,
       [id]: Math.max(1, (current[id] || 1) - 1),
     }));
   }
 
   function increaseQuantity(id: number) {
-    setQuantities((current) => ({
+    setRepeatCounts((current) => ({
       ...current,
       [id]: (current[id] || 1) + 1,
     }));
@@ -123,8 +153,13 @@ export default function ProductsPage() {
 
     refreshCartCount();
 
-    // Reset selector back to 1 after adding.
-    setQuantities((current) => ({
+    // Reset selector after adding.
+    setPackSizes((current) => ({
+      ...current,
+      [product.id]: 20,
+    }));
+
+    setRepeatCounts((current) => ({
       ...current,
       [product.id]: 1,
     }));
@@ -536,66 +571,63 @@ export default function ProductsPage() {
 
                       <div className="mt-5 rounded-2xl border border-stone-200 bg-[#faf8f3] p-3">
 
-                        <div className="flex items-center justify-between gap-3">
+                        <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-stone-400">
+                          Quantity
+                        </p>
 
-                          <div>
+                        <p className="mt-1 text-[10px] text-stone-500">
+                          Select square feet
+                        </p>
 
-                            <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-stone-400">
-                              Quantity
-                            </p>
+                        <div className="mt-3 grid grid-cols-2 gap-2">
 
-                            <p className="mt-1 text-[10px] text-stone-500">
-                              Square feet
-                            </p>
-
-                          </div>
-
-
-                          {/* QUANTITY SELECTOR */}
-
-                          <div className="flex items-center rounded-full border border-stone-300 bg-white p-1">
-
+                          {quantityOptions.map((option) => (
                             <button
+                              key={option}
                               type="button"
                               onClick={() =>
-                                decreaseQuantity(
-                                  product.id
-                                )
+                                selectPackSize(product.id, option)
                               }
-                              disabled={
-                                quantity <= 1
-                              }
-                              aria-label={`Decrease ${product.name} quantity`}
-                              className="flex h-9 w-9 items-center justify-center rounded-full text-xl font-medium transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-30"
+                              className={`min-h-10 rounded-full border px-2 text-[10px] font-semibold transition active:scale-95 ${
+                                getPackSize(product.id) === option
+                                  ? "border-stone-950 bg-stone-950 text-white"
+                                  : "border-stone-200 bg-white text-stone-900 hover:border-stone-950"
+                              }`}
                             >
-                              −
+                              {option} sq.ft.
                             </button>
-
-
-                            <span className="min-w-[72px] text-center text-xs font-semibold">
-                              {quantity} sq.ft.
-                            </span>
-
-
-                            <button
-                              type="button"
-                              onClick={() =>
-                                increaseQuantity(
-                                  product.id
-                                )
-                              }
-                              aria-label={`Increase ${product.name} quantity`}
-                              className="flex h-9 w-9 items-center justify-center rounded-full text-xl font-medium transition hover:bg-stone-100"
-                            >
-                              +
-                            </button>
-
-                          </div>
+                          ))}
 
                         </div>
 
+                        <div className="mt-3 flex items-center justify-between rounded-full border border-stone-200 bg-white p-1">
 
-                        {/* SELECTED SUBTOTAL */}
+                          <button
+                            type="button"
+                            onClick={() => decreaseQuantity(product.id)}
+                            disabled={getRepeatCount(product.id) <= 1}
+                            aria-label={`Decrease ${product.name} quantity`}
+                            className="touch-manipulation flex h-9 w-9 items-center justify-center rounded-full text-xl font-medium transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-30"
+                          >
+                            −
+                          </button>
+
+                          <span className="text-[10px] font-semibold">
+                            {getRepeatCount(product.id)} ×{" "}
+                            {getPackSize(product.id)} ={" "}
+                            {quantity} sq.ft.
+                          </span>
+
+                          <button
+                            type="button"
+                            onClick={() => increaseQuantity(product.id)}
+                            aria-label={`Increase ${product.name} quantity`}
+                            className="touch-manipulation flex h-9 w-9 items-center justify-center rounded-full text-xl font-medium transition hover:bg-stone-100"
+                          >
+                            +
+                          </button>
+
+                        </div>
 
                         <div className="mt-3 flex items-center justify-between border-t border-stone-200 pt-3">
 
@@ -605,9 +637,7 @@ export default function ProductsPage() {
 
                           <p className="text-sm font-semibold">
                             ₹
-                            {subtotal.toLocaleString(
-                              "en-IN"
-                            )}
+                            {subtotal.toLocaleString("en-IN")}
                           </p>
 
                         </div>
