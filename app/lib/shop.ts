@@ -228,12 +228,21 @@ export function isInWishlist(id: number) {
    COUNTS
 ========================================================= */
 
+/*
+ * Cart count = number of different products
+ * in the cart.
+ *
+ * Example:
+ *
+ * 1 product × 2400 sq.ft. = Cart 1
+ * 2 products = Cart 2
+ * 3 products = Cart 3
+ *
+ * Quantity does NOT affect this number.
+ */
+
 export function getCartCount() {
-  return getCart().reduce(
-    (total, item) =>
-      total + item.quantity,
-    0
-  );
+  return getCart().length;
 }
 
 

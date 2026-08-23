@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { createClient } from "../lib/supabase";
 
 type CartItem = {
   id: number;
@@ -18,6 +19,9 @@ type CartItem = {
 export default function CartPage() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(false);
+
+  const supabase = createClient();
 
   useEffect(() => {
     try {
@@ -119,6 +123,26 @@ export default function CartPage() {
       0
     );
   }, [cart]);
+
+  async function proceedToCheckout() {
+    setCheckingAuth(true);
+
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (user) {
+        window.location.href = "/checkout";
+      } else {
+        window.location.href = "/auth";
+      }
+    } catch {
+      window.location.href = "/auth";
+    } finally {
+      setCheckingAuth(false);
+    }
+  }
 
   if (!loaded) {
     return (
@@ -404,13 +428,19 @@ export default function CartPage() {
                 </div>
 
 
-                <Link
-                  href="/checkout"
-                  className="mt-5 flex min-h-14 items-center justify-center rounded-full bg-stone-950 px-6 text-sm font-semibold text-white transition hover:bg-stone-700"
+                <button
+                  type="button"
+                  onClick={proceedToCheckout}
+                  disabled={checkingAuth}
+                  className="mt-5 flex min-h-14 w-full items-center justify-center rounded-full bg-stone-950 px-6 text-sm font-semibold text-white transition hover:bg-stone-700 disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  Proceed to Checkout
-                  <span className="ml-2">→</span>
-                </Link>
+                  {checkingAuth
+                    ? "Checking account..."
+                    : "Proceed to Checkout"}
+                  {!checkingAuth && (
+                    <span className="ml-2">→</span>
+                  )}
+                </button>
 
 
                 <a

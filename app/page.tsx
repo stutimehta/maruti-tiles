@@ -3,13 +3,30 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { products } from "./data/products";
+import ProductActions from "./components/ProductActions";
+import { getCartCount } from "./lib/shop";
 
 const whatsappNumber = "918141352183";
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const refreshCartCount = () => {
+      setCartCount(getCartCount());
+    };
+
+    refreshCartCount();
+
+    window.addEventListener("maruti-cart-updated", refreshCartCount);
+
+    return () => {
+      window.removeEventListener("maruti-cart-updated", refreshCartCount);
+    };
+  }, []);
 
   const featuredProducts = products.filter((product) =>
     [1, 10, 19, 17, 3].includes(product.id)
@@ -104,10 +121,24 @@ export default function Home() {
           <div className="hidden items-center gap-3 lg:flex">
 
             <Link
-              href="/enquiry"
+              href="/wishlist"
               className="rounded-full px-4 py-2 text-sm text-stone-300 transition hover:text-white"
             >
-              ♡ Enquiry
+              ♡ Wishlist
+            </Link>
+
+            <Link
+              href="/cart"
+              aria-label="Cart"
+              className="relative flex h-10 items-center justify-center rounded-full border border-stone-700 px-4 text-sm text-stone-200 transition hover:border-[#d2b06c] hover:text-[#d2b06c]"
+            >
+              🛒 Cart
+
+              {cartCount > 0 && (
+                <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[#d2b06c] px-1 text-[10px] font-bold text-black">
+                  {cartCount}
+                </span>
+              )}
             </Link>
 
             <a
@@ -126,11 +157,25 @@ export default function Home() {
           <div className="flex items-center gap-2 lg:hidden">
 
             <Link
-              href="/enquiry"
-              aria-label="Enquiry"
+              href="/wishlist"
+              aria-label="Wishlist"
               className="flex h-10 w-10 items-center justify-center rounded-full border border-stone-700 text-lg"
             >
               ♡
+            </Link>
+
+            <Link
+              href="/cart"
+              aria-label="Cart"
+              className="relative flex h-10 w-10 items-center justify-center rounded-full border border-stone-700 text-lg"
+            >
+              🛒
+
+              {cartCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#d2b06c] px-1 text-[8px] font-bold text-black">
+                  {cartCount}
+                </span>
+              )}
             </Link>
 
             <button
@@ -202,11 +247,19 @@ export default function Home() {
               </a>
 
               <Link
-                href="/enquiry"
+                href="/wishlist"
                 onClick={() => setMenuOpen(false)}
                 className="rounded-full border border-stone-700 px-6 py-3 text-center font-semibold"
               >
-                View Enquiry
+                ♡ View Wishlist
+              </Link>
+
+              <Link
+                href="/cart"
+                onClick={() => setMenuOpen(false)}
+                className="rounded-full border border-stone-700 px-6 py-3 text-center font-semibold"
+              >
+                🛒 View Cart
               </Link>
 
               <a
@@ -547,8 +600,22 @@ export default function Home() {
                     </div>
 
 
-                    <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-sm">
-                      ♡
+                    <div
+                      className="absolute right-3 top-3 z-20"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                      }}
+                    >
+                      <ProductActions
+                        id={product.id}
+                        name={product.name}
+                        category={product.category}
+                        size={product.size}
+                        finish={product.finish}
+                        image={product.image}
+                        pricePerSqFt={product.pricePerSqFt}
+                      />
                     </div>
 
                   </div>
