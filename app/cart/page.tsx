@@ -146,68 +146,123 @@ export default function CartPage() {
 
   if (!loaded) {
     return (
-      <main className="min-h-screen bg-[#f2efe9]" />
+      <main className="min-h-screen bg-[#0b0b0a]" />
     );
   }
 
   return (
-    <main className="min-h-screen bg-[#f2efe9] text-stone-900">
+    <main className="min-h-screen overflow-x-hidden bg-[#0b0b0a] text-stone-100">
 
-      {/* HEADER */}
+      {/* =========================================================
+          PREMIUM HEADER
+      ========================================================= */}
 
-      <header className="border-b border-stone-200 bg-[#f7f5f0]">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0b0b0a]/95 text-white backdrop-blur-xl">
 
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-6">
+        <div className="mx-auto flex h-[78px] max-w-[1400px] items-center justify-between px-5 sm:px-7 lg:px-10">
 
+          {/* TEXT ONLY BRAND — NO LOGO */}
           <Link
             href="/"
-            className="flex items-center"
+            className="group flex shrink-0 items-center"
+            aria-label="Maruti Tiles Home"
           >
-            <Image
-              src="/images/brand/logo.png"
-              alt="Maruti Tiles"
-              width={48}
-              height={48}
-              className="h-11 w-11 object-contain"
-            />
+            <div className="leading-none">
 
-            <span className="ml-3 text-lg font-bold tracking-tight">
-              MARUTI TILES
-            </span>
+              <p className="font-serif text-[29px] font-medium uppercase tracking-[0.12em] text-stone-100 transition group-hover:text-[#d8ba79] sm:text-[33px]">
+                MARUTI
+              </p>
+
+              <div className="mt-1 flex items-center gap-2">
+                <span className="h-px w-7 bg-[#c7a665]" />
+
+                <p className="text-[8px] font-semibold uppercase tracking-[0.52em] text-[#c7a665] sm:text-[9px]">
+                  TILES
+                </p>
+              </div>
+
+            </div>
           </Link>
 
+          {/* HEADER ACTION */}
           <Link
             href="/products"
-            className="rounded-full border border-stone-300 px-5 py-2.5 text-xs font-semibold transition hover:bg-stone-950 hover:text-white"
+            className="rounded-full border border-stone-700 px-5 py-2.5 text-xs font-semibold text-stone-200 transition hover:border-[#c8a867] hover:text-[#d8ba79] sm:px-6"
           >
             Continue Shopping
           </Link>
 
         </div>
-
       </header>
 
 
-      {/* PAGE */}
+      {/* =========================================================
+          CART PAGE
+      ========================================================= */}
 
-      <section className="px-5 py-14 sm:px-6 md:py-20">
+      <section className="relative overflow-hidden px-5 py-14 sm:px-7 md:py-20">
 
-        <div className="mx-auto max-w-7xl">
+        {/* PREMIUM BACKGROUND */}
+        <div className="pointer-events-none absolute inset-0">
 
-          <div className="flex items-end justify-between gap-6">
+          <div className="absolute left-[-10%] top-[8%] h-[500px] w-[500px] rounded-full bg-[#b99558]/10 blur-[150px]" />
+
+          <div className="absolute right-[-8%] top-[20%] h-[600px] w-[600px] rounded-full bg-[#d2b06c]/[0.06] blur-[160px]" />
+
+          <div className="absolute bottom-[-20%] left-[35%] h-[500px] w-[500px] rounded-full bg-[#8f6d37]/[0.05] blur-[150px]" />
+
+        </div>
+
+
+        <div className="relative mx-auto max-w-[1400px]">
+
+          {/* =====================================================
+              PAGE INTRO
+          ===================================================== */}
+
+          <div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-end">
 
             <div>
 
-              <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#b38d48]">
-                Your selection
-              </p>
+              <div className="flex items-center gap-3">
+                <span className="h-px w-10 bg-[#c7a665]" />
 
-              <h1 className="mt-4 text-5xl font-semibold tracking-[-0.04em] text-stone-950 sm:text-6xl">
-                Your Cart
+                <p className="text-[9px] font-bold uppercase tracking-[0.42em] text-[#c7a665]">
+                  Your Selection
+                </p>
+              </div>
+
+
+              <h1 className="mt-7 max-w-3xl font-serif text-[4rem] font-medium leading-[0.9] tracking-[-0.055em] text-stone-100 sm:text-6xl md:text-7xl">
+
+                Your
+                <span className="block text-[#c7a665]">
+                  collection.
+                </span>
+
               </h1>
 
-              <p className="mt-4 text-sm text-stone-500">
-                {totalQuantity} sq. ft. selected
+
+              <p className="mt-6 text-sm leading-7 text-stone-500 sm:text-base">
+                Review your selected surfaces and prepare your
+                requirements for the next step.
+              </p>
+
+            </div>
+
+
+            {/* TOTAL AREA */}
+            <div className="border-l border-stone-800 pl-5 sm:min-w-[170px] sm:pb-1">
+
+              <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-stone-600">
+                Selected Area
+              </p>
+
+              <p className="mt-2 text-2xl font-semibold text-stone-100">
+                {totalQuantity}
+                <span className="ml-1 text-sm font-normal text-stone-500">
+                  sq. ft.
+                </span>
               </p>
 
             </div>
@@ -215,38 +270,71 @@ export default function CartPage() {
           </div>
 
 
+          {/* =====================================================
+              EMPTY CART
+          ===================================================== */}
+
           {cart.length === 0 ? (
 
-            <div className="mt-12 rounded-[2rem] border border-stone-200 bg-white px-6 py-20 text-center shadow-sm">
+            <div className="relative mt-14 overflow-hidden rounded-[2rem] border border-stone-800 bg-[#11110f] px-6 py-24 text-center shadow-[0_30px_100px_rgba(0,0,0,0.35)] sm:px-10">
 
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#f4f0e8] text-2xl">
-                🛒
+              {/* Decorative frame */}
+              <div className="absolute left-6 top-6 h-px w-20 bg-[#c7a665]/70" />
+              <div className="absolute right-6 top-6 h-16 w-px bg-[#c7a665]/50" />
+              <div className="absolute bottom-6 left-6 h-16 w-px bg-[#c7a665]/50" />
+              <div className="absolute bottom-6 right-6 h-px w-20 bg-[#c7a665]/70" />
+
+
+              <div className="relative mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[#c7a665]/30 bg-[#181611]">
+
+                <span className="text-2xl text-[#c7a665]">
+                  🛒
+                </span>
+
               </div>
 
-              <h2 className="mt-6 text-2xl font-semibold">
+
+              <p className="mt-7 text-[9px] font-bold uppercase tracking-[0.4em] text-[#c7a665]">
+                Your Selection
+              </p>
+
+
+              <h2 className="mt-4 font-serif text-3xl text-stone-100 sm:text-4xl">
                 Your cart is empty
               </h2>
 
-              <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-stone-500">
-                Explore our collection and add the surfaces
-                you need for your project.
+
+              <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-stone-500">
+                Explore our collection and discover premium
+                surfaces for your next project.
               </p>
+
 
               <Link
                 href="/products"
-                className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-stone-950 px-7 text-sm font-semibold text-white transition hover:bg-stone-700"
+                className="mt-9 inline-flex min-h-14 items-center justify-center rounded-lg bg-[#d0ae6c] px-7 text-sm font-semibold text-[#11100e] shadow-[0_18px_50px_rgba(0,0,0,0.35)] transition hover:-translate-y-1 hover:bg-[#e0c489]"
               >
                 Explore Collection
-                <span className="ml-2">→</span>
+
+                <span className="ml-4 text-lg">
+                  ↗
+                </span>
               </Link>
 
             </div>
 
           ) : (
 
-            <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_380px]">
+            /* =====================================================
+               CART WITH ITEMS
+            ===================================================== */
 
-              {/* ITEMS */}
+            <div className="mt-14 grid gap-8 lg:grid-cols-[1fr_380px]">
+
+
+              {/* =================================================
+                  ITEMS
+              ================================================= */}
 
               <div className="space-y-4">
 
@@ -254,64 +342,74 @@ export default function CartPage() {
 
                   <article
                     key={item.id}
-                    className="rounded-[2rem] border border-stone-200 bg-white p-4 shadow-sm sm:p-5"
+                    className="overflow-hidden rounded-[1.75rem] border border-stone-800 bg-[#11110f] p-4 shadow-[0_20px_70px_rgba(0,0,0,0.25)] transition duration-500 hover:border-stone-700 sm:p-5"
                   >
 
                     <div className="flex gap-4 sm:gap-6">
 
-                      <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-2xl bg-stone-100 sm:h-36 sm:w-36">
+
+                      {/* PRODUCT IMAGE */}
+
+                      <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-2xl border border-stone-800 bg-[#181714] sm:h-36 sm:w-36">
 
                         <Image
                           src={item.image}
                           alt={item.name}
                           fill
                           sizes="144px"
-                          className="object-cover"
+                          className="object-cover transition duration-700 hover:scale-105"
                         />
 
                       </div>
 
 
+                      {/* PRODUCT INFO */}
+
                       <div className="min-w-0 flex-1">
 
-                        <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-stone-400">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#c7a665]">
                           {item.category}
                         </p>
 
-                        <h2 className="mt-1 text-lg font-semibold text-stone-950 sm:text-xl">
+
+                        <h2 className="mt-1 text-lg font-semibold text-stone-100 sm:text-xl">
                           {item.name}
                         </h2>
+
 
                         <p className="mt-1 text-xs text-stone-500">
                           {item.size} · {item.finish}
                         </p>
 
 
-                        <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+                        <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
+
 
                           {/* QUANTITY */}
 
-                          <div className="flex items-center rounded-full border border-stone-300 bg-[#f7f5f0]">
+                          <div className="flex items-center rounded-full border border-stone-700 bg-[#0d0d0c]">
 
                             <button
                               type="button"
                               onClick={() => decrease(item.id)}
                               disabled={item.quantity <= 20}
                               aria-label={`Decrease ${item.name} quantity`}
-                              className="touch-manipulation flex h-10 w-10 items-center justify-center rounded-full text-lg font-medium transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-30"
+                              className="touch-manipulation flex h-10 w-10 items-center justify-center rounded-full text-lg font-medium text-stone-300 transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-30"
                             >
                               −
                             </button>
 
-                            <span className="min-w-[100px] text-center text-sm font-semibold">
+
+                            <span className="min-w-[100px] text-center text-sm font-semibold text-stone-200">
                               {item.quantity} sq.ft.
                             </span>
+
 
                             <button
                               type="button"
                               onClick={() => increase(item.id)}
                               aria-label={`Increase ${item.name} quantity`}
-                              className="touch-manipulation flex h-10 w-10 items-center justify-center rounded-full text-lg font-medium transition hover:bg-white"
+                              className="touch-manipulation flex h-10 w-10 items-center justify-center rounded-full text-lg font-medium text-stone-300 transition hover:bg-stone-800"
                             >
                               +
                             </button>
@@ -319,13 +417,15 @@ export default function CartPage() {
                           </div>
 
 
+                          {/* SUBTOTAL */}
+
                           <div className="text-right">
 
-                            <p className="text-[9px] uppercase tracking-[0.2em] text-stone-400">
+                            <p className="text-[9px] uppercase tracking-[0.2em] text-stone-600">
                               Subtotal
                             </p>
 
-                            <p className="mt-1 font-semibold">
+                            <p className="mt-1 font-semibold text-stone-100">
                               ₹
                               {(
                                 item.pricePerSqFt *
@@ -338,10 +438,12 @@ export default function CartPage() {
                         </div>
 
 
+                        {/* REMOVE */}
+
                         <button
                           type="button"
                           onClick={() => removeItem(item.id)}
-                          className="mt-3 text-xs font-medium text-stone-400 underline underline-offset-4 transition hover:text-red-600"
+                          className="mt-4 text-xs font-medium text-stone-600 underline underline-offset-4 transition hover:text-red-400"
                         >
                           Remove
                         </button>
@@ -357,53 +459,70 @@ export default function CartPage() {
               </div>
 
 
-              {/* SUMMARY */}
+              {/* =================================================
+                  ORDER SUMMARY
+              ================================================= */}
 
-              <aside className="h-fit rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm sm:p-7">
+              <aside className="h-fit rounded-[1.75rem] border border-stone-800 bg-[#11110f] p-6 shadow-[0_25px_80px_rgba(0,0,0,0.3)] sm:p-7">
 
-                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
-                  Order Summary
-                </p>
+                <div className="flex items-center gap-3">
 
-                <div className="mt-6 space-y-4">
+                  <span className="h-px w-7 bg-[#c7a665]" />
+
+                  <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#c7a665]">
+                    Order Summary
+                  </p>
+
+                </div>
+
+
+                <div className="mt-7 space-y-5">
+
 
                   <div className="flex justify-between text-sm">
+
                     <span className="text-stone-500">
                       Products
                     </span>
 
-                    <span className="font-semibold">
+                    <span className="font-semibold text-stone-200">
                       {totalQuantity} sq.ft.
                     </span>
+
                   </div>
 
 
                   <div className="flex justify-between text-sm">
+
                     <span className="text-stone-500">
                       Product subtotal
                     </span>
 
-                    <span className="font-semibold">
+                    <span className="font-semibold text-stone-200">
                       ₹{subtotal.toLocaleString("en-IN")}
                     </span>
+
                   </div>
 
 
-                  <div className="border-t border-stone-200 pt-5">
+                  <div className="border-t border-stone-800 pt-5">
 
                     <div className="flex items-end justify-between">
 
                       <div>
-                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-stone-400">
+
+                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-stone-600">
                           Total
                         </p>
 
-                        <p className="mt-1 text-2xl font-semibold">
+                        <p className="mt-1 text-2xl font-semibold text-stone-100">
                           ₹{subtotal.toLocaleString("en-IN")}
                         </p>
+
                       </div>
 
-                      <span className="text-xs text-stone-400">
+
+                      <span className="text-xs text-stone-600">
                         + delivery
                       </span>
 
@@ -414,13 +533,15 @@ export default function CartPage() {
                 </div>
 
 
-                <div className="mt-6 rounded-2xl bg-[#f6f3ed] p-4">
+                {/* DELIVERY */}
 
-                  <p className="text-xs font-semibold">
+                <div className="mt-6 rounded-2xl border border-stone-800 bg-[#0d0d0c] p-4">
+
+                  <p className="text-xs font-semibold text-stone-200">
                     Delivery charges
                   </p>
 
-                  <p className="mt-1 text-xs leading-5 text-stone-500">
+                  <p className="mt-1 text-xs leading-5 text-stone-600">
                     Delivery will be calculated separately based
                     on location, quantity and transport requirements.
                   </p>
@@ -428,26 +549,35 @@ export default function CartPage() {
                 </div>
 
 
+                {/* CHECKOUT */}
+
                 <button
                   type="button"
                   onClick={proceedToCheckout}
                   disabled={checkingAuth}
-                  className="mt-5 flex min-h-14 w-full items-center justify-center rounded-full bg-stone-950 px-6 text-sm font-semibold text-white transition hover:bg-stone-700 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="mt-5 flex min-h-14 w-full items-center justify-center rounded-lg bg-[#d0ae6c] px-6 text-sm font-semibold text-[#11100e] shadow-[0_15px_40px_rgba(0,0,0,0.3)] transition hover:-translate-y-1 hover:bg-[#e0c489] disabled:cursor-not-allowed disabled:opacity-70"
                 >
+
                   {checkingAuth
                     ? "Checking account..."
                     : "Proceed to Checkout"}
+
                   {!checkingAuth && (
-                    <span className="ml-2">→</span>
+                    <span className="ml-2 text-lg">
+                      →
+                    </span>
                   )}
+
                 </button>
 
+
+                {/* WHATSAPP */}
 
                 <a
                   href="https://wa.me/918141352183"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 flex min-h-14 items-center justify-center rounded-full border border-stone-300 px-6 text-sm font-semibold transition hover:border-stone-950"
+                  className="mt-3 flex min-h-14 items-center justify-center rounded-lg border border-stone-700 px-6 text-sm font-semibold text-stone-200 transition hover:border-[#c8a867] hover:text-[#d8ba79]"
                 >
                   Need Help? WhatsApp
                 </a>
@@ -461,6 +591,41 @@ export default function CartPage() {
         </div>
 
       </section>
+
+
+      {/* =========================================================
+          FOOTER
+      ========================================================= */}
+
+      <footer className="border-t border-stone-900 bg-[#070706] px-5 py-10 text-center sm:px-7">
+
+        <div className="mx-auto max-w-[1400px]">
+
+          <div className="mx-auto flex w-fit items-center gap-3">
+
+            <span className="h-px w-6 bg-[#c7a665]" />
+
+            <p className="font-serif text-lg tracking-[0.16em] text-stone-300">
+              MARUTI TILES
+            </p>
+
+            <span className="h-px w-6 bg-[#c7a665]" />
+
+          </div>
+
+
+          <p className="mt-4 text-[9px] uppercase tracking-[0.35em] text-stone-700">
+            Premium Surfaces · Surat · Gujarat · India
+          </p>
+
+
+          <p className="mt-6 text-[10px] text-stone-700">
+            © 2026 Maruti Tiles. All Rights Reserved.
+          </p>
+
+        </div>
+
+      </footer>
 
     </main>
   );

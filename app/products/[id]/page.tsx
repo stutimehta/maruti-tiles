@@ -101,21 +101,21 @@ export default async function ProductPage({
 
   if (!product) {
     return (
-      <main className="min-h-screen bg-stone-50 px-6 py-24">
+      <main className="min-h-screen bg-[#0b0b0a] px-6 py-24 text-stone-100">
 
         <div className="mx-auto max-w-4xl text-center">
 
-          <h1 className="text-4xl font-semibold text-stone-900">
+          <h1 className="text-4xl font-semibold text-stone-100">
             Product Not Found
           </h1>
 
-          <p className="mt-4 text-stone-600">
+          <p className="mt-4 text-stone-400">
             The product you are looking for does not exist.
           </p>
 
           <Link
             href="/products"
-            className="mt-8 inline-block rounded-full bg-stone-900 px-7 py-4 font-semibold text-white transition hover:bg-stone-700"
+            className="mt-8 inline-block rounded-full bg-[#d2b06c] px-7 py-4 font-semibold text-black transition hover:bg-[#e0c489]"
           >
             Back to Products
           </Link>
@@ -161,46 +161,37 @@ Thank you.`;
 
 
   return (
-    <main className="min-h-screen bg-[#f5f1e9] text-stone-900">
+    <main className="min-h-screen overflow-x-hidden bg-[#0b0b0a] text-stone-100">
 
 
       {/* =====================================================
           HEADER
       ===================================================== */}
 
-      <header className="sticky top-0 z-50 border-b border-stone-200 bg-white/95 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0b0b0a]/95 text-white backdrop-blur-xl">
 
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6">
+        <div className="mx-auto flex h-[72px] max-w-[1400px] items-center justify-between px-5 sm:px-7 lg:px-10">
 
 
-          {/* LOGO */}
+          {/* TEXT-ONLY PREMIUM BRAND — NO LOGO */}
 
           <Link
             href="/"
-            className="flex items-center"
+            className="group flex shrink-0 items-center"
+            aria-label="Maruti Tiles Home"
           >
-
-            <Image
-              src="/images/brand/logo.png"
-              alt="Maruti Tiles"
-              width={55}
-              height={55}
-              priority
-              className="h-11 w-11 object-contain sm:h-12 sm:w-12"
-            />
-
-            <div className="ml-3">
-
-              <p className="text-lg font-bold tracking-tight sm:text-xl">
-                MARUTI TILES
+            <div className="leading-none">
+              <p className="font-serif text-[27px] font-medium uppercase tracking-[0.16em] text-stone-100 transition group-hover:text-[#d8ba79] sm:text-[32px]">
+                Maruti
               </p>
 
-              <p className="text-[7px] font-semibold uppercase tracking-[0.35em] text-[#b08d4e]">
-                Premium Surfaces
-              </p>
-
+              <div className="mt-1 flex items-center gap-2">
+                <span className="h-px w-6 bg-[#c7a665]" />
+                <p className="text-[8px] font-semibold uppercase tracking-[0.52em] text-[#c7a665] sm:text-[9px]">
+                  Tiles
+                </p>
+              </div>
             </div>
-
           </Link>
 
 
@@ -210,7 +201,7 @@ Thank you.`;
 
             <Link
               href="/wishlist"
-              className="hidden rounded-full border border-stone-300 px-4 py-2.5 text-xs font-semibold transition hover:bg-stone-950 hover:text-white sm:inline-flex"
+              className="hidden rounded-full border border-stone-700 px-4 py-2.5 text-xs font-semibold text-stone-200 transition hover:border-[#d2b06c] hover:text-[#d2b06c] sm:inline-flex"
             >
               ♡ Wishlist
             </Link>
@@ -218,7 +209,7 @@ Thank you.`;
 
             <Link
               href="/cart"
-              className="rounded-full border border-stone-300 px-4 py-2.5 text-xs font-semibold transition hover:bg-stone-950 hover:text-white"
+              className="rounded-full border border-stone-700 px-4 py-2.5 text-xs font-semibold text-stone-200 transition hover:border-[#d2b06c] hover:text-[#d2b06c]"
             >
               🛒 Cart
             </Link>
@@ -226,7 +217,7 @@ Thank you.`;
 
             <Link
               href="/products"
-              className="hidden rounded-full border border-stone-300 px-5 py-2.5 text-xs font-semibold transition hover:bg-stone-950 hover:text-white md:inline-flex"
+              className="hidden rounded-full border border-[#8f7442] px-5 py-2.5 text-xs font-semibold text-stone-200 transition hover:bg-[#d2b06c] hover:text-black md:inline-flex"
             >
               ← Products
             </Link>
@@ -242,16 +233,20 @@ Thank you.`;
           PRODUCT DETAILS
       ===================================================== */}
 
-      <section className="px-5 py-10 sm:px-6 sm:py-14 md:py-20">
+      <section className="relative overflow-hidden px-5 py-10 text-stone-100 sm:px-6 sm:py-14 md:py-20">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-[5%] top-[8%] h-[420px] w-[420px] rounded-full bg-[#b99558]/10 blur-[140px]" />
+          <div className="absolute right-[0%] top-[15%] h-[520px] w-[520px] rounded-full bg-[#d7c29a]/[0.05] blur-[160px]" />
+        </div>
 
-        <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
+        <div className="relative mx-auto grid max-w-7xl gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
 
 
           {/* =================================================
               PRODUCT IMAGE
           ================================================= */}
 
-          <div className="relative h-fit overflow-hidden rounded-[2rem] bg-white shadow-[0_15px_50px_rgba(0,0,0,0.07)]">
+          <div className="relative h-fit overflow-hidden rounded-[2rem] border border-stone-800 bg-[#151411] shadow-[0_25px_80px_rgba(0,0,0,0.5)]">
 
 
             {/* BADGES */}
@@ -259,7 +254,7 @@ Thank you.`;
             <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-2 sm:left-5 sm:top-5">
 
               {product.newArrival && (
-                <span className="rounded-full bg-white px-4 py-2 text-[10px] font-bold text-stone-900 shadow-md sm:text-xs">
+                <span className="rounded-full bg-[#f5f1e9] px-4 py-2 text-[10px] font-bold text-stone-900 shadow-md sm:text-xs">
                   New Arrival
                 </span>
               )}
@@ -301,7 +296,7 @@ Thank you.`;
 
             {/* CATEGORY */}
 
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500 sm:text-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a867] sm:text-sm">
               {product.category}
             </p>
 
@@ -315,7 +310,7 @@ Thank you.`;
 
             {/* DESCRIPTION */}
 
-            <p className="mt-5 text-base leading-7 text-stone-600 sm:mt-6 sm:text-lg sm:leading-8">
+            <p className="mt-5 text-base leading-7 text-stone-400 sm:mt-6 sm:text-lg sm:leading-8">
               {product.description}
             </p>
 
@@ -329,9 +324,9 @@ Thank you.`;
 
               {/* SIZE */}
 
-              <div className="rounded-2xl bg-white p-4 shadow-sm sm:p-5">
+              <div className="rounded-2xl border border-stone-800 bg-[#151411] p-4 shadow-[0_12px_35px_rgba(0,0,0,0.2)] sm:p-5">
 
-                <p className="text-[10px] uppercase tracking-widest text-stone-400 sm:text-xs">
+                <p className="text-[10px] uppercase tracking-widest text-stone-500 sm:text-xs">
                   Size
                 </p>
 
@@ -344,9 +339,9 @@ Thank you.`;
 
               {/* FINISH */}
 
-              <div className="rounded-2xl bg-white p-4 shadow-sm sm:p-5">
+              <div className="rounded-2xl border border-stone-800 bg-[#151411] p-4 shadow-[0_12px_35px_rgba(0,0,0,0.2)] sm:p-5">
 
-                <p className="text-[10px] uppercase tracking-widest text-stone-400 sm:text-xs">
+                <p className="text-[10px] uppercase tracking-widest text-stone-500 sm:text-xs">
                   Finish
                 </p>
 
@@ -363,13 +358,13 @@ Thank you.`;
                 APPLICATION
             ================================================= */}
 
-            <div className="mt-4 rounded-2xl bg-white p-4 shadow-sm sm:mt-6 sm:p-5">
+            <div className="mt-4 rounded-2xl border border-stone-800 bg-[#151411] p-4 shadow-[0_12px_35px_rgba(0,0,0,0.2)] sm:mt-6 sm:p-5">
 
-              <p className="text-[10px] uppercase tracking-widest text-stone-400 sm:text-xs">
+              <p className="text-[10px] uppercase tracking-widest text-stone-500 sm:text-xs">
                 Application
               </p>
 
-              <p className="mt-2 text-sm leading-6 text-stone-700 sm:leading-7">
+              <p className="mt-2 text-sm leading-6 text-stone-300 sm:leading-7">
                 {product.application}
               </p>
 
@@ -399,7 +394,7 @@ Thank you.`;
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 flex min-h-14 w-full items-center justify-center rounded-full border border-stone-300 bg-white px-7 text-center text-sm font-semibold text-stone-900 transition hover:border-stone-900 hover:bg-stone-100 active:scale-[0.98]"
+              className="mt-5 flex min-h-14 w-full items-center justify-center rounded-full border border-[#8f7442] bg-[#d2b06c] px-7 text-center text-sm font-semibold text-black transition hover:bg-[#e0c489] active:scale-[0.98]"
             >
               Any Query? Ask on WhatsApp
             </a>
@@ -421,7 +416,7 @@ Thank you.`;
           RELATED PRODUCTS
       ===================================================== */}
 
-      <section className="border-t border-stone-200 bg-white px-5 py-16 sm:px-6 sm:py-20">
+      <section className="border-t border-stone-800 bg-[#090909] px-5 py-16 text-white sm:px-6 sm:py-20">
 
         <div className="mx-auto max-w-7xl">
 
@@ -430,7 +425,7 @@ Thank you.`;
 
           <div className="max-w-2xl">
 
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-stone-500 sm:text-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#c8a867] sm:text-sm">
               You May Also Like
             </p>
 
@@ -449,7 +444,7 @@ Thank you.`;
 
               <article
                 key={related.id}
-                className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                className="overflow-hidden rounded-[2rem] border border-stone-800 bg-[#151411] shadow-[0_15px_50px_rgba(0,0,0,0.3)] transition hover:-translate-y-1 hover:border-[#8f7442] hover:shadow-xl"
               >
 
 
@@ -460,7 +455,7 @@ Thank you.`;
                   className="block"
                 >
 
-                  <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-[#11110f]">
 
                     <Image
                       src={related.image}
@@ -476,7 +471,7 @@ Thank you.`;
                     <div className="absolute left-4 top-4 flex flex-wrap gap-2">
 
                       {related.newArrival && (
-                        <span className="rounded-full bg-white px-3 py-1.5 text-[10px] font-bold shadow-sm">
+                        <span className="rounded-full bg-[#f5f1e9] px-3 py-1.5 text-[10px] font-bold text-stone-900 shadow-sm">
                           New Arrival
                         </span>
                       )}
@@ -501,7 +496,7 @@ Thank you.`;
 
                   {/* CATEGORY */}
 
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-[#b9a37c]">
                     {related.category}
                   </p>
 
@@ -510,7 +505,7 @@ Thank you.`;
 
                   <Link href={`/products/${related.id}`}>
 
-                    <h3 className="mt-2 text-xl font-semibold transition hover:text-stone-500 sm:text-2xl">
+                    <h3 className="mt-2 text-xl font-semibold text-stone-100 transition hover:text-[#d7bb83] sm:text-2xl">
                       {related.name}
                     </h3>
 
@@ -522,26 +517,26 @@ Thank you.`;
                   <div className="mt-5 grid grid-cols-2 gap-3">
 
 
-                    <div className="rounded-xl bg-stone-50 p-3">
+                    <div className="rounded-xl border border-stone-800 bg-[#11110f] p-3">
 
                       <p className="text-[9px] uppercase tracking-widest text-stone-400">
                         Size
                       </p>
 
-                      <p className="mt-1 text-xs font-semibold sm:text-sm">
+                      <p className="mt-1 text-xs font-semibold text-stone-200 sm:text-sm">
                         {related.size}
                       </p>
 
                     </div>
 
 
-                    <div className="rounded-xl bg-stone-50 p-3">
+                    <div className="rounded-xl border border-stone-800 bg-[#11110f] p-3">
 
                       <p className="text-[9px] uppercase tracking-widest text-stone-400">
                         Finish
                       </p>
 
-                      <p className="mt-1 text-xs font-semibold sm:text-sm">
+                      <p className="mt-1 text-xs font-semibold text-stone-200 sm:text-sm">
                         {related.finish}
                       </p>
 
@@ -554,7 +549,7 @@ Thank you.`;
 
                   <div className="mt-6 flex items-center justify-between gap-3">
 
-                    <p className="text-sm font-semibold">
+                    <p className="text-sm font-semibold text-stone-100">
 
                       ₹
                       {related.pricePerSqFt.toLocaleString("en-IN")}
@@ -568,7 +563,7 @@ Thank you.`;
 
                     <Link
                       href={`/products/${related.id}`}
-                      className="min-h-11 rounded-full bg-stone-900 px-4 py-3 text-center text-xs font-semibold text-white transition hover:bg-stone-700"
+                      className="min-h-11 rounded-full bg-[#d2b06c] px-4 py-3 text-center text-xs font-semibold text-black transition hover:bg-[#e0c489]"
                     >
                       View →
                     </Link>
@@ -592,10 +587,10 @@ Thank you.`;
           FOOTER
       ===================================================== */}
 
-      <footer className="border-t bg-stone-900 px-5 py-8 text-center text-white sm:px-6">
+      <footer className="border-t border-stone-800 bg-[#070706] px-5 py-10 text-center text-white sm:px-6">
 
         <p className="text-sm">
-          © 2026 Maruti Tiles. All rights reserved.
+          © 2026 Maruti Tiles. All Rights Reserved.
         </p>
 
       </footer>

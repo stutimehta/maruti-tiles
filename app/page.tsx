@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -48,33 +47,28 @@ export default function Home() {
 
         <div className="mx-auto flex h-[72px] max-w-[1400px] items-center justify-between px-5 sm:px-7 lg:px-10">
 
-          {/* LOGO — SAME EXISTING LOGO */}
+          {/* BRAND — TEXT ONLY, NO LOGO */}
           <Link
             href="/"
-            className="flex shrink-0 items-center"
+            className="group flex shrink-0 items-center"
+            aria-label="Maruti Tiles Home"
           >
-            <Image
-              src="/images/brand/logo.png"
-              alt="Maruti Tiles"
-              width={55}
-              height={55}
-              priority
-              className="h-11 w-11 object-contain sm:h-12 sm:w-12"
-            />
+            <div className="leading-none">
 
-            <div className="ml-3">
-
-              <p className="font-serif text-[19px] font-semibold tracking-[0.08em] sm:text-[22px]">
-                MARUTI TILES
+              <p className="font-serif text-[25px] font-medium uppercase tracking-[0.12em] text-stone-100 transition group-hover:text-[#d8ba79] sm:text-[29px]">
+                Maruti
               </p>
 
-              <p className="mt-0.5 text-[7px] font-semibold uppercase tracking-[0.42em] text-[#c7a665]">
-                Premium Surfaces
-              </p>
+              <div className="mt-1 flex items-center gap-2">
+                <span className="h-px w-5 bg-[#c7a665]" />
+
+                <p className="text-[8px] font-semibold uppercase tracking-[0.52em] text-[#c7a665] sm:text-[9px]">
+                  Tiles
+                </p>
+              </div>
 
             </div>
           </Link>
-
 
           {/* DESKTOP NAV */}
           <nav className="hidden items-center gap-8 lg:flex">
@@ -116,7 +110,6 @@ export default function Home() {
 
           </nav>
 
-
           {/* DESKTOP ACTIONS */}
           <div className="hidden items-center gap-3 lg:flex">
 
@@ -151,7 +144,6 @@ export default function Home() {
             </a>
 
           </div>
-
 
           {/* MOBILE */}
           <div className="flex items-center gap-2 lg:hidden">
@@ -198,7 +190,6 @@ export default function Home() {
           </div>
 
         </div>
-
 
         {/* MOBILE MENU */}
         {menuOpen && (
@@ -281,176 +272,174 @@ export default function Home() {
 
 
       {/* =========================================================
-          HERO
+          PREMIUM HERO
       ========================================================= */}
       <section
         id="home"
-        className="relative overflow-hidden bg-[#eee8dc]"
+        className="relative min-h-[760px] overflow-hidden bg-[#090908] text-white lg:min-h-[780px]"
       >
 
-        <div className="mx-auto max-w-[1400px]">
+        {/* PREMIUM HERO IMAGE */}
+        <div className="absolute inset-0">
 
-          <div className="grid min-h-[680px] items-stretch lg:grid-cols-[0.9fr_1.1fr]">
+          <Image
+            src="/images/hero-premium.png"
+            alt="Premium architectural tile surfaces"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[68%_center]"
+          />
 
-            {/* HERO TEXT */}
-            <div className="flex flex-col justify-center px-6 py-16 sm:px-10 lg:px-14 xl:px-20">
+          {/* Dark luxury overlay */}
+          <div className="absolute inset-0 bg-black/35" />
 
-              <div className="flex items-center gap-3">
+          {/* Stronger left-side readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#080807] via-[#080807]/95 via-[42%] to-[#080807]/20" />
 
-                <span className="h-px w-10 bg-stone-700" />
+          {/* Bottom shadow */}
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#080807] to-transparent" />
 
-                <p className="text-[9px] font-bold uppercase tracking-[0.4em] text-stone-600">
-                  Maruti Tiles · Surat · Gujarat
-                </p>
-
-              </div>
+        </div>
 
 
-              <p className="mt-10 text-[10px] font-bold uppercase tracking-[0.35em] text-[#ad8b4d]">
-                Premium Surfaces
+        {/* Decorative frame */}
+        <div className="pointer-events-none absolute inset-0">
+
+          <div className="absolute left-6 top-6 h-px w-24 bg-[#c9a867] sm:left-10 sm:top-10" />
+
+          <div className="absolute right-6 top-6 h-20 w-px bg-[#c9a867] sm:right-10 sm:top-10" />
+
+          <div className="absolute bottom-8 left-6 h-20 w-px bg-[#c9a867]/70 sm:left-10" />
+
+          <div className="absolute bottom-8 right-6 h-px w-24 bg-[#c9a867]/70 sm:right-10" />
+
+        </div>
+
+
+        <div className="relative mx-auto flex min-h-[760px] max-w-[1400px] items-center px-6 py-20 sm:px-10 lg:min-h-[780px] lg:px-14 xl:px-20">
+
+          <div className="max-w-[720px]">
+
+            {/* LOCATION */}
+            <div className="flex items-center gap-3">
+
+              <span className="h-px w-10 bg-[#c7a665]" />
+
+              <p className="text-[9px] font-bold uppercase tracking-[0.45em] text-[#d0ad69]">
+                Surat · Gujarat · India
               </p>
-
-
-              <h1 className="mt-5 max-w-[650px] font-serif text-[4.2rem] font-medium leading-[0.86] tracking-[-0.055em] text-stone-950 sm:text-6xl md:text-7xl xl:text-[6.3rem]">
-
-                Surfaces
-
-                <span className="block text-[#b08d4e]">
-                  that define
-                </span>
-
-                <span className="block">
-                  space.
-                </span>
-
-              </h1>
-
-
-              <p className="mt-8 max-w-lg text-base leading-7 text-stone-600 sm:text-lg">
-                Premium tiles curated for refined residential,
-                commercial and architectural spaces.
-              </p>
-
-
-              {/* BUTTONS */}
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-
-                <a
-                  href="#products"
-                  className="inline-flex min-h-14 items-center justify-center rounded-lg bg-stone-950 px-7 text-sm font-semibold text-white shadow-xl transition hover:-translate-y-1 hover:bg-stone-800"
-                >
-                  Explore Collection
-                  <span className="ml-4 text-lg">
-                    ↗
-                  </span>
-                </a>
-
-                <a
-                  href="#catalogues"
-                  className="inline-flex min-h-14 items-center justify-center rounded-lg border border-stone-400 px-7 text-sm font-semibold text-stone-900 transition hover:-translate-y-1 hover:bg-white"
-                >
-                  View Catalogues
-                </a>
-
-              </div>
-
-
-              {/* TRUST */}
-              <div className="mt-12 grid max-w-lg grid-cols-3 border-t border-stone-300 pt-6">
-
-                <div>
-                  <p className="text-lg font-semibold">
-                    ◆
-                  </p>
-
-                  <p className="mt-3 text-[12px] font-semibold tracking-wide">
-                    Premium
-                  </p>
-
-                  <p className="mt-1 text-[10px] text-stone-500">
-                    Quality
-                  </p>
-                </div>
-
-
-                <div className="border-l border-stone-300 pl-4 sm:pl-7">
-
-                  <p className="text-lg font-semibold">
-                    ▥
-                  </p>
-
-                  <p className="mt-3 text-[12px] font-semibold tracking-wide">
-                    Morbi
-                  </p>
-
-                  <p className="mt-1 text-[10px] text-stone-500">
-                    Manufacturing
-                  </p>
-
-                </div>
-
-
-                <div className="border-l border-stone-300 pl-4 sm:pl-7">
-
-                  <p className="text-lg font-semibold">
-                    ◎
-                  </p>
-
-                  <p className="mt-3 text-[12px] font-semibold tracking-wide">
-                    India & International 
-                  </p>
-
-                  <p className="mt-1 text-[10px] text-stone-500">
-                    Export
-                  </p>
-
-                </div>
-
-              </div>
 
             </div>
 
 
-            {/* HERO VISUAL */}
+            {/* SMALL LABEL */}
+            <p className="mt-12 text-[10px] font-semibold uppercase tracking-[0.48em] text-stone-400">
+              Architectural Collections
+            </p>
 
-            <div className="relative min-h-[540px] overflow-hidden bg-[#15130f] lg:min-h-full">
 
-              {/* Premium background */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(190,153,82,0.18),transparent_42%),linear-gradient(135deg,#0d0c0a_0%,#211b12_50%,#0d0c0a_100%)]" />
+            {/* MAIN CREATIVE CAPTION */}
+            <h1 className="mt-6 max-w-[680px] font-serif text-[4rem] font-medium leading-[0.88] tracking-[-0.055em] text-stone-100 sm:text-6xl md:text-7xl xl:text-[6.2rem]">
 
-              <div className="absolute inset-0 opacity-30">
-                <div className="absolute left-[15%] top-[-10%] h-[130%] w-px rotate-[18deg] bg-[#d3b474]" />
-                <div className="absolute left-[45%] top-[-10%] h-[130%] w-px rotate-[18deg] bg-[#8d774e]" />
-                <div className="absolute right-[18%] top-[-10%] h-[130%] w-px rotate-[18deg] bg-[#d3b474]" />
-              </div>
+              <span className="block">
+                Spaces
+                <span className="ml-3 font-serif italic font-normal text-[#c9a867]">
+                  with
+                </span>
+              </span>
 
-              {/* Premium glow */}
-              <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#b08c4c]/15 blur-[110px]" />
+              <span className="block font-serif italic font-normal text-[#c9a867]">
+                presence.
+              </span>
 
-              {/* Logo */}
-              <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
-                <div className="rounded-[2rem] border border-[#d2b06c]/30 bg-black/20 p-8 shadow-[0_35px_90px_rgba(0,0,0,0.7)] backdrop-blur-sm sm:p-10">
-                  <Image
-                    src="/images/brand/logo.png"
-                    alt="Maruti Tiles"
-                    width={300}
-                    height={300}
-                    priority
-                    className="h-[190px] w-[190px] object-contain sm:h-[250px] sm:w-[250px]"
-                  />
-                </div>
-              </div>
+              <span className="mt-2 block">
+                Surfaces
+                <span className="ml-3 font-serif italic font-normal text-[#c9a867]">
+                  with
+                </span>
+              </span>
 
-              {/* Premium frame */}
-              <div className="absolute left-8 top-8 h-px w-24 bg-[#d2b06c]" />
-              <div className="absolute right-8 top-8 h-20 w-px bg-[#d2b06c]" />
-              <div className="absolute bottom-8 left-8 h-20 w-px bg-[#d2b06c]" />
-              <div className="absolute bottom-8 right-8 h-px w-24 bg-[#d2b06c]" />
+              <span className="block">
+                purpose.
+              </span>
 
-              <div className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 text-center">
-                <p className="whitespace-nowrap text-[8px] font-semibold uppercase tracking-[0.4em] text-[#d2b06c]">
-                  Premium Surfaces · Maruti Tiles
+            </h1>
+
+
+            {/* DESCRIPTION */}
+            <p className="mt-9 max-w-xl text-base leading-7 text-stone-300 sm:text-lg">
+              Premium tiles curated for architecture,
+              interiors and modern living.
+            </p>
+
+
+            {/* BUTTONS */}
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+
+              <a
+                href="#products"
+                className="inline-flex min-h-14 items-center justify-center rounded-lg bg-[#d2b06c] px-7 text-sm font-semibold text-[#11100e] shadow-[0_18px_50px_rgba(0,0,0,0.45)] transition hover:-translate-y-1 hover:bg-[#e0c489]"
+              >
+                Explore Collection
+
+                <span className="ml-4 text-lg">
+                  ↗
+                </span>
+              </a>
+
+
+              <a
+                href="#catalogues"
+                className="inline-flex min-h-14 items-center justify-center rounded-lg border border-white/25 bg-black/20 px-7 text-sm font-semibold text-stone-100 backdrop-blur-sm transition hover:-translate-y-1 hover:border-[#c7a665] hover:text-[#d7bb83]"
+              >
+                View Catalogues
+
+                <span className="ml-4 text-lg">
+                  →
+                </span>
+              </a>
+
+            </div>
+
+
+            {/* PREMIUM PILLARS */}
+            <div className="mt-14 grid max-w-xl grid-cols-3 border-t border-white/15 pt-7">
+
+              <div>
+                <p className="font-serif text-xl text-stone-100">
+                  01
                 </p>
+
+                <p className="mt-2 text-[9px] uppercase tracking-[0.25em] text-stone-400">
+                  Premium
+                </p>
+              </div>
+
+
+              <div className="border-l border-white/15 pl-5 sm:pl-8">
+
+                <p className="font-serif text-xl text-stone-100">
+                  02
+                </p>
+
+                <p className="mt-2 text-[9px] uppercase tracking-[0.25em] text-stone-400">
+                  Timeless
+                </p>
+
+              </div>
+
+
+              <div className="border-l border-white/15 pl-5 sm:pl-8">
+
+                <p className="font-serif text-xl text-stone-100">
+                  03
+                </p>
+
+                <p className="mt-2 text-[9px] uppercase tracking-[0.25em] text-stone-400">
+                  Crafted
+                </p>
+
               </div>
 
             </div>
@@ -465,7 +454,7 @@ export default function Home() {
       {/* =========================================================
           CATEGORY STRIP
       ========================================================= */}
-      <section className="bg-[#f8f5ef] px-5 py-12 sm:px-7">
+      <section className="bg-[#11110f] px-5 py-14 text-white sm:px-7">
 
         <div className="mx-auto max-w-[1400px]">
 
@@ -473,7 +462,7 @@ export default function Home() {
 
             <span className="h-px w-10 bg-[#c5a265]" />
 
-            <p className="text-[10px] font-bold uppercase tracking-[0.38em] sm:text-[11px]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.38em] text-stone-300 sm:text-[11px]">
               Explore Our Surfaces
             </p>
 
@@ -527,11 +516,11 @@ export default function Home() {
 
 
       {/* =========================================================
-          COLLECTION — DARK
+          COLLECTION
       ========================================================= */}
       <section
         id="products"
-        className="bg-[#0d0d0c] px-5 py-20 text-white sm:px-7 md:py-24"
+        className="bg-[#090909] px-5 py-20 text-white sm:px-7 md:py-24"
       >
 
         <div className="mx-auto max-w-[1400px]">
@@ -545,15 +534,16 @@ export default function Home() {
               </p>
 
               <h2 className="mt-5 font-serif text-4xl leading-[0.95] sm:text-5xl">
-                Tiles for every
+                Material for
+
                 <span className="block text-stone-500">
-                  beautiful space.
+                  modern spaces.
                 </span>
               </h2>
 
               <p className="mt-6 text-sm leading-6 text-stone-400">
-                Explore our curated selection of premium surfaces
-                for modern living.
+                A considered selection of premium surfaces
+                for residential, commercial and architectural projects.
               </p>
 
               <Link
@@ -561,6 +551,7 @@ export default function Home() {
                 className="mt-7 inline-flex items-center text-xs font-semibold text-[#d4b574]"
               >
                 View All Products
+
                 <span className="ml-3 text-lg">
                   →
                 </span>
@@ -569,7 +560,6 @@ export default function Home() {
             </div>
 
 
-            {/* PRODUCT CARDS */}
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
 
               {featuredProducts.map((product) => (
@@ -590,7 +580,6 @@ export default function Home() {
                       className="object-cover transition duration-700 group-hover:scale-105"
                     />
 
-
                     <div className="absolute left-3 top-3">
 
                       <span className="rounded-sm bg-[#c6a563] px-2 py-1 text-[7px] font-bold uppercase tracking-[0.12em] text-black">
@@ -607,6 +596,7 @@ export default function Home() {
                         event.stopPropagation();
                       }}
                     >
+
                       <ProductActions
                         id={product.id}
                         name={product.name}
@@ -616,6 +606,7 @@ export default function Home() {
                         image={product.image}
                         pricePerSqFt={product.pricePerSqFt}
                       />
+
                     </div>
 
                   </div>
@@ -655,7 +646,7 @@ export default function Home() {
       ========================================================= */}
       <section
         id="catalogues"
-        className="bg-[#f5f1e9] px-5 py-20 sm:px-7 md:py-24"
+        className="bg-[#151411] px-5 py-20 text-white sm:px-7 md:py-24"
       >
 
         <div className="mx-auto max-w-[1400px]">
@@ -669,11 +660,17 @@ export default function Home() {
               </p>
 
               <h2 className="mt-4 font-serif text-4xl leading-[0.95] sm:text-5xl">
-                Explore our
-                <span className="block">
-                  premium collections.
+                Discover
+
+                <span className="block text-stone-500">
+                  the collection.
                 </span>
               </h2>
+
+              <p className="mt-6 text-sm leading-6 text-stone-400">
+                Explore detailed collections, finishes and formats
+                for your next project.
+              </p>
 
             </div>
 
@@ -709,13 +706,12 @@ export default function Home() {
       ========================================================= */}
       <section
         id="about"
-        className="bg-[#12110f] px-5 py-20 text-white sm:px-7 md:py-24"
+        className="bg-[#0b0b0a] px-5 py-20 text-white sm:px-7 md:py-24"
       >
 
         <div className="mx-auto grid max-w-[1200px] gap-10 lg:grid-cols-2 lg:items-center">
 
-          {/* IMAGE */}
-          <div className="relative overflow-hidden rounded-2xl border border-stone-700">
+          <div className="relative overflow-hidden rounded-2xl border border-stone-800 bg-[#151411]">
 
             <div className="aspect-[4/3]">
 
@@ -729,16 +725,18 @@ export default function Home() {
 
             </div>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+
 
             <div className="absolute bottom-6 left-6">
 
-              <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#d0af6d]">
+              <p className="font-serif text-3xl tracking-[0.04em] text-white">
                 Maruti Tiles
               </p>
 
-              <p className="mt-2 font-serif text-2xl">
-                Premium Surfaces
+              <p className="mt-2 text-[9px] font-semibold uppercase tracking-[0.35em] text-[#d0af6d]">
+                Material · Texture · Space
               </p>
 
             </div>
@@ -746,7 +744,6 @@ export default function Home() {
           </div>
 
 
-          {/* TEXT */}
           <div>
 
             <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#c8a867]">
@@ -754,9 +751,10 @@ export default function Home() {
             </p>
 
             <h2 className="mt-5 font-serif text-4xl leading-[0.95] sm:text-5xl">
-              Built around surfaces.
+              Material with character.
+
               <span className="block text-stone-500">
-                Designed around spaces.
+                Spaces with identity.
               </span>
             </h2>
 
@@ -775,6 +773,7 @@ export default function Home() {
             <div className="mt-9 grid grid-cols-3 border-t border-stone-800 pt-6">
 
               <div>
+
                 <p className="text-lg font-semibold">
                   2026
                 </p>
@@ -782,6 +781,7 @@ export default function Home() {
                 <p className="mt-1 text-[8px] uppercase tracking-[0.2em] text-stone-500">
                   Established
                 </p>
+
               </div>
 
 
@@ -824,16 +824,20 @@ export default function Home() {
       ========================================================= */}
       <section
         id="contact"
-        className="bg-[#f5f1e9] px-5 py-10 sm:px-7 md:py-14"
+        className="bg-[#151411] px-5 py-12 text-white sm:px-7 md:py-16"
       >
 
-        <div className="mx-auto max-w-[1200px] rounded-2xl bg-white p-7 shadow-[0_15px_60px_rgba(0,0,0,0.08)] sm:p-10">
+        <div className="mx-auto max-w-[1200px] rounded-2xl border border-stone-800 bg-[#0d0d0c] p-7 shadow-[0_20px_80px_rgba(0,0,0,0.3)] sm:p-10">
 
           <div className="grid gap-7 lg:grid-cols-[1fr_1fr_1fr] lg:items-center">
 
             <div>
 
-              <h2 className="font-serif text-3xl sm:text-4xl">
+              <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#c8a867]">
+                Start a conversation
+              </p>
+
+              <h2 className="mt-3 font-serif text-3xl sm:text-4xl">
                 Have a project in mind?
               </h2>
 
@@ -848,13 +852,15 @@ export default function Home() {
               href={`https://wa.me/${whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex min-h-16 items-center justify-center rounded-xl border border-stone-200 px-5 transition hover:border-[#c8a867] hover:bg-[#faf8f3]"
+              className="flex min-h-16 items-center justify-center rounded-xl border border-stone-800 px-5 transition hover:border-[#c8a867] hover:bg-[#171612]"
             >
-              <span className="mr-4 text-2xl text-green-600">
+
+              <span className="mr-4 text-2xl text-green-500">
                 ◉
               </span>
 
               <div>
+
                 <p className="text-sm font-semibold">
                   WhatsApp Enquiry
                 </p>
@@ -862,6 +868,7 @@ export default function Home() {
                 <p className="mt-1 text-xs text-stone-500">
                   Get pricing & availability
                 </p>
+
               </div>
 
             </a>
@@ -871,13 +878,15 @@ export default function Home() {
 
               <a
                 href="tel:+918141352183"
-                className="flex min-h-14 items-center rounded-xl border border-stone-200 px-5 transition hover:border-[#c8a867]"
+                className="flex min-h-14 items-center rounded-xl border border-stone-800 px-5 transition hover:border-[#c8a867]"
               >
+
                 <span className="mr-4 text-xl text-[#ad8a4d]">
                   ☎
                 </span>
 
                 <div>
+
                   <p className="text-xs font-semibold">
                     Call Now
                   </p>
@@ -885,6 +894,7 @@ export default function Home() {
                   <p className="text-xs text-stone-500">
                     +91 81413 52183
                   </p>
+
                 </div>
 
               </a>
@@ -892,13 +902,15 @@ export default function Home() {
 
               <a
                 href="mailto:amitgohil006@gmail.com"
-                className="flex min-h-14 items-center rounded-xl border border-stone-200 px-5 transition hover:border-[#c8a867]"
+                className="flex min-h-14 items-center rounded-xl border border-stone-800 px-5 transition hover:border-[#c8a867]"
               >
+
                 <span className="mr-4 text-xl text-[#ad8a4d]">
                   ✉
                 </span>
 
                 <div>
+
                   <p className="text-xs font-semibold">
                     Email Us
                   </p>
@@ -906,6 +918,7 @@ export default function Home() {
                   <p className="break-all text-xs text-stone-500">
                     amitgohil006@gmail.com
                   </p>
+
                 </div>
 
               </a>
@@ -922,36 +935,26 @@ export default function Home() {
       {/* =========================================================
           FOOTER
       ========================================================= */}
-      <footer className="bg-[#090908] px-5 py-12 text-white sm:px-7">
+      <footer className="bg-[#070706] px-5 py-12 text-white sm:px-7">
 
         <div className="mx-auto max-w-[1400px]">
 
           <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
 
-            {/* BRAND */}
             <div>
 
-              <Link
-                href="/"
-                className="flex items-center"
-              >
+              <Link href="/" className="group inline-block">
 
-                <Image
-                  src="/images/brand/logo.png"
-                  alt="Maruti Tiles"
-                  width={55}
-                  height={55}
-                  className="h-11 w-11 object-contain"
-                />
+                <p className="font-serif text-2xl tracking-[0.1em] text-stone-100">
+                  Maruti
+                </p>
 
-                <div className="ml-3">
+                <div className="mt-1 flex items-center gap-2">
 
-                  <p className="font-serif text-xl tracking-[0.08em]">
-                    MARUTI TILES
-                  </p>
+                  <span className="h-px w-5 bg-[#c7a665]" />
 
-                  <p className="mt-1 text-[6px] font-semibold uppercase tracking-[0.4em] text-[#c7a665]">
-                    Premium Surfaces
+                  <p className="text-[8px] font-semibold uppercase tracking-[0.5em] text-[#c7a665]">
+                    Tiles
                   </p>
 
                 </div>
@@ -968,7 +971,6 @@ export default function Home() {
             </div>
 
 
-            {/* QUICK LINKS */}
             <div>
 
               <p className="text-[8px] font-bold uppercase tracking-[0.3em] text-stone-500">
@@ -1002,7 +1004,6 @@ export default function Home() {
             </div>
 
 
-            {/* CATEGORIES */}
             <div>
 
               <p className="text-[8px] font-bold uppercase tracking-[0.3em] text-stone-500">
@@ -1036,7 +1037,6 @@ export default function Home() {
             </div>
 
 
-            {/* CONTACT */}
             <div>
 
               <p className="text-[8px] font-bold uppercase tracking-[0.3em] text-stone-500">
@@ -1076,7 +1076,6 @@ export default function Home() {
           </div>
 
 
-          {/* COPYRIGHT */}
           <div className="mt-10 flex flex-col justify-between gap-4 border-t border-stone-800 pt-6 text-[11px] text-stone-600 sm:flex-row">
 
             <p>
@@ -1084,7 +1083,6 @@ export default function Home() {
             </p>
 
             <div className="flex gap-5">
-
               <span>
                 Privacy Policy
               </span>
@@ -1092,7 +1090,6 @@ export default function Home() {
               <span>
                 Terms & Conditions
               </span>
-
             </div>
 
           </div>
@@ -1105,10 +1102,6 @@ export default function Home() {
   );
 }
 
-
-/* ===============================================================
-   CATEGORY CARD
-   =============================================================== */
 
 function CategoryCard({
   title,
@@ -1135,7 +1128,7 @@ function CategoryCard({
         className="object-cover transition duration-700 group-hover:scale-110"
       />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/5" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/5" />
 
       <div className="absolute bottom-4 left-4 text-white">
 
@@ -1158,10 +1151,6 @@ function CategoryCard({
 }
 
 
-/* ===============================================================
-   CATALOGUE CARD
-   =============================================================== */
-
 function CatalogueCard({
   title,
   file,
@@ -1174,12 +1163,12 @@ function CatalogueCard({
       href={file}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex min-h-[100px] items-center justify-between rounded-xl border border-stone-200 bg-white px-5 transition duration-300 hover:-translate-y-1 hover:border-[#c8a867] hover:shadow-lg"
+      className="group flex min-h-[100px] items-center justify-between rounded-xl border border-stone-800 bg-[#0d0d0c] px-5 transition duration-300 hover:-translate-y-1 hover:border-[#c8a867] hover:shadow-lg"
     >
 
       <div className="flex items-center gap-4">
 
-        <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-stone-200 text-xs font-bold">
+        <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-stone-700 text-xs font-bold text-[#c8a867]">
           PDF
         </div>
 

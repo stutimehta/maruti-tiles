@@ -360,7 +360,7 @@ export default function PaymentPage() {
         },
 
         theme: {
-          color: "#b38d48",
+          color: "#c7a665",
         },
 
         modal: {
@@ -416,6 +416,7 @@ export default function PaymentPage() {
              *
              * The server verifies the Razorpay signature.
              */
+
             /*
              * Get the currently logged-in Supabase session.
              * The server uses this access token to create the
@@ -614,8 +615,13 @@ export default function PaymentPage() {
    */
   if (!checkout) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#f7f5f0]">
-        <p className="text-sm text-stone-500">
+      <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#090909] text-white">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-[15%] top-[15%] h-[350px] w-[350px] rounded-full bg-[#c7a665]/10 blur-[130px]" />
+          <div className="absolute bottom-[10%] right-[10%] h-[400px] w-[400px] rounded-full bg-[#d6bc80]/5 blur-[140px]" />
+        </div>
+
+        <p className="relative text-sm text-stone-400">
           Loading payment...
         </p>
       </main>
@@ -623,73 +629,131 @@ export default function PaymentPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f5f0] text-stone-900">
+    <main className="relative min-h-screen overflow-x-hidden bg-[#090909] text-stone-100">
 
-      {/* HEADER */}
+      {/* =====================================================
+          PREMIUM AMBIENT BACKGROUND
+      ===================================================== */}
 
-      <header className="border-b border-stone-200 bg-[#f7f5f0]">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-6">
+      <div className="pointer-events-none fixed inset-0 -z-0 overflow-hidden">
+        <div className="absolute left-[-10%] top-[8%] h-[500px] w-[500px] rounded-full bg-[#b38d48]/10 blur-[150px]" />
+
+        <div className="absolute right-[-8%] top-[30%] h-[600px] w-[600px] rounded-full bg-[#d4b875]/[0.06] blur-[170px]" />
+
+        <div className="absolute bottom-[-15%] left-[30%] h-[500px] w-[500px] rounded-full bg-[#8c6c36]/[0.05] blur-[150px]" />
+      </div>
+
+
+      {/* =====================================================
+          HEADER
+      ===================================================== */}
+
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0b0b0a]/95 text-white backdrop-blur-xl">
+
+        <div className="mx-auto flex h-[78px] max-w-[1400px] items-center justify-between px-5 sm:px-7 lg:px-10">
+
+          {/* TEXT ONLY BRAND */}
 
           <Link
             href="/"
-            className="flex items-center"
+            className="group flex shrink-0 items-center"
+            aria-label="Maruti Tiles Home"
           >
-            <img
-              src="/images/brand/logo.png"
-              alt="Maruti Tiles"
-              className="h-11 w-11 object-contain"
-            />
+            <div className="leading-none">
 
-            <span className="ml-3 text-lg font-bold tracking-tight">
-              MARUTI TILES
-            </span>
+              <p className="font-serif text-[27px] font-medium uppercase tracking-[0.12em] text-stone-100 transition group-hover:text-[#d8ba79] sm:text-[31px]">
+                Maruti
+              </p>
+
+              <div className="mt-1 flex items-center gap-2">
+                <span className="h-px w-6 bg-[#c7a665]" />
+
+                <p className="text-[8px] font-semibold uppercase tracking-[0.55em] text-[#c7a665] sm:text-[9px]">
+                  Tiles
+                </p>
+              </div>
+
+            </div>
           </Link>
+
+
+          {/* BACK BUTTON */}
 
           <Link
             href="/checkout"
-            className="rounded-full border border-stone-300 px-5 py-2.5 text-xs font-semibold transition hover:bg-stone-950 hover:text-white"
+            className="rounded-full border border-stone-700 px-5 py-2.5 text-xs font-semibold text-stone-200 transition hover:border-[#c7a665] hover:bg-[#c7a665] hover:text-black sm:px-6"
           >
             Back to Checkout
           </Link>
 
         </div>
+
       </header>
 
 
-      {/* CONTENT */}
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
 
-      <section className="px-5 py-12 sm:px-6 md:py-20">
+      <section className="relative z-10 px-5 py-14 sm:px-7 md:py-20 lg:py-24">
 
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-[1180px]">
 
-          <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#b38d48]">
-            Payment
-          </p>
+          {/* INTRO */}
 
-          <h1 className="mt-4 text-5xl font-semibold tracking-[-0.04em] text-stone-950 sm:text-6xl">
-            Choose how to pay.
-          </h1>
+          <div className="max-w-4xl">
 
-          <p className="mt-4 max-w-xl text-sm leading-6 text-stone-500">
-            Select your payment method. The amount is calculated
-            automatically from your product total.
-          </p>
+            <div className="flex items-center gap-3">
+
+              <span className="h-px w-10 bg-[#c7a665]" />
+
+              <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#c7a665]">
+                Payment
+              </p>
+
+            </div>
+
+            <h1 className="mt-6 max-w-4xl font-serif text-5xl font-medium leading-[0.95] tracking-[-0.045em] text-stone-100 sm:text-6xl md:text-7xl">
+
+              Choose how to
+              <span className="text-[#c7a665]">
+                {" "}pay.
+              </span>
+
+            </h1>
+
+            <p className="mt-6 max-w-xl text-sm leading-7 text-stone-400 sm:text-base">
+              Select your payment method. The amount is calculated
+              automatically from your product total.
+            </p>
+
+          </div>
 
 
-          <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_360px]">
+          {/* =================================================
+              MAIN GRID
+          ================================================= */}
 
-            {/* PAYMENT OPTIONS */}
+          <div className="mt-12 grid gap-7 lg:grid-cols-[1fr_360px]">
 
-            <div className="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
 
-              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+            {/* =================================================
+                PAYMENT OPTIONS
+            ================================================= */}
+
+            <div className="rounded-[2rem] border border-stone-800 bg-[#11110f]/95 p-6 shadow-[0_30px_100px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:p-8">
+
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-stone-500">
                 Payment Method
               </p>
 
 
               <div className="mt-7 space-y-4">
 
-                {/* ONLINE */}
+
+                {/* =================================================
+                    ONLINE PAYMENT
+                ================================================= */}
 
                 <button
                   type="button"
@@ -698,10 +762,10 @@ export default function PaymentPage() {
                     setMessage("");
                   }}
                   disabled={loading}
-                  className={`w-full rounded-3xl border p-5 text-left transition ${
+                  className={`w-full rounded-3xl border p-5 text-left transition duration-300 ${
                     paymentMethod === "online"
-                      ? "border-stone-950 bg-stone-50"
-                      : "border-stone-200 bg-white hover:border-stone-400"
+                      ? "border-[#c7a665] bg-[#191712] shadow-[0_0_0_1px_rgba(199,166,101,0.12)]"
+                      : "border-stone-800 bg-[#0d0d0c] hover:border-stone-600 hover:bg-[#151411]"
                   }`}
                 >
 
@@ -710,13 +774,13 @@ export default function PaymentPage() {
                     <div
                       className={`mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${
                         paymentMethod === "online"
-                          ? "border-stone-950"
-                          : "border-stone-300"
+                          ? "border-[#c7a665]"
+                          : "border-stone-600"
                       }`}
                     >
 
                       {paymentMethod === "online" && (
-                        <div className="h-2.5 w-2.5 rounded-full bg-stone-950" />
+                        <div className="h-2.5 w-2.5 rounded-full bg-[#c7a665]" />
                       )}
 
                     </div>
@@ -724,11 +788,11 @@ export default function PaymentPage() {
 
                     <div className="min-w-0 flex-1">
 
-                      <div className="flex flex-col justify-between gap-2 sm:flex-row">
+                      <div className="flex flex-col justify-between gap-3 sm:flex-row">
 
                         <div>
 
-                          <p className="text-base font-semibold">
+                          <p className="text-base font-semibold text-stone-100">
                             Online Payment
                           </p>
 
@@ -738,8 +802,11 @@ export default function PaymentPage() {
 
                         </div>
 
-                        <p className="text-lg font-semibold">
-                          ₹{onlineAmount.toLocaleString("en-IN")}
+                        <p className="text-lg font-semibold text-[#d8bc7c]">
+                          ₹
+                          {onlineAmount.toLocaleString(
+                            "en-IN"
+                          )}
                         </p>
 
                       </div>
@@ -756,7 +823,9 @@ export default function PaymentPage() {
                 </button>
 
 
-                {/* COD */}
+                {/* =================================================
+                    CASH ON DELIVERY
+                ================================================= */}
 
                 <button
                   type="button"
@@ -765,10 +834,10 @@ export default function PaymentPage() {
                     setMessage("");
                   }}
                   disabled={loading}
-                  className={`w-full rounded-3xl border p-5 text-left transition ${
+                  className={`w-full rounded-3xl border p-5 text-left transition duration-300 ${
                     paymentMethod === "cod"
-                      ? "border-stone-950 bg-stone-50"
-                      : "border-stone-200 bg-white hover:border-stone-400"
+                      ? "border-[#c7a665] bg-[#191712] shadow-[0_0_0_1px_rgba(199,166,101,0.12)]"
+                      : "border-stone-800 bg-[#0d0d0c] hover:border-stone-600 hover:bg-[#151411]"
                   }`}
                 >
 
@@ -777,13 +846,13 @@ export default function PaymentPage() {
                     <div
                       className={`mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${
                         paymentMethod === "cod"
-                          ? "border-stone-950"
-                          : "border-stone-300"
+                          ? "border-[#c7a665]"
+                          : "border-stone-600"
                       }`}
                     >
 
                       {paymentMethod === "cod" && (
-                        <div className="h-2.5 w-2.5 rounded-full bg-stone-950" />
+                        <div className="h-2.5 w-2.5 rounded-full bg-[#c7a665]" />
                       )}
 
                     </div>
@@ -791,11 +860,11 @@ export default function PaymentPage() {
 
                     <div className="min-w-0 flex-1">
 
-                      <div className="flex flex-col justify-between gap-2 sm:flex-row">
+                      <div className="flex flex-col justify-between gap-3 sm:flex-row">
 
                         <div>
 
-                          <p className="text-base font-semibold">
+                          <p className="text-base font-semibold text-stone-100">
                             Cash on Delivery
                           </p>
 
@@ -805,7 +874,7 @@ export default function PaymentPage() {
 
                         </div>
 
-                        <p className="text-lg font-semibold">
+                        <p className="text-lg font-semibold text-[#d8bc7c]">
                           ₹
                           {codAdvanceAmount.toLocaleString(
                             "en-IN"
@@ -815,7 +884,7 @@ export default function PaymentPage() {
                       </div>
 
 
-                      <div className="mt-4 rounded-2xl bg-[#f6f3ed] p-4">
+                      <div className="mt-4 rounded-2xl border border-stone-800 bg-[#0b0b0a] p-4">
 
                         <div className="flex justify-between text-sm">
 
@@ -823,7 +892,7 @@ export default function PaymentPage() {
                             20% Advance
                           </span>
 
-                          <span className="font-semibold">
+                          <span className="font-semibold text-stone-200">
                             ₹
                             {codAdvanceAmount.toLocaleString(
                               "en-IN"
@@ -839,7 +908,7 @@ export default function PaymentPage() {
                             Remaining 80%
                           </span>
 
-                          <span className="font-semibold">
+                          <span className="font-semibold text-stone-200">
                             ₹
                             {codRemainingAmount.toLocaleString(
                               "en-IN"
@@ -859,11 +928,13 @@ export default function PaymentPage() {
               </div>
 
 
-              {/* SHIPPING */}
+              {/* =================================================
+                  SHIPPING
+              ================================================= */}
 
-              <div className="mt-7 rounded-2xl bg-[#f6f3ed] p-5">
+              <div className="mt-7 rounded-2xl border border-stone-800 bg-[#151411] p-5">
 
-                <p className="text-sm font-semibold">
+                <p className="text-sm font-semibold text-stone-200">
                   Shipping charges
                 </p>
 
@@ -877,22 +948,26 @@ export default function PaymentPage() {
               </div>
 
 
-              {/* MESSAGE */}
+              {/* =================================================
+                  MESSAGE
+              ================================================= */}
 
               {message && (
-                <div className="mt-5 rounded-2xl bg-[#f6f3ed] px-4 py-3 text-sm leading-6 text-stone-600">
+                <div className="mt-5 rounded-2xl border border-[#6f5a31] bg-[#191712] px-4 py-3 text-sm leading-6 text-stone-300">
                   {message}
                 </div>
               )}
 
 
-              {/* CONTINUE */}
+              {/* =================================================
+                  CONTINUE
+              ================================================= */}
 
               <button
                 type="button"
                 onClick={continueToGateway}
                 disabled={loading || !paymentMethod}
-                className="mt-6 flex min-h-14 w-full items-center justify-center rounded-full bg-stone-950 px-6 text-sm font-semibold text-white transition hover:bg-stone-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="mt-6 flex min-h-14 w-full items-center justify-center rounded-full bg-[#d2b06c] px-6 text-sm font-semibold text-[#11100e] shadow-[0_15px_40px_rgba(0,0,0,0.3)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#e0c489] disabled:cursor-not-allowed disabled:bg-stone-800 disabled:text-stone-500 disabled:shadow-none"
               >
 
                 {loading
@@ -904,7 +979,7 @@ export default function PaymentPage() {
                       )}`}
 
                 {!loading && paymentMethod && (
-                  <span className="ml-2">
+                  <span className="ml-2 text-lg">
                     →
                   </span>
                 )}
@@ -914,11 +989,13 @@ export default function PaymentPage() {
             </div>
 
 
-            {/* ORDER SUMMARY */}
+            {/* =================================================
+                ORDER SUMMARY
+            ================================================= */}
 
-            <aside className="h-fit rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm sm:p-7">
+            <aside className="h-fit rounded-[2rem] border border-stone-800 bg-[#11110f]/95 p-6 shadow-[0_30px_100px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:p-7">
 
-              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-stone-500">
                 Order Summary
               </p>
 
@@ -929,7 +1006,7 @@ export default function PaymentPage() {
 
                   <div
                     key={item.id}
-                    className="flex gap-3 border-b border-stone-100 pb-4"
+                    className="flex gap-3 border-b border-stone-800 pb-4"
                   >
 
                     <img
@@ -941,7 +1018,7 @@ export default function PaymentPage() {
 
                     <div className="min-w-0 flex-1">
 
-                      <p className="text-sm font-semibold">
+                      <p className="text-sm font-semibold text-stone-100">
                         {item.name}
                       </p>
 
@@ -949,7 +1026,7 @@ export default function PaymentPage() {
                         {item.quantity} sq.ft.
                       </p>
 
-                      <p className="mt-1 text-xs font-semibold">
+                      <p className="mt-1 text-xs font-semibold text-[#d8bc7c]">
                         ₹
                         {(
                           item.pricePerSqFt *
@@ -966,7 +1043,9 @@ export default function PaymentPage() {
               </div>
 
 
-              <div className="mt-6 border-t border-stone-200 pt-5">
+              {/* TOTAL */}
+
+              <div className="mt-6 border-t border-stone-800 pt-5">
 
                 <div className="flex justify-between text-sm">
 
@@ -974,25 +1053,32 @@ export default function PaymentPage() {
                     Product Total
                   </span>
 
-                  <span className="font-semibold">
-                    ₹{subtotal.toLocaleString("en-IN")}
+                  <span className="font-semibold text-stone-100">
+                    ₹
+                    {subtotal.toLocaleString(
+                      "en-IN"
+                    )}
                   </span>
 
                 </div>
 
 
-                <div className="mt-5 rounded-2xl bg-[#f6f3ed] p-4">
+                {/* PAY NOW */}
 
-                  <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-stone-400">
+                <div className="mt-5 rounded-2xl border border-[#66542f] bg-[#191712] p-4">
+
+                  <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#c7a665]">
                     Pay Now
                   </p>
 
-                  <p className="mt-1 text-2xl font-semibold">
+                  <p className="mt-1 text-2xl font-semibold text-[#e0c489]">
+
                     {paymentMethod
                       ? `₹${amountToPay.toLocaleString(
                           "en-IN"
                         )}`
                       : "—"}
+
                   </p>
 
                 </div>
@@ -1006,6 +1092,19 @@ export default function PaymentPage() {
         </div>
 
       </section>
+
+
+      {/* =====================================================
+          FOOTER ACCENT
+      ===================================================== */}
+
+      <div className="relative z-10 border-t border-stone-900 bg-[#070706] px-5 py-7 text-center">
+
+        <p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-stone-600">
+          Maruti Tiles · Secure Payment
+        </p>
+
+      </div>
 
     </main>
   );

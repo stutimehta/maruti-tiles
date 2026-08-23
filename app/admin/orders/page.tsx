@@ -38,17 +38,10 @@ const STATUSES = [
 export default function AdminOrdersPage() {
   const supabase = createClient();
 
-  const [orders, setOrders] =
-    useState<Order[]>([]);
-
-  const [loading, setLoading] =
-    useState(true);
-
-  const [message, setMessage] =
-    useState("");
-
-  const [savingId, setSavingId] =
-    useState<string | null>(null);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState("");
+  const [savingId, setSavingId] = useState<string | null>(null);
 
   useEffect(() => {
     loadOrders();
@@ -68,46 +61,39 @@ export default function AdminOrdersPage() {
         return;
       }
 
-      /*
-       * The database RLS policy checks whether
-       * this user is an approved admin.
-       */
-      const { data, error } =
-        await supabase
-          .from("orders")
-          .select(
-            `
-            id,
-            customer_id,
-            status,
-            full_name,
-            email,
-            phone,
-            address,
-            city,
-            state,
-            postal_code,
-            country,
-            total,
-            amount_paid,
-            remaining_amount,
-            payment_method,
-            payment_status,
-            created_at
-            `
-          )
-          .order("created_at", {
-            ascending: false,
-          });
+      const { data, error } = await supabase
+        .from("orders")
+        .select(
+          `
+          id,
+          customer_id,
+          status,
+          full_name,
+          email,
+          phone,
+          address,
+          city,
+          state,
+          postal_code,
+          country,
+          total,
+          amount_paid,
+          remaining_amount,
+          payment_method,
+          payment_status,
+          created_at
+          `
+        )
+        .order("created_at", {
+          ascending: false,
+        });
 
       if (error) {
         setMessage(error.message);
         return;
       }
 
-      setOrders(
-        (data || []) as Order[]
-      );
+      setOrders((data || []) as Order[]);
     } catch (error) {
       setMessage(
         error instanceof Error
@@ -127,11 +113,10 @@ export default function AdminOrdersPage() {
     setMessage("");
 
     try {
-      const { error } =
-        await supabase
-          .from("orders")
-          .update({ status })
-          .eq("id", orderId);
+      const { error } = await supabase
+        .from("orders")
+        .update({ status })
+        .eq("id", orderId);
 
       if (error) {
         setMessage(error.message);
@@ -160,96 +145,157 @@ export default function AdminOrdersPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f5f0] text-stone-900">
+    <main className="min-h-screen bg-[#0b0b0a] text-white">
 
-      <header className="border-b border-stone-200 bg-white">
+      {/* =====================================================
+          HEADER
+      ===================================================== */}
+
+      <header className="sticky top-0 z-50 border-b border-[#292824] bg-[#0b0b0a]/95 backdrop-blur-xl">
+
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-6">
 
+          {/* MARUTI TEXT LOGO */}
+
           <div>
-            <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#b38d48]">
-              Maruti Tiles
+            <p className="font-serif text-3xl tracking-[0.08em] text-white">
+              MARUTI
             </p>
 
-            <h1 className="mt-1 text-2xl font-semibold">
-              Admin Orders
-            </h1>
+            <div className="mt-2 flex items-center gap-2">
+              <span className="h-px w-7 bg-[#c9a45d]" />
+
+              <span className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#c9a45d]">
+                TILES
+              </span>
+            </div>
           </div>
+
+
+          {/* BACK BUTTON */}
 
           <a
             href="/"
-            className="rounded-full border border-stone-300 px-5 py-2.5 text-xs font-semibold"
+            className="rounded-full border border-[#4a4030] px-5 py-2.5 text-xs font-semibold text-white transition hover:border-[#c9a45d] hover:bg-[#c9a45d] hover:text-black"
           >
             Back to Website
           </a>
 
         </div>
+
       </header>
 
 
-      <section className="px-5 py-10 sm:px-6">
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
+
+      <section className="px-5 py-10 sm:px-6 md:py-14">
+
         <div className="mx-auto max-w-7xl">
 
-          <div className="mb-8">
-            <p className="text-sm text-stone-500">
+          {/* PAGE HEADER */}
+
+          <div className="mb-9">
+
+            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#c9a45d]">
+              Administration
+            </p>
+
+            <h1 className="mt-3 font-serif text-4xl tracking-tight text-white sm:text-5xl">
+              Admin Orders
+            </h1>
+
+            <p className="mt-3 text-sm text-stone-500">
               Manage customer orders and delivery status.
             </p>
+
           </div>
 
 
+          {/* =================================================
+              LOADING
+          ================================================= */}
+
           {loading && (
-            <div className="rounded-[2rem] border border-stone-200 bg-white p-8 shadow-sm">
+            <div className="rounded-[2rem] border border-[#302e2a] bg-[#121210] p-8 shadow-2xl">
+
               <p className="text-sm text-stone-500">
                 Loading orders...
               </p>
+
             </div>
           )}
 
 
+          {/* =================================================
+              ERROR
+          ================================================= */}
+
           {!loading && message && (
-            <div className="rounded-2xl border border-red-200 bg-red-50 p-5 text-sm text-red-700">
+            <div className="rounded-[2rem] border border-red-900/50 bg-[#18100f] p-6 text-sm text-red-400">
               {message}
             </div>
           )}
 
 
+          {/* =================================================
+              EMPTY
+          ================================================= */}
+
           {!loading &&
             !message &&
             orders.length === 0 && (
-              <div className="rounded-[2rem] border border-stone-200 bg-white p-8 text-center shadow-sm">
-                <h2 className="text-xl font-semibold">
+              <div className="rounded-[2rem] border border-[#302e2a] bg-[#121210] p-10 text-center shadow-2xl">
+
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#4a402d] bg-[#191711]">
+                  <span className="text-2xl text-[#c9a45d]">
+                    ◇
+                  </span>
+                </div>
+
+                <h2 className="mt-6 font-serif text-3xl text-white">
                   No orders found
                 </h2>
 
-                <p className="mt-2 text-sm text-stone-500">
+                <p className="mt-3 text-sm text-stone-500">
                   New customer orders will appear here.
                 </p>
+
               </div>
             )}
 
 
+          {/* =================================================
+              ORDERS
+          ================================================= */}
+
           {!loading &&
             !message &&
             orders.length > 0 && (
+
               <div className="space-y-6">
 
                 {orders.map((order) => (
 
                   <article
                     key={order.id}
-                    className="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm"
+                    className="rounded-[2rem] border border-[#302e2a] bg-[#121210] p-6 shadow-2xl transition duration-300 hover:border-[#4b402c] sm:p-7"
                   >
 
-                    {/* HEADER */}
+                    {/* =================================================
+                        ORDER HEADER
+                    ================================================= */}
 
-                    <div className="flex flex-col justify-between gap-4 border-b border-stone-100 pb-5 lg:flex-row lg:items-start">
+                    <div className="flex flex-col justify-between gap-5 border-b border-[#292824] pb-6 lg:flex-row lg:items-start">
 
                       <div>
 
-                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-stone-400">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-stone-600">
                           Order ID
                         </p>
 
-                        <p className="mt-1 break-all text-sm font-semibold">
+                        <p className="mt-2 break-all text-sm font-semibold text-white">
                           {order.id}
                         </p>
 
@@ -262,13 +308,15 @@ export default function AdminOrdersPage() {
                       </div>
 
 
-                      <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
+                      {/* STATUS BADGES */}
 
-                        <span className="rounded-full bg-[#f6f3ed] px-4 py-2 text-xs font-semibold">
+                      <div className="flex flex-wrap items-center gap-2">
+
+                        <span className="rounded-full border border-[#55462b] bg-[#191711] px-4 py-2 text-xs font-semibold text-[#d7b56d]">
                           {order.status}
                         </span>
 
-                        <span className="rounded-full bg-stone-950 px-4 py-2 text-xs font-semibold text-white">
+                        <span className="rounded-full border border-[#383630] bg-[#1a1917] px-4 py-2 text-xs font-semibold text-stone-300">
                           {order.payment_method === "cod"
                             ? "COD"
                             : "Online"}
@@ -279,21 +327,25 @@ export default function AdminOrdersPage() {
                     </div>
 
 
-                    {/* CUSTOMER */}
+                    {/* =================================================
+                        CUSTOMER / DELIVERY / PAYMENT
+                    ================================================= */}
 
-                    <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1fr_1fr]">
+                    <div className="mt-7 grid gap-8 lg:grid-cols-[1fr_1fr_1fr]">
+
+                      {/* CUSTOMER */}
 
                       <div>
 
-                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-stone-400">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#6d6961]">
                           Customer
                         </p>
 
-                        <p className="mt-2 text-sm font-semibold">
+                        <p className="mt-3 text-sm font-semibold text-white">
                           {order.full_name}
                         </p>
 
-                        <p className="mt-1 text-xs text-stone-500">
+                        <p className="mt-2 break-all text-xs text-stone-500">
                           {order.email}
                         </p>
 
@@ -304,13 +356,15 @@ export default function AdminOrdersPage() {
                       </div>
 
 
+                      {/* DELIVERY */}
+
                       <div>
 
-                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-stone-400">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#6d6961]">
                           Delivery Address
                         </p>
 
-                        <p className="mt-2 text-sm leading-6 text-stone-600">
+                        <p className="mt-3 text-sm leading-6 text-stone-400">
                           {order.address}
                           <br />
                           {order.city},{" "}
@@ -323,58 +377,52 @@ export default function AdminOrdersPage() {
                       </div>
 
 
+                      {/* PAYMENT */}
+
                       <div>
 
-                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-stone-400">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#6d6961]">
                           Payment
                         </p>
 
-                        <div className="mt-2 space-y-2">
+                        <div className="mt-3 space-y-3">
 
-                          <div className="flex justify-between text-sm">
+                          <div className="flex justify-between gap-4 text-sm">
                             <span className="text-stone-500">
                               Total
                             </span>
 
-                            <span className="font-semibold">
+                            <span className="font-semibold text-white">
                               ₹
                               {Number(
                                 order.total
-                              ).toLocaleString(
-                                "en-IN"
-                              )}
+                              ).toLocaleString("en-IN")}
                             </span>
                           </div>
 
-
-                          <div className="flex justify-between text-sm">
+                          <div className="flex justify-between gap-4 text-sm">
                             <span className="text-stone-500">
                               Paid
                             </span>
 
-                            <span className="font-semibold">
+                            <span className="font-semibold text-white">
                               ₹
                               {Number(
                                 order.amount_paid
-                              ).toLocaleString(
-                                "en-IN"
-                              )}
+                              ).toLocaleString("en-IN")}
                             </span>
                           </div>
 
-
-                          <div className="flex justify-between text-sm">
+                          <div className="flex justify-between gap-4 text-sm">
                             <span className="text-stone-500">
                               Remaining
                             </span>
 
-                            <span className="font-semibold">
+                            <span className="font-semibold text-[#d7b56d]">
                               ₹
                               {Number(
                                 order.remaining_amount
-                              ).toLocaleString(
-                                "en-IN"
-                              )}
+                              ).toLocaleString("en-IN")}
                             </span>
                           </div>
 
@@ -385,45 +433,45 @@ export default function AdminOrdersPage() {
                     </div>
 
 
-                    {/* STATUS UPDATE */}
+                    {/* =================================================
+                        STATUS UPDATE
+                    ================================================= */}
 
-                    <div className="mt-7 border-t border-stone-100 pt-6">
+                    <div className="mt-8 border-t border-[#292824] pt-6">
 
-                      <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-stone-400">
+                      <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#6d6961]">
                         Update Order Status
                       </p>
 
+                      <div className="mt-4 flex flex-wrap gap-2">
 
-                      <div className="mt-3 flex flex-wrap gap-2">
+                        {STATUSES.map((status) => (
 
-                        {STATUSES.map(
-                          (status) => (
-
-                            <button
-                              key={status}
-                              type="button"
-                              disabled={
-                                savingId ===
-                                order.id
-                              }
-                              onClick={() =>
-                                updateStatus(
-                                  order.id,
-                                  status
-                                )
-                              }
-                              className={`rounded-full border px-4 py-2 text-xs font-semibold transition ${
-                                order.status ===
+                          <button
+                            key={status}
+                            type="button"
+                            disabled={
+                              savingId === order.id
+                            }
+                            onClick={() =>
+                              updateStatus(
+                                order.id,
                                 status
-                                  ? "border-stone-950 bg-stone-950 text-white"
-                                  : "border-stone-300 bg-white hover:border-stone-950"
-                              } disabled:cursor-not-allowed disabled:opacity-50`}
-                            >
-                              {status}
-                            </button>
+                              )
+                            }
+                            className={`rounded-full border px-4 py-2.5 text-xs font-semibold transition ${
+                              order.status === status
+                                ? "border-[#c9a45d] bg-[#c9a45d] text-black"
+                                : "border-[#3a3833] bg-[#171715] text-stone-400 hover:border-[#c9a45d] hover:text-[#d7b56d]"
+                            } disabled:cursor-not-allowed disabled:opacity-50`}
+                          >
+                            {savingId === order.id &&
+                            order.status !== status
+                              ? status
+                              : status}
+                          </button>
 
-                          )
-                        )}
+                        ))}
 
                       </div>
 
@@ -434,10 +482,25 @@ export default function AdminOrdersPage() {
                 ))}
 
               </div>
+
             )}
 
         </div>
+
       </section>
+
+
+      {/* =====================================================
+          FOOTER
+      ===================================================== */}
+
+      <footer className="border-t border-[#252420] bg-[#080807] px-5 py-10 text-center">
+
+        <p className="text-xs text-stone-600">
+          © 2026 Maruti Tiles. All Rights Reserved.
+        </p>
+
+      </footer>
 
     </main>
   );

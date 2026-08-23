@@ -141,15 +141,17 @@ export default function AddToCartButton({
   return (
     <div className="mt-7 sm:mt-8">
 
-      {/* PRICE */}
+      {/* =====================================================
+          PRICE
+      ===================================================== */}
 
-      <div className="border-t border-stone-200 pt-5 sm:pt-6">
+      <div className="border-t border-stone-800 pt-5 sm:pt-6">
 
-        <p className="text-[10px] uppercase tracking-[0.2em] text-stone-400 sm:text-xs">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-[#a99573] sm:text-xs">
           Price per sq. ft.
         </p>
 
-        <p className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
+        <p className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
           ₹
           {pricePerSqFt.toLocaleString("en-IN")}
 
@@ -165,11 +167,11 @@ export default function AddToCartButton({
           QUANTITY
       ===================================================== */}
 
-      <div className="mt-6 rounded-3xl border border-stone-200 bg-white p-4 shadow-sm sm:p-5">
+      <div className="mt-6 rounded-3xl border border-stone-800 bg-[#151411] p-4 shadow-[0_18px_55px_rgba(0,0,0,0.3)] sm:p-5">
 
         <div>
 
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-400 sm:text-xs">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#c8a867] sm:text-xs">
             Quantity
           </p>
 
@@ -192,8 +194,8 @@ export default function AddToCartButton({
               onClick={() => selectPackSize(option)}
               className={`min-h-11 rounded-full border px-3 text-xs font-semibold transition active:scale-95 ${
                 packSize === option
-                  ? "border-stone-950 bg-stone-950 text-white"
-                  : "border-stone-200 bg-stone-50 text-stone-900 hover:border-stone-950 hover:bg-white"
+                  ? "border-[#d2b06c] bg-[#d2b06c] text-black shadow-[0_6px_20px_rgba(210,176,108,0.12)]"
+                  : "border-stone-700 bg-[#0d0d0c] text-stone-200 hover:border-[#c8a867] hover:text-[#d8ba79]"
               }`}
             >
               {option} sq.ft.
@@ -204,29 +206,39 @@ export default function AddToCartButton({
         </div>
 
 
-        {/* REPEAT QUANTITY */}
+        {/* =====================================================
+            REPEAT QUANTITY
+        ===================================================== */}
 
-        <div className="mt-4 flex items-center justify-between rounded-full border border-stone-200 bg-stone-50 p-1">
+        <div className="mt-4 flex items-center justify-between rounded-full border border-stone-700 bg-[#0b0b0a] p-1.5">
+
+          {/* MINUS */}
 
           <button
             type="button"
             onClick={decreaseQuantity}
             disabled={repeatCount <= 1}
             aria-label="Decrease quantity"
-            className="touch-manipulation flex h-10 w-10 items-center justify-center rounded-full text-xl font-medium transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-30"
+            className="touch-manipulation flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-2xl font-medium leading-none text-white transition hover:bg-stone-800 hover:text-[#d8ba79] disabled:cursor-not-allowed disabled:text-stone-700"
           >
             −
           </button>
 
-          <span className="text-sm font-semibold">
+
+          {/* QUANTITY TEXT */}
+
+          <span className="min-w-0 flex-1 px-3 text-center text-sm font-semibold text-white sm:text-base">
             {repeatCount} × {packSize} sq.ft.
           </span>
+
+
+          {/* PLUS */}
 
           <button
             type="button"
             onClick={increaseQuantity}
             aria-label="Increase quantity"
-            className="touch-manipulation flex h-10 w-10 items-center justify-center rounded-full text-xl font-medium transition hover:bg-white"
+            className="touch-manipulation flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-2xl font-medium leading-none text-white transition hover:bg-stone-800 hover:text-[#d8ba79]"
           >
             +
           </button>
@@ -234,39 +246,43 @@ export default function AddToCartButton({
         </div>
 
 
-        {/* TOTAL QUANTITY */}
+        {/* =====================================================
+            TOTAL QUANTITY
+        ===================================================== */}
 
-        <div className="mt-3 text-center">
+        <div className="mt-4 rounded-2xl border border-stone-800 bg-[#0d0d0c] px-4 py-4 text-center">
 
-          <p className="text-xs text-stone-500">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-stone-500">
             Total Quantity
           </p>
 
-          <p className="mt-1 text-lg font-semibold">
+          <p className="mt-1 text-lg font-semibold text-white">
             {quantity} sq.ft.
           </p>
 
         </div>
 
 
-        {/* SUBTOTAL */}
+        {/* =====================================================
+            SUBTOTAL
+        ===================================================== */}
 
-        <div className="mt-5 flex items-end justify-between border-t border-stone-100 pt-4">
+        <div className="mt-5 flex items-end justify-between border-t border-stone-800 pt-4">
 
           <div>
 
-            <p className="text-[10px] uppercase tracking-[0.2em] text-stone-400">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-[#a99573]">
               Product subtotal
             </p>
 
-            <p className="mt-1 text-sm text-stone-500">
+            <p className="mt-1 text-sm text-stone-400">
               {quantity} × ₹
               {pricePerSqFt.toLocaleString("en-IN")}
             </p>
 
           </div>
 
-          <p className="text-2xl font-semibold">
+          <p className="text-2xl font-semibold text-[#d8ba79]">
             ₹
             {subtotal.toLocaleString("en-IN")}
           </p>
@@ -286,7 +302,7 @@ export default function AddToCartButton({
 
           <Link
             href="/cart"
-            className="flex min-h-14 items-center justify-center rounded-full bg-stone-900 px-7 text-center font-semibold text-white transition hover:bg-stone-700"
+            className="flex min-h-14 items-center justify-center rounded-full bg-[#d2b06c] px-7 text-center font-semibold text-black transition hover:bg-[#e0c489]"
           >
             View Cart
 
@@ -295,10 +311,11 @@ export default function AddToCartButton({
             </span>
           </Link>
 
+
           <button
             type="button"
             onClick={() => setAdded(false)}
-            className="min-h-14 rounded-full border border-stone-300 bg-white px-6 font-semibold text-stone-900 transition hover:bg-stone-50"
+            className="min-h-14 rounded-full border border-stone-700 bg-[#151411] px-6 font-semibold text-stone-200 transition hover:border-[#c8a867] hover:text-[#d8ba79]"
           >
             Continue Shopping
           </button>
@@ -310,7 +327,7 @@ export default function AddToCartButton({
         <button
           type="button"
           onClick={addToCart}
-          className="mt-4 flex min-h-14 w-full items-center justify-center rounded-full bg-stone-900 px-7 text-center font-semibold text-white transition hover:-translate-y-0.5 hover:bg-stone-700 active:scale-[0.98]"
+          className="mt-4 flex min-h-14 w-full items-center justify-center rounded-full bg-[#d2b06c] px-7 text-center font-semibold text-black shadow-[0_15px_40px_rgba(210,176,108,0.12)] transition hover:-translate-y-0.5 hover:bg-[#e0c489] active:scale-[0.98]"
         >
           Add to Cart
 
@@ -321,6 +338,8 @@ export default function AddToCartButton({
 
       )}
 
+
+      {/* DELIVERY NOTE */}
 
       <p className="mt-4 text-center text-xs leading-6 text-stone-500 sm:text-sm">
         Delivery charges are calculated separately at checkout.
