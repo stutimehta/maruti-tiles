@@ -27,6 +27,17 @@ type Order = {
   created_at: string;
 };
 
+type CashPaymentRequest = {
+  id: string;
+  order_id: string;
+  customer_id: string;
+  amount: number;
+  status: "requested" | "confirmed" | "cancelled";
+  requested_at: string;
+  confirmed_at: string | null;
+  confirmed_by: string | null;
+};
+
 const STATUSES = [
   "Confirmed",
   "Preparing",
@@ -42,6 +53,15 @@ export default function AdminOrdersPage() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [savingId, setSavingId] = useState<string | null>(null);
+
+  const [cashRequests, setCashRequests] =
+    useState<CashPaymentRequest[]>([]);
+
+  const [cashLoading, setCashLoading] =
+    useState(true);
+
+  const [confirmingCashId, setConfirmingCashId] =
+    useState<string | null>(null);
 
   useEffect(() => {
     loadOrders();
@@ -94,6 +114,7 @@ export default function AdminOrdersPage() {
       }
 
       setOrders((data || []) as Order[]);
+      await loadCashRequests();
     } catch (error) {
       setMessage(
         error instanceof Error
@@ -102,6 +123,200 @@ export default function AdminOrdersPage() {
       );
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function loadCashRequests() {
+    setCashLoading(true);
+
+    try {
+      const { data, error } = await supabase
+        .from("cash_payment_requests")
+        .select(
+          `
+            id,
+            order_id,
+            customer_id,
+            amount,
+            status,
+            requested_at,
+            confirmed_at,
+            confirmed_by
+          `
+        )
+        .eq("status", "requested")
+        .order("requested_at", {
+          ascending: false,
+        });
+
+      if (error) {
+        console.error(
+          "Cash payment requests error:",
+          error
+        );
+
+        setCashRequests([]);
+        return;
+      }
+
+      setCashRequests(
+        (data || []) as CashPaymentRequest[]
+      );
+    } catch (error) {
+      console.error(
+        "Cash payment requests error:",
+        error
+      );
+
+      setCashRequests([]);
+    } finally {
+      setCashLoading(false);
+    }
+  }
+
+  async function confirmCashPayment(
+    request: CashPaymentRequest
+  ) {
+    const order = orders.find(
+      (item) => item.id === request.order_id
+    );
+
+    if (!order) {
+      setMessage(
+        "The order connected to this cash request could not be found."
+      );
+      return;
+    }
+
+    if (request.status !== "requested") {
+      return;
+    }
+
+    if (
+      Number(order.remaining_amount) <= 0 ||
+      order.payment_status === "paid"
+    ) {
+      setMessage(
+        "This order has no remaining balance."
+      );
+      return;
+    }
+
+    if (order.status !== "Out for Delivery") {
+      setMessage(
+        "Cash payment can only be confirmed when the order is Out for Delivery."
+      );
+      return;
+    }
+
+    setConfirmingCashId(request.id);
+    setMessage("");
+
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        window.location.href = "/auth";
+        return;
+      }
+
+      const {
+        data: updatedRequest,
+        error: requestError,
+      } = await supabase
+        .from("cash_payment_requests")
+        .update({
+          status: "confirmed",
+          confirmed_at: new Date().toISOString(),
+          confirmed_by: user.id,
+        })
+        .eq("id", request.id)
+        .eq("status", "requested")
+        .select(
+          `
+            id,
+            order_id,
+            customer_id,
+            amount,
+            status,
+            requested_at,
+            confirmed_at,
+            confirmed_by
+          `
+        )
+        .single();
+
+      if (requestError || !updatedRequest) {
+        throw new Error(
+          requestError?.message ||
+            "Unable to confirm cash payment request."
+        );
+      }
+
+      const newAmountPaid =
+        Number(order.total);
+
+      const {
+        error: orderError,
+      } = await supabase
+        .from("orders")
+        .update({
+          amount_paid: newAmountPaid,
+          remaining_amount: 0,
+          payment_status: "paid",
+        })
+        .eq("id", order.id);
+
+      if (orderError) {
+        throw new Error(
+          orderError.message ||
+            "Cash request was confirmed but the order could not be updated."
+        );
+      }
+
+      setCashRequests((current) =>
+        current.map((item) =>
+          item.id === request.id
+            ? (updatedRequest as CashPaymentRequest)
+            : item
+        )
+      );
+
+      setOrders((current) =>
+        current.map((item) =>
+          item.id === order.id
+            ? {
+                ...item,
+                amount_paid: newAmountPaid,
+                remaining_amount: 0,
+                payment_status: "paid",
+              }
+            : item
+        )
+      );
+
+      setMessage(
+        `Cash payment of ₹${Number(
+          request.amount
+        ).toLocaleString(
+          "en-IN"
+        )} confirmed for order ${order.id}.`
+      );
+    } catch (error) {
+      console.error(
+        "Confirm cash payment error:",
+        error
+      );
+
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "Unable to confirm cash payment."
+      );
+    } finally {
+      setConfirmingCashId(null);
     }
   }
 
@@ -265,6 +480,150 @@ export default function AdminOrdersPage() {
               </div>
             )}
 
+
+          {/* =================================================
+              CASH PAYMENT REQUESTS
+          ================================================= */}
+
+          {!cashLoading &&
+            cashRequests.some((item) => {
+              const order = orders.find(
+                (currentOrder) =>
+                  currentOrder.id === item.order_id
+              );
+
+              return (
+                item.status === "requested" &&
+                order?.status === "Out for Delivery" &&
+                Number(order.remaining_amount) > 0 &&
+                order.payment_status !== "paid"
+              );
+            }) && (
+              <section className="mb-8 rounded-[2rem] border border-[#5a4725] bg-[#14120e] p-6 shadow-2xl sm:p-7">
+                <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#c9a45d]">
+                      Cash Payment Requests
+                    </p>
+
+                    <h2 className="mt-3 font-serif text-3xl tracking-tight text-white">
+                      Pending cash payments
+                    </h2>
+
+                    <p className="mt-2 text-sm text-stone-500">
+                      Only confirm after the delivery person has reached the customer and actually received the remaining cash.
+                    </p>
+                  </div>
+
+                  <span className="w-fit rounded-full border border-[#55462b] bg-[#191711] px-4 py-2 text-xs font-semibold text-[#d7b56d]">
+                    {cashRequests.filter(
+                      (item) => {
+                        const order = orders.find(
+                          (currentOrder) =>
+                            currentOrder.id === item.order_id
+                        );
+
+                        return (
+                          item.status === "requested" &&
+                          order?.status === "Out for Delivery" &&
+                          Number(order.remaining_amount) > 0 &&
+                          order.payment_status !== "paid"
+                        );
+                      }
+                    ).length}{" "}
+                    ready for delivery payment
+                  </span>
+                </div>
+
+                <div className="mt-6 space-y-4">
+                  {cashRequests
+                    .filter((request) => {
+                      const order = orders.find(
+                        (item) => item.id === request.order_id
+                      );
+
+                      return (
+                        order?.status === "Out for Delivery" &&
+                        Number(order.remaining_amount) > 0 &&
+                        order.payment_status !== "paid"
+                      );
+                    })
+                    .map((request) => {
+                      const order = orders.find(
+                        (item) => item.id === request.order_id
+                      );
+
+                      return (
+                      <div
+                        key={request.id}
+                        className="rounded-[1.5rem] border border-[#302e2a] bg-[#0f0f0e] p-5"
+                      >
+                        <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
+                          <div>
+                            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-stone-600">
+                              Order
+                            </p>
+
+                            <p className="mt-2 break-all text-sm font-semibold text-white">
+                              {request.order_id}
+                            </p>
+
+                            {order && (
+                              <p className="mt-2 text-xs text-stone-500">
+                                {order.full_name} · {order.phone}
+                              </p>
+                            )}
+
+                            <p className="mt-2 text-xs text-stone-600">
+                              Requested{" "}
+                              {new Date(
+                                request.requested_at
+                              ).toLocaleString("en-IN")}
+                            </p>
+                          </div>
+
+                          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                            <div className="rounded-2xl bg-[#191711] px-5 py-3">
+                              <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-stone-600">
+                                Cash Amount
+                              </p>
+
+                              <p className="mt-1 text-lg font-semibold text-[#d7b56d]">
+                                ₹
+                                {Number(
+                                  request.amount
+                                ).toLocaleString("en-IN")}
+                              </p>
+                            </div>
+
+                            {request.status === "requested" ? (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  confirmCashPayment(request)
+                                }
+                                disabled={
+                                  confirmingCashId === request.id
+                                }
+                                className="min-h-12 rounded-full bg-[#c9a45d] px-6 text-sm font-semibold text-black transition hover:bg-[#d8b873] disabled:cursor-not-allowed disabled:opacity-50"
+                              >
+                                {confirmingCashId === request.id
+                                  ? "Confirming..."
+                                  : "Confirm Cash Received"}
+                              </button>
+                            ) : (
+                              <span className="rounded-full border border-green-900/50 bg-green-950/20 px-5 py-3 text-xs font-semibold text-green-300">
+                                Cash Confirmed
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
 
           {/* =================================================
               ORDERS

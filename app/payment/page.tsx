@@ -31,10 +31,12 @@ type CheckoutData = {
 
 type PaymentMethod = "online" | "cod" | "";
 
-declare global {
-  interface Window {
-    Razorpay: new (options: RazorpayOptions) => RazorpayInstance;
-  }
+function getRazorpayConstructor() {
+  return (window as Window & {
+    Razorpay?: new (
+      options: RazorpayOptions
+    ) => RazorpayInstance;
+  }).Razorpay;
 }
 
 type RazorpayOptions = {
@@ -171,7 +173,7 @@ export default function PaymentPage() {
       return false;
     }
 
-    if (window.Razorpay) {
+    if (getRazorpayConstructor()) {
       return true;
     }
 
@@ -182,7 +184,7 @@ export default function PaymentPage() {
 
       if (existingScript) {
         existingScript.addEventListener("load", () => {
-          resolve(!!window.Razorpay);
+          resolve(!!getRazorpayConstructor());
         });
 
         existingScript.addEventListener("error", () => {
@@ -200,7 +202,7 @@ export default function PaymentPage() {
       script.async = true;
 
       script.onload = () => {
-        resolve(!!window.Razorpay);
+        resolve(!!getRazorpayConstructor());
       };
 
       script.onerror = () => {
@@ -331,7 +333,15 @@ export default function PaymentPage() {
       /*
        * Open Razorpay Checkout
        */
-      const razorpay = new window.Razorpay({
+      const RazorpayConstructor = getRazorpayConstructor();
+
+      if (!RazorpayConstructor) {
+        throw new Error(
+          "Razorpay could not be loaded. Please refresh the page and try again."
+        );
+      }
+
+      const razorpay = new RazorpayConstructor({
         key: keyId,
 
         amount,
