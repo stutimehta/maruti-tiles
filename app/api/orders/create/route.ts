@@ -260,29 +260,36 @@ export async function POST(request: Request) {
 
       cleanCart.push({
         id: productId,
+
         name:
           typeof item.name === "string"
             ? item.name
             : "",
+
         category:
           typeof item.category === "string"
             ? item.category
             : "",
+
         size:
           typeof item.size === "string"
             ? item.size
             : "",
+
         finish:
           typeof item.finish === "string"
             ? item.finish
             : "",
+
         image:
           typeof item.image === "string"
             ? item.image
             : "",
+
         pricePerSqFt: Number(
           item.pricePerSqFt
         ),
+
         quantity,
       });
     }
@@ -565,12 +572,13 @@ export async function POST(request: Request) {
           inventoryError
         );
 
-        // Delete created order.
+        // Delete created order items.
         await supabase
           .from("order_items")
           .delete()
           .eq("order_id", order.id);
 
+        // Delete created order.
         await supabase
           .from("orders")
           .delete()
